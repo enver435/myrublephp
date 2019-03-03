@@ -4,10 +4,46 @@
 
     use App\Models\UserModel;
 
-    class AuthController
+    class UserController
     {
         private $json     = [];
         private $validate = false;
+
+        public function getUser($request, $response, $args)
+        {
+            $body = $request->getParsedBody();
+            
+            $where = [];
+            foreach ($body as $key => $value) {
+                $where[] = [$key, '=', $value];
+            }
+
+            try {
+                $userInfo = UserModel::getUser($where);
+                if($userInfo !== false) {
+                    // set json data
+                    $this->json = [
+                        'status' => true,
+                        'data'   => $userInfo
+                    ];
+                } else {
+                    // set json data
+                    $this->json = [
+                        'status'  => false,
+                        'message' => 'User not exist'
+                    ];
+                }
+            } catch (\Illuminate\Database\QueryException $e) {
+                // set json data
+                $this->json = [
+                    'status'  => false,
+                    'message' => 'Database Error: ' . $e->getMessage()
+                ];
+            }
+
+            // return reponse json data
+            return $response->withJson($this->json);
+        }
 
         /**
          * User Sign In
@@ -86,10 +122,18 @@
             $pass     = $body['pass'];
 
             // validate body
-            if($username != '' && $email != '' && $pass != '') {
+            if($email != '' && $username != '' && $pass != '') {
                 if(filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
                     if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
-                        $this->validate = true;
+                        if(strlen($pass) >= 6) {
+                            $this->validate = true;
+                        } else {
+                            // set json data
+                            $this->json = [
+                                'status'  => false,
+                                'message' => 'Şifrə ən azı 6 simvol uzunluğunda olmalıdır'
+                            ];
+                        }
                     } else {
                         // set json data
                         $this->json = [
@@ -160,7 +204,7 @@
                 } catch (\Illuminate\Database\QueryException $e) {
                     // set json data
                     $this->json = [
-                        'status'  => 'error',
+                        'status'  => false,
                         'message' => 'Database Error: ' . $e->getMessage()
                     ];
                 }
