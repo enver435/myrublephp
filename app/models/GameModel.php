@@ -19,6 +19,18 @@
             }
             return false;
         }
+
+        /**
+         * Insert User
+         *
+         * @param array $data
+         * @return integer
+         */
+        public static function insertGame($data)
+        {
+            return self::get('db')->table('game_logs')
+                ->insertGetId($data);
+        }
     }
 
 ?>

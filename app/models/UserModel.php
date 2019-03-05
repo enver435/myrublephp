@@ -23,6 +23,19 @@
         }
 
         /**
+         * Update User
+         *
+         * @param string|array $where
+         * @return object
+         */
+        public static function updateUser($where, $data)
+        {
+            return self::get('db')->table('users')
+                ->where($where)
+                ->update($data);
+        }
+
+        /**
          * Exist User
          *
          * @param string|array $where

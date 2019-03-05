@@ -15,14 +15,18 @@
 
     // USER Routes
     $app->group('/user', function() {
-        // get user information
+        // get user
         $this->post('/info', '\App\Controllers\UserController:getUser');
+        // update user
+        $this->post('/update', '\App\Controllers\UserController:updateUser');
     });
 
     // GAME Routes
     $app->group('/game', function() {
         // get default
         $this->post('/default', '\App\Controllers\GameController:getDefault');
+        // insert
+        $this->post('/insert', '\App\Controllers\GameController:insertGame');
     });
 
 ?>

@@ -45,6 +45,57 @@
             return $response->withJson($this->json);
         }
 
+        public function updateUser($request, $response, $args)
+        {
+            $body = $request->getParsedBody();
+
+            if($body['id'] > 0 && count($body['data']) > 0) {
+                
+                $updateData = [];
+                foreach ($body['data'] as $key => $value) {
+                    $updateData[$key] = $value;
+                }
+
+                try {
+                    $where = ['id' => $body['id']];
+
+                    // update user
+                    UserModel::updateUser($where, $updateData);
+
+                    // get user information
+                    $userInfo = UserModel::getUser($where);
+                    if($userInfo !== false) {
+                        // set json data
+                        $this->json = [
+                            'status' => true,
+                            'data'   => $userInfo
+                        ];
+                    } else {
+                        // set json data
+                        $this->json = [
+                            'status'  => false,
+                            'message' => 'User not exist'
+                        ];
+                    }
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // set json data
+                    $this->json = [
+                        'status'  => false,
+                        'message' => 'Database Error: ' . $e->getMessage()
+                    ];
+                }
+            } else {
+                // set json data
+                $this->json = [
+                    'status'  => false,
+                    'message' => 'Required user ID and updated DATA'
+                ];
+            }
+
+            // return reponse json data
+            return $response->withJson($this->json);
+        }
+
         /**
          * User Sign In
          */
