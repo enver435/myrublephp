@@ -2,7 +2,10 @@
 
     // index
     $app->map(['GET', 'POST'], '/', function($request, $response, $args) {
-        return $response->getBody()->write(getenv('APP_NAME') . ' Version: ' . getenv('APP_VERSION'));
+        return $response->withJson([
+            'appName'    => getenv('APP_NAME'),
+            'appVersion' => getenv('APP_VERSION')
+        ]);
     });
 
     // AUTH Routes
