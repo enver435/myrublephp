@@ -235,13 +235,13 @@
                     }
 
                     if($insert === true) {
+                        // modify insert data
+                        $insertData          = $body;
+                        $insertData['pass']  = md5($insertData['pass']);
+                        $insertData['heart'] = 3;
+
                         // insert user
-                        UserModel::insertUser([
-                            'email'    => $email,
-                            'username' => $username,
-                            'pass'     => md5($pass),
-                            'heart'    => 3
-                        ]);
+                        UserModel::insertUser($insertData);
                         
                         // set json data
                         $this->json = [

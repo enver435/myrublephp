@@ -6,27 +6,26 @@
     $container['errorHandler'] = function($container) {
         return function($request, $response, $exception) use($container) {
             $data = [
+                'status'  => false,
                 'code'    => $exception->getCode(),
                 'message' => $exception->getMessage(),
                 'file'    => $exception->getFile(),
                 'line'    => $exception->getLine(),
                 'trace'   => explode("\n", $exception->getTraceAsString()),
             ];
-
-            $container->view->render($response, '_errors/all.html', [
-                'error' => $data
-            ]);
-            return $response->withStatus(500);
+            return $response->withJson($data);
         };
     };
 
     // page not found handler
     $container['notFoundHandler'] = function ($container) {
         return function ($request, $response) use($container) {
-            $container->view->render($response, '_errors/404.html', [
-                'error' => []
-            ]);
-            return $response->withStatus(404);
+            $data = [
+                'status' => false,
+                'code' => '404',
+                'message' => 'Route not found'
+            ];
+            return $response->withJson($data);
         };
     };
 

@@ -5,6 +5,20 @@
     class UserModel extends BaseModel
     {
         /**
+         * Get All Users
+         *
+         * @return array
+         */
+        public static function users($where = null)
+        {
+            $results = self::get('db')->table('users');
+            if($where != null) {
+                $results->where($where);
+            }
+            return $results->get();
+        }
+
+        /**
          * Get User
          *
          * @param string|array $where
