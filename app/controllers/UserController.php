@@ -115,14 +115,14 @@
                     // set json data
                     $this->json = [
                         'status'  => false,
-                        'message' => 'Email formatı düzgün deyil'
+                        'message' => 'Неверный электронной почты'
                     ];
                 }
             } else {
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Sətirləri boş buraxmayın'
+                    'message' => 'Пожалуйста, не оставляйте пустые строки пустыми'
                 ];
             }
 
@@ -144,7 +144,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'İstifadəçi tapılmadı'
+                            'message' => 'Пользователь не найден'
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -182,28 +182,28 @@
                             // set json data
                             $this->json = [
                                 'status'  => false,
-                                'message' => 'Şifrə ən azı 6 simvol uzunluğunda olmalıdır'
+                                'message' => 'Пароль должен содержать не менее 6 символов'
                             ];
                         }
                     } else {
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'İstifadəçi adı formatı düzgün deyil'
+                            'message' => 'Неверное имя пользователя'
                         ];
                     }
                 } else {
                     // set json data
                     $this->json = [
                         'status'  => false,
-                        'message' => 'Email formatı düzgün deyil'
+                        'message' => 'Неверный электронной почты'
                     ];
                 }
             } else {
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Sətirləri boş buraxmayın'
+                    'message' => 'Пожалуйста, не оставляйте пустые строки пустыми'
                 ];
             }
 
@@ -220,7 +220,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Bu email artıq istifadə olunur'
+                            'message' => 'Этот адрес электронной почты уже используется'
                         ];
                         // set insert status
                         $insert = false;
@@ -228,7 +228,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Bu istifadəçi adı artıq istifadə olunur'
+                            'message' => 'Имя пользователя уже используется'
                         ];
                         // set insert status
                         $insert = false;
