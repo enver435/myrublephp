@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2019 at 12:37 PM
+-- Generation Time: Mar 09, 2019 at 03:48 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -205,18 +205,21 @@ CREATE TABLE `users` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `pass` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `balance` float NOT NULL,
-  `heart` int(11) NOT NULL
+  `heart` int(11) NOT NULL,
+  `start_notify_heart` int(11) NOT NULL,
+  `firebase_token` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `heart`) VALUES
-(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 2.5, 0),
-(2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0),
-(3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3),
-(4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3);
+INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `heart`, `start_notify_heart`, `firebase_token`) VALUES
+(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 2.5, 0, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
+(2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, ''),
+(3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
+(4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, ''),
+(5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh');
 
 --
 -- Indexes for dumped tables
@@ -248,7 +251,7 @@ ALTER TABLE `game_logs`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
