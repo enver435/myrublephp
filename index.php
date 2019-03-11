@@ -7,7 +7,8 @@
 
     // get environment
     switch ($_SERVER["HTTP_HOST"]) {
-        case "soburli.localhost":
+        case "localhost":
+        case "192.168.0.102":
             define('ENVIRONMENT', 'development');
             break;
         default:
