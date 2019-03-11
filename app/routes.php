@@ -53,4 +53,11 @@
         $this->get('/heart-notify', '\App\Controllers\CronController:heartNotify');
     });
 
+    /**
+     * Site Routes
+     */
+    $app->get('/privacy', function($request, $response, $args) use ($container) {
+        return $container->view->render($response, 'privacy.html');
+    });
+
 ?>

@@ -5,19 +5,18 @@
     // start session
     session_start();
 
-    switch ($_SERVER['SERVER_NAME']) {
-        case 'localhost':
-        case '192.168.0.102':
-            $env = 'dev';
+    // get environment
+    switch ($_SERVER["HTTP_HOST"]) {
+        case "soburli.localhost":
+            define('ENVIRONMENT', 'development');
             break;
-        
         default:
-            $env = 'production';
+            define('ENVIRONMENT', 'production');
             break;
     }
 
     // load .env file
-    $dotenv = Dotenv\Dotenv::create(__DIR__, $env == 'dev' ? '.env.dev' : '.env');
+    $dotenv = Dotenv\Dotenv::create(__DIR__, ENVIRONMENT == 'development' ? '.env.dev' : '.env');
     $dotenv->load(true);
 
     // instantiate the App object
