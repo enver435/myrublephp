@@ -14,7 +14,7 @@
 
         public function __construct()
         {
-            $serviceAccount = ServiceAccount::fromJsonFile(dirname(__DIR__) . '../../myruble-dfbba-firebase-adminsdk-sri1t-d6e6fb83e7.json');
+            $serviceAccount = ServiceAccount::fromJsonFile('myruble-dfbba-firebase-adminsdk-sri1t-d6e6fb83e7.json');
             $firebase = (new Firebase\Factory())
                 ->withServiceAccount($serviceAccount)
                 ->create();
