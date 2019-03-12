@@ -38,31 +38,33 @@
                         $title = 'Возможность играть';
                         $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
 
-                        // send notification
-                        $this->firebase
-                            ->getMessaging()
-                            ->send([
-                                'token' => $user->firebase_token,
-                                'notification' => [
-                                    'title' => $title,
-                                    'body' => $body,
-                                ],
-                                'android' => [
-                                    'priority' => 'normal',
+                        try {
+                            $this->firebase
+                                ->getMessaging()
+                                ->send([
+                                    'token' => $user->firebase_token,
                                     'notification' => [
-                                        'title'      => $title,
-                                        'body'       => $body,
-                                        'channel_id' => 'myruble_channel',
-                                        'sound'      => 'default',
-                                        'color'      => '#474747'
+                                        'title' => $title,
+                                        'body' => $body,
+                                    ],
+                                    'android' => [
+                                        'priority' => 'normal',
+                                        'notification' => [
+                                            'title'      => $title,
+                                            'body'       => $body,
+                                            'channel_id' => 'myruble_channel',
+                                            'sound'      => 'default',
+                                            'color'      => '#474747'
+                                        ]
                                     ]
-                                ]
+                                ]);
+    
+                            // update user
+                            UserModel::updateUser(['id' => $user->id], [
+                                'start_notify_heart' => 0
                             ]);
-
-                        // update user
-                        UserModel::updateUser(['id' => $user->id], [
-                            'start_notify_heart' => 0
-                        ]);
+                        } catch (\Throwable $th) {
+                        }
                     }
                 }
             } catch (\Illuminate\Database\QueryException $e) {
