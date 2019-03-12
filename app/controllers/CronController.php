@@ -27,13 +27,11 @@
 
             try {
                 $users = UserModel::users([
-                    ['start_notify_heart', '>', 0]
+                    ['notify_heart_time', '>', 0]
                 ]);
 
                 foreach ($users as $user) {
-                    $nextTime = strtotime('+1 minutes', $user->start_notify_heart);
-
-                    if($nowTime >= $nextTime) {
+                    if($nowTime >= $user->notify_heart_time) {
                         // create notification
                         $title = 'Возможность играть';
                         $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
@@ -61,7 +59,7 @@
     
                             // update user
                             UserModel::updateUser(['id' => $user->id], [
-                                'start_notify_heart' => 0
+                                'notify_heart_time' => 0
                             ]);
                         } catch (\Throwable $th) {
                         }
