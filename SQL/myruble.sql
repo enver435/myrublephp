@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2019 at 12:14 PM
+-- Generation Time: Mar 18, 2019 at 08:58 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -299,7 +299,33 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (234, 1, 0, 0, 0, 0, 1552387474),
 (235, 1, 0, 0, 0, 0, 1552387490),
 (236, 1, 0, 0, 0, 0, 1552387505),
-(237, 1, 0, 0, 0, 0, 1552387521);
+(237, 1, 0, 0, 0, 0, 1552387521),
+(238, 1, 0, 1, 0, 0, 1552910258),
+(239, 1, 0, 0, 0, 0, 1552921082),
+(240, 0, 0, 0, 0, 0, 1552928927),
+(241, 1, 0, 0, 0, 0, 1552936807);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_methods`
+--
+
+CREATE TABLE `payment_methods` (
+  `yandex_min_withdraw` float NOT NULL,
+  `yandex_comission` float NOT NULL,
+  `payeer_min_withdraw` float NOT NULL,
+  `payeer_comission` float NOT NULL,
+  `webmoney_min_withdraw` float NOT NULL,
+  `webmoney_comission` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `payment_methods`
+--
+
+INSERT INTO `payment_methods` (`yandex_min_withdraw`, `yandex_comission`, `payeer_min_withdraw`, `payeer_comission`, `webmoney_min_withdraw`, `webmoney_comission`) VALUES
+(5, 0.5, 5, 0.95, 5, 0.8);
 
 -- --------------------------------------------------------
 
@@ -325,11 +351,35 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `heart`, `notify_heart_time`, `firebase_token`) VALUES
-(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 5, 0, 1552387532, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA'),
+(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 5, 0, 1552929048, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA'),
 (2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, ''),
 (3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
 (4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, ''),
 (5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `withdraws`
+--
+
+CREATE TABLE `withdraws` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `amount` float NOT NULL,
+  `commission` float NOT NULL,
+  `payment_method` int(11) NOT NULL COMMENT '0 = unknown, 1 = yandex, 2 = payeer, 3 = webmoney',
+  `wallet_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `payment_status` int(11) NOT NULL COMMENT ' 0 = waiting, 1 = paid, 2 = not paid',
+  `time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `withdraws`
+--
+
+INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `time`) VALUES
+(1, 1, 5, 0.5, 1, '156467567569', 0, 1549045007);
 
 --
 -- Indexes for dumped tables
@@ -348,6 +398,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `withdraws`
+--
+ALTER TABLE `withdraws`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -355,13 +411,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `withdraws`
+--
+ALTER TABLE `withdraws`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
