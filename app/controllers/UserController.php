@@ -11,33 +11,41 @@
 
         public function getUser($request, $response, $args)
         {
-            $body = $request->getParsedBody();
+            $params = $request->getQueryParams();
             
-            $where = [];
-            foreach ($body as $key => $value) {
-                $where[] = [$key, '=', $value];
-            }
-
-            try {
-                $userInfo = UserModel::getUser($where);
-                if($userInfo !== false) {
-                    // set json data
-                    $this->json = [
-                        'status' => true,
-                        'data'   => $userInfo
-                    ];
-                } else {
+            if(@$params['id'] > 0) {
+                $where = [];
+                foreach ($params as $key => $value) {
+                    $where[] = [$key, '=', $value];
+                }
+    
+                try {
+                    $userInfo = UserModel::getUser($where);
+                    if($userInfo !== false) {
+                        // set json data
+                        $this->json = [
+                            'status' => true,
+                            'data'   => $userInfo
+                        ];
+                    } else {
+                        // set json data
+                        $this->json = [
+                            'status'  => false,
+                            'message' => 'User not exist'
+                        ];
+                    }
+                } catch (\Illuminate\Database\QueryException $e) {
                     // set json data
                     $this->json = [
                         'status'  => false,
-                        'message' => 'User not exist'
+                        'message' => 'Database Error: ' . $e->getMessage()
                     ];
                 }
-            } catch (\Illuminate\Database\QueryException $e) {
+            } else {
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Database Error: ' . $e->getMessage()
+                    'message' => 'User not exist'
                 ];
             }
 

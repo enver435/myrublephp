@@ -21,7 +21,7 @@
         }
 
         /**
-         * Insert User
+         * Insert Game
          *
          * @param array $data
          * @return integer

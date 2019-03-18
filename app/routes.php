@@ -29,7 +29,7 @@
          */
         $this->group('/user', function() {
             // get user
-            $this->post('/info', '\App\Controllers\UserController:getUser');
+            $this->get('/info', '\App\Controllers\UserController:getUser');
             // update user
             $this->post('/update', '\App\Controllers\UserController:updateUser');
         });
@@ -39,9 +39,21 @@
          */
         $this->group('/game', function() {
             // get default
-            $this->post('/default', '\App\Controllers\GameController:getDefault');
+            $this->get('', '\App\Controllers\GameController:getDefault');
             // insert
             $this->post('/insert', '\App\Controllers\GameController:insertGame');
+        });
+
+        /**
+         * WITHDRAW Routes
+         */
+        $this->group('/withdraw', function() {
+            // get
+            $this->get('', '\App\Controllers\WithdrawController:withdraws');
+            // payment methods
+            $this->get('/payment-methods', '\App\Controllers\WithdrawController:paymentMethods');
+            // insert
+            $this->post('/insert', '\App\Controllers\WithdrawController:insertWithdraw');
         });
     });
 
