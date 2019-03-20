@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2019 at 08:58 PM
+-- Generation Time: Mar 20, 2019 at 06:48 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -303,7 +303,10 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (238, 1, 0, 1, 0, 0, 1552910258),
 (239, 1, 0, 0, 0, 0, 1552921082),
 (240, 0, 0, 0, 0, 0, 1552928927),
-(241, 1, 0, 0, 0, 0, 1552936807);
+(241, 1, 0, 0, 0, 0, 1552936807),
+(242, 1, 1, 0, 0.25, 1, 1553072693),
+(243, 1, 1, 0, 0.25, 1, 1553073619),
+(244, 1, 1, 0, 0.25, 1, 1553073645);
 
 -- --------------------------------------------------------
 
@@ -313,18 +316,18 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 
 CREATE TABLE `payment_methods` (
   `yandex_min_withdraw` float NOT NULL,
-  `yandex_comission` float NOT NULL,
+  `yandex_commission` float NOT NULL,
   `payeer_min_withdraw` float NOT NULL,
-  `payeer_comission` float NOT NULL,
+  `payeer_commission` float NOT NULL,
   `webmoney_min_withdraw` float NOT NULL,
-  `webmoney_comission` float NOT NULL
+  `webmoney_commission` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `payment_methods`
 --
 
-INSERT INTO `payment_methods` (`yandex_min_withdraw`, `yandex_comission`, `payeer_min_withdraw`, `payeer_comission`, `webmoney_min_withdraw`, `webmoney_comission`) VALUES
+INSERT INTO `payment_methods` (`yandex_min_withdraw`, `yandex_commission`, `payeer_min_withdraw`, `payeer_commission`, `webmoney_min_withdraw`, `webmoney_commission`) VALUES
 (5, 0.5, 5, 0.95, 5, 0.8);
 
 -- --------------------------------------------------------
@@ -351,11 +354,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `heart`, `notify_heart_time`, `firebase_token`) VALUES
-(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 5, 0, 1552929048, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA'),
+(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 5.75, 3, 1553072650, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA'),
 (2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, ''),
 (3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
 (4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, ''),
-(5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh');
+(5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
+(6, '', '', 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA');
 
 -- --------------------------------------------------------
 
@@ -379,7 +383,20 @@ CREATE TABLE `withdraws` (
 --
 
 INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `time`) VALUES
-(1, 1, 5, 0.5, 1, '156467567569', 0, 1549045007);
+(1, 1, 5, 0.5, 1, '156467567569', 1, 1549045007),
+(2, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(3, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(4, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(5, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(6, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(7, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(8, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(9, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(10, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(11, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
+(12, 1, 5.7, 0.5, 1, '344748383829', 1, 1553101232),
+(13, 1, 5.6, 0.5, 1, '63737e7', 1, 1553102484),
+(14, 1, 5.6, 0.5, 1, '374747', 0, 1553102668);
 
 --
 -- Indexes for dumped tables
@@ -411,19 +428,19 @@ ALTER TABLE `withdraws`
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `withdraws`
 --
 ALTER TABLE `withdraws`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
