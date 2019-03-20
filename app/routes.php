@@ -50,10 +50,12 @@
         $this->group('/withdraw', function() {
             // get
             $this->get('', '\App\Controllers\WithdrawController:withdraws');
-            // payment methods
-            $this->get('/payment-methods', '\App\Controllers\WithdrawController:paymentMethods');
             // insert
             $this->post('/insert', '\App\Controllers\WithdrawController:insertWithdraw');
+            // check last withdraw
+            $this->post('/checkWaiting', '\App\Controllers\WithdrawController:checkWaiting');
+            // payment methods
+            $this->get('/payment-methods', '\App\Controllers\WithdrawController:paymentMethods');
         });
     });
 

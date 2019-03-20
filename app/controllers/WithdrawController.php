@@ -67,6 +67,31 @@
         }
 
         /**
+         * Check Withdraw Waiting
+         */
+        public function checkWaiting($request, $response, $args)
+        {
+            $body = $request->getParsedBody();
+            
+            try {
+                // set json data
+                $this->json = [
+                    'status' => true,
+                    'data'   => WithdrawModel::checkWaiting(@$body['user_id'])
+                ];
+            } catch (\Illuminate\Database\QueryException $e) {
+                // set json data
+                $this->json = [
+                    'status'  => false,
+                    'message' => 'Database Error: ' . $e->getMessage()
+                ];
+            }
+
+            // return reponse json data
+            return $response->withJson($this->json);
+        }
+
+        /**
          * Payment Methods
          */
         public function paymentMethods($request, $response, $args)

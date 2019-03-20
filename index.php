@@ -11,6 +11,7 @@
         case "192.168.0.101":
         case "192.168.0.102":
         case "192.168.1.101":
+        case "192.168.1.104":
             define('ENVIRONMENT', 'development');
             break;
         default:
