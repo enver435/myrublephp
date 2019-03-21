@@ -48,12 +48,12 @@
          * WITHDRAW Routes
          */
         $this->group('/withdraw', function() {
-            // get
+            // get withdraws
             $this->get('', '\App\Controllers\WithdrawController:withdraws');
-            // insert
+            // get payment methods
+            $this->get('/methods', '\App\Controllers\WithdrawController:paymentMethods');
+            // insert withdraw
             $this->post('/insert', '\App\Controllers\WithdrawController:insertWithdraw');
-            // payment methods
-            $this->get('/payment-methods', '\App\Controllers\WithdrawController:paymentMethods');
         });
     });
 
