@@ -32,28 +32,6 @@
         /**
          * Payment Methods
          *
-         * @return boolean
-         */
-        public static function checkWaiting($user_id)
-        {
-            $result = self::get('db')->table('withdraws')
-                ->where([
-                    ['user_id', '=', $user_id],
-                    ['payment_status', '=', 0]
-                ])
-                ->orderBy('id', 'desc')
-                ->limit(1)
-                ->first();
-            
-            if(!empty($result)) {
-                return true;
-            }
-            return false;
-        }
-
-        /**
-         * Payment Methods
-         *
          * @return object
          */
         public static function paymentMethods()

@@ -52,8 +52,6 @@
             $this->get('', '\App\Controllers\WithdrawController:withdraws');
             // insert
             $this->post('/insert', '\App\Controllers\WithdrawController:insertWithdraw');
-            // check last withdraw
-            $this->post('/checkWaiting', '\App\Controllers\WithdrawController:checkWaiting');
             // payment methods
             $this->get('/payment-methods', '\App\Controllers\WithdrawController:paymentMethods');
         });
