@@ -19,7 +19,7 @@
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => WithdrawModel::withdraws(@$params['user_id'], @$params['offset'], @$params['limit'])
+                    'data'   => WithdrawModel::withdraws(@$params['user_id'], @$params['payment_status'], @$params['offset'], @$params['limit'])
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data

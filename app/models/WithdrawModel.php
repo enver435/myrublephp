@@ -9,12 +9,16 @@
          *
          * @return object
          */
-        public static function withdraws($user_id, $offset, $limit)
+        public static function withdraws($user_id, $payment_status, $offset, $limit)
         {
             $query = self::get('db')->table('withdraws');
 
             if($user_id > 0) {
                 $query->where(['user_id' => $user_id]);
+            }
+
+            if($payment_status >= 0) {
+                $query->where(['payment_status' => $payment_status]);
             }
 
             if($offset >= 0 && $limit > 0) {
