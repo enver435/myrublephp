@@ -17,7 +17,7 @@
                 $query->where(['user_id' => $user_id]);
             }
 
-            if($payment_status >= 0) {
+            if($payment_status) {
                 $query->where(['payment_status' => $payment_status]);
             }
 
