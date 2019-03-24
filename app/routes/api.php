@@ -19,9 +19,9 @@
          */
         $this->group('/auth', function() {
             // sign in
-            $this->post('/signin', '\App\Controllers\UserController:signIn');
+            $this->post('/signin', '\App\Controllers\Api\UserController:signIn');
             // sign up
-            $this->post('/signup', '\App\Controllers\UserController:signUp');
+            $this->post('/signup', '\App\Controllers\Api\UserController:signUp');
         });
     
         /**
@@ -29,9 +29,9 @@
          */
         $this->group('/user', function() {
             // get user
-            $this->get('/info', '\App\Controllers\UserController:getUser');
+            $this->get('/info', '\App\Controllers\Api\UserController:getUser');
             // update user
-            $this->post('/update', '\App\Controllers\UserController:updateUser');
+            $this->post('/update', '\App\Controllers\Api\UserController:updateUser');
         });
     
         /**
@@ -39,9 +39,9 @@
          */
         $this->group('/game', function() {
             // get default
-            $this->get('', '\App\Controllers\GameController:getDefault');
+            $this->get('', '\App\Controllers\Api\GameController:getDefault');
             // insert
-            $this->post('/insert', '\App\Controllers\GameController:insertGame');
+            $this->post('/insert', '\App\Controllers\Api\GameController:insertGame');
         });
 
         /**
@@ -49,11 +49,11 @@
          */
         $this->group('/withdraw', function() {
             // get withdraws
-            $this->get('', '\App\Controllers\WithdrawController:withdraws');
+            $this->get('', '\App\Controllers\Api\WithdrawController:withdraws');
             // get payment methods
-            $this->get('/methods', '\App\Controllers\WithdrawController:paymentMethods');
+            $this->get('/methods', '\App\Controllers\Api\WithdrawController:paymentMethods');
             // insert withdraw
-            $this->post('/insert', '\App\Controllers\WithdrawController:insertWithdraw');
+            $this->post('/insert', '\App\Controllers\Api\WithdrawController:insertWithdraw');
         });
     });
 

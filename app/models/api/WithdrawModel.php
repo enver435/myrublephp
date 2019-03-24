@@ -1,6 +1,8 @@
 <?php
 
-    namespace App\Models;
+    namespace App\Models\Api;
+
+    use App\Models\BaseModel;
 
     class WithdrawModel extends BaseModel
     {

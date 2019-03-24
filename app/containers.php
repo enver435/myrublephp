@@ -52,14 +52,15 @@
         $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
         $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
         $view->addExtension(new \Twig_Extension_Debug());
+        $view->addExtension(new \App\System\Extensions\TwigExtension($container));
 
         // all view render
-        $view['siteName']       = getenv('APP_NAME');
-        $view['baseUrl']        = getenv('APP_URL');
-        $view['fullUrl']        = $container->get('request')->getUri();
-        $view['session']        = $_SESSION;
-        $view['cookie']         = $_COOKIE;
-        $view['env']            = ENVIRONMENT;
+        $view['siteName'] = getenv('APP_NAME');
+        $view['baseUrl']  = getenv('APP_URL');
+        $view['fullUrl']  = $container->get('request')->getUri();
+        $view['session']  = $_SESSION;
+        $view['cookie']   = $_COOKIE;
+        $view['env']      = ENVIRONMENT;
 
         return $view;
     };

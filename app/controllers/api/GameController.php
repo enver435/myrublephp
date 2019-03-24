@@ -1,25 +1,23 @@
 <?php
 
-    namespace App\Controllers;
+    namespace App\Controllers\Api;
 
-    use App\Models\WithdrawModel;
+    use App\Models\Api\GameModel;
 
-    class WithdrawController
+    class GameController
     {
         private $json = [];
 
         /**
-         * Get Withdraws
+         * Get Game Default
          */
-        public function withdraws($request, $response, $args)
+        public function getDefault($request, $response, $args)
         {
-            $params = $request->getQueryParams();
-
             try {
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => WithdrawModel::withdraws(@$params['user_id'], @$params['payment_status'], @$params['offset'], @$params['limit'])
+                    'data'   => GameModel::getDefault()
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data
@@ -34,9 +32,9 @@
         }
 
         /**
-         * Insert Withdraw
+         * Insert Game Result
          */
-        public function insertWithdraw($request, $response, $args)
+        public function insertGame($request, $response, $args)
         {
             $body = $request->getParsedBody();
 
@@ -46,36 +44,13 @@
             }
 
             try {
-                $lastId     = WithdrawModel::insert($data);
+                $lastId     = GameModel::insertGame($data);
                 $data['id'] = $lastId;
                 
                 // set json data
                 $this->json = [
                     'status' => true,
                     'data'   => $data
-                ];
-            } catch (\Illuminate\Database\QueryException $e) {
-                // set json data
-                $this->json = [
-                    'status'  => false,
-                    'message' => 'Database Error: ' . $e->getMessage()
-                ];
-            }
-
-            // return reponse json data
-            return $response->withJson($this->json);
-        }
-
-        /**
-         * Payment Methods
-         */
-        public function paymentMethods($request, $response, $args)
-        {
-            try {
-                // set json data
-                $this->json = [
-                    'status' => true,
-                    'data'   => WithdrawModel::paymentMethods()
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data
