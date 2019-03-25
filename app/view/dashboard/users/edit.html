@@ -1,0 +1,45 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        {% for message in flash.success %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.danger %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.info %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">İstifadəçi №{{ item.id }}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 offset-3">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="username">İstifadəçi adı</label>
+                            <input id="username" type="text" name="username" value="{{ item.username }}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" name="email" value="{{ item.email }}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="balance">Balans</label>
+                            <input id="balance" type="number" name="balance" step="any" value="{{ item.balance }}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="heart">Heart</label>
+                            <input id="heart" type="number" name="heart" value="{{ item.heart }}" class="form-control">
+                        </div>
+                        <button type="submit" name="save" class="btn btn-primary w-100">Yadda saxla</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

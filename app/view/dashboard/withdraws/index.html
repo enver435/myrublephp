@@ -1,0 +1,65 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Pul çıxarışları</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="w-1">No.</th>
+                            <th>İstifadəçi</th>
+                            <th>Məbləğ</th>
+                            <th>Komissiya</th>
+                            <th>Ödəniş metodu</th>
+                            <th>Wallet</th>
+                            <th>Çıxarma tarixi</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in withdraws %}    
+                            <tr>
+                                <td><span class="text-muted">{{ item.id }}</span></td>
+                                <td>
+                                    <a href="{{ path_for('dashboard.users.show', {id: item.user_id}) }}">{{ item.username }}</a>
+                                </td>
+                                <td>{{ item.amount|number_format(2, '.', ',') }} <i class="fa fa-rub"></i></td>
+                                <td>{{ item.commission }}%</td>
+                                <td>{{ item.payment_method == 1 ? 'Yandex Money' : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</td>
+                                <td>{{ item.wallet_number }}</td>
+                                <td>{{ item.time|date("d.m.Y H:i") }}</td>
+                                <td>
+                                    {% if item.payment_status == 0 %}
+                                        <span class="badge badge-warning">Gözləyir</span>
+                                    {% elseif item.payment_status == 1 %}
+                                        <span class="badge badge-success">Ödənildi</span>
+                                    {% elseif item.payment_status == 2 %}
+                                        <span class="badge badge-danger">Ödənilmədi</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.payment_status == 0 %}   
+                                        <a class="icon" href="{{ path_for('dashboard.withdraw.edit', {id: item.id}) }}" title="Editlə">
+                                            <i class="fe fe-edit"></i>
+                                        </a>
+                                    {% endif %}
+                                    <a class="icon" href="{{ path_for('dashboard.withdraw.index') }}?user_id={{ item.user_id }}" title="Bu istifadəçinin pul çıxarışları">
+                                        <i class="fe fe-user"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {{ pagination|raw }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Models\Api;
+    namespace App\Models\Dashboard;
 
     use App\Models\BaseModel;
 
@@ -11,13 +11,25 @@
          *
          * @return array
          */
-        public static function users($where = null)
+        public static function users($where = null, $offset = null, $limit = null)
         {
-            $results = self::get('db')->table('users');
+            $query = self::get('db')->table('users');
+
+            // if where not null
             if($where != null) {
-                $results->where($where);
+                $query->where($where);
             }
-            return $results->get();
+
+            // if exist pagination
+            if($offset >= 0 && $limit > 0) {
+                $query->offset($offset)->limit($limit);
+            }
+            
+            // get rows
+            $results = $query->get();
+
+            // return results
+            return $results;
         }
 
         /**
@@ -49,18 +61,6 @@
             return self::get('db')->table('users')
                 ->where($where)
                 ->update($data);
-        }
-
-        /**
-         * Insert User
-         *
-         * @param array $data
-         * @return integer
-         */
-        public static function insert($data)
-        {
-            return self::get('db')->table('users')
-                ->insertGetId($data);
         }
 
         /**

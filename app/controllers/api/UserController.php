@@ -20,7 +20,7 @@
                 }
     
                 try {
-                    $userInfo = UserModel::getUser($where);
+                    $userInfo = UserModel::info($where);
                     if($userInfo !== false) {
                         // set json data
                         $this->json = [
@@ -68,10 +68,10 @@
                     $where = ['id' => $body['id']];
 
                     // update user
-                    UserModel::updateUser($where, $updateData);
+                    UserModel::update($where, $updateData);
 
                     // get user information
-                    $userInfo = UserModel::getUser($where);
+                    $userInfo = UserModel::info($where);
                     if($userInfo !== false) {
                         // set json data
                         $this->json = [
@@ -137,7 +137,7 @@
             // if validation status true
             if($this->validate === true) {
                 try {
-                    $userInfo = UserModel::getUser([
+                    $userInfo = UserModel::info([
                         ['email', '=', $email],
                         ['pass', '=', md5($pass)]
                     ]);
@@ -249,12 +249,12 @@
                         $insertData['heart'] = 3;
 
                         // insert user
-                        UserModel::insertUser($insertData);
+                        UserModel::insert($insertData);
                         
                         // set json data
                         $this->json = [
                             'status' => true,
-                            'data'   => UserModel::getUser([
+                            'data'   => UserModel::info([
                                 ['email', '=', $email],
                                 ['pass', '=', md5($pass)]
                             ])

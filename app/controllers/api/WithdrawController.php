@@ -13,13 +13,28 @@
          */
         public function withdraws($request, $response, $args)
         {
+            // get query params
             $params = $request->getQueryParams();
+
+            $where = null;
+
+            // if exist status param
+            if(isset($params['status']) && $params['status'] >= 0) {
+                // set where
+                $where[] = ['payment_status', '=', $params['status']];
+            }
+
+            // if exist user_id param
+            if(isset($params['user_id']) && $params['user_id'] > 0) {
+                // set where
+                $where[] = ['user_id', '=', $params['user_id']];
+            }
 
             try {
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => WithdrawModel::withdraws(@$params['user_id'], @$params['payment_status'], @$params['offset'], @$params['limit'])
+                    'data'   => WithdrawModel::withdraws($where, @$params['offset'], @$params['limit'])
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data

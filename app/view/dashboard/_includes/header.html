@@ -43,10 +43,10 @@
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>
                             Pul çıxarışları</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{ base_url() }}/dashboard/withdraws" class="dropdown-item ">Hamısı <b style="color: #495057;">(100)</b></a>
-                            <a href="{{ base_url() }}/dashboard/withdraws?filter=1" class="dropdown-item ">Ödənilənlər <b style="color: #495057;">(50)</b></a>
-                            <a href="{{ base_url() }}/dashboard/withdraws?filter=2" class="dropdown-item ">Ödənilməyənlər <b style="color: #495057;">(50)</b></a>
-                            <a href="{{ base_url() }}/dashboard/withdraws?filter=0" class="dropdown-item ">Gözləyənlər <b style="color: #495057;">(50)</b></a>
+                            <a href="{{ base_url() }}/dashboard/withdraws" class="dropdown-item ">Hamısı <b style="color: #495057;">({{ headerWithdraws.all }})</b></a>
+                            <a href="{{ base_url() }}/dashboard/withdraws?status=0" class="dropdown-item ">Gözləyənlər <b style="color: #495057;">({{ headerWithdraws.waiting }})</b></a>
+                            <a href="{{ base_url() }}/dashboard/withdraws?status=1" class="dropdown-item ">Ödənilənlər <b style="color: #495057;">({{ headerWithdraws.paid }})</b></a>
+                            <a href="{{ base_url() }}/dashboard/withdraws?status=2" class="dropdown-item ">Ödənilməyənlər <b style="color: #495057;">({{ headerWithdraws.not_paid }})</b></a>
                         </div>
                     </li>
                 </ul>

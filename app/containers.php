@@ -1,5 +1,7 @@
 <?php
 
+    use App\Models\BaseModel;
+
     $container = $app->getContainer();
 
     // exception handler
@@ -62,7 +64,20 @@
         $view['cookie']   = $_COOKIE;
         $view['env']      = ENVIRONMENT;
 
+        // header withdraws count
+        $view['headerWithdraws'] = [
+            'all'      => BaseModel::count('withdraws'),
+            'waiting'  => BaseModel::count('withdraws', ['payment_status' => 0]),
+            'paid'     => BaseModel::count('withdraws', ['payment_status' => 1]),
+            'not_paid' => BaseModel::count('withdraws', ['payment_status' => 2])
+        ];
+
         return $view;
+    };
+
+    // flash message
+    $container['flash'] = function () {
+        return new \Slim\Flash\Messages();
     };
 
     // container set $GLOBALS variable

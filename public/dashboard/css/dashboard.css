@@ -4639,9 +4639,11 @@ input[type="button"].btn-block {
   padding-left: 0;
   list-style: none;
   border-radius: 3px;
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
-.page-link {
+.pagination a {
   position: relative;
   display: block;
   padding: 0.5rem 0.75rem;
@@ -4652,7 +4654,7 @@ input[type="button"].btn-block {
   border: 1px solid #dee2e6;
 }
 
-.page-link:hover {
+.pagination a:hover {
   z-index: 2;
   color: #295a9f;
   text-decoration: none;
@@ -4660,35 +4662,35 @@ input[type="button"].btn-block {
   border-color: #dee2e6;
 }
 
-.page-link:focus {
+.pagination a:focus {
   z-index: 2;
   outline: 0;
   box-shadow: 0 0 0 2px rgba(70, 127, 207, 0.25);
 }
 
-.page-link:not(:disabled):not(.disabled) {
+.pagination li:not(:disabled):not(.disabled) {
   cursor: pointer;
 }
 
-.page-item:first-child .page-link {
+.pagination li:first-child a {
   margin-left: 0;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
 }
 
-.page-item:last-child .page-link {
+.pagination li:last-child a {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 
-.page-item.active .page-link {
+.pagination li.active a {
   z-index: 1;
   color: #fff;
   background-color: #467fcf;
   border-color: #467fcf;
 }
 
-.page-item.disabled .page-link {
+.pagination li.disabled a {
   color: #ced4da;
   pointer-events: none;
   cursor: auto;

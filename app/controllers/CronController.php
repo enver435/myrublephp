@@ -2,30 +2,23 @@
 
     namespace App\Controllers;
 
-    use App\Models\UserModel;
-
-    use Kreait\Firebase;
-    use Kreait\Firebase\ServiceAccount;
+    use App\Models\Api\UserModel;
+    use App\System\Libraries\Firebase;
 
     class CronController
     {
         private $json = [];
-        private $firebase;
-
-        public function __construct()
-        {
-            $serviceAccount = ServiceAccount::fromJsonFile('myruble-dfbba-firebase-adminsdk-sri1t-d6e6fb83e7.json');
-            $firebase = (new Firebase\Factory())
-                ->withServiceAccount($serviceAccount)
-                ->create();
-            $this->firebase = $firebase;
-        }
 
         public function heartNotify($request, $response, $args)
         {
-            $nowTime = time();
+            // get now time
+            $nowTime  = time();
+
+            // init firebase
+            $firebase = Firebase::init();
 
             try {
+                // get users
                 $users = UserModel::users([
                     ['notify_heart_time', '>', 0]
                 ]);
@@ -37,31 +30,19 @@
                         $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
 
                         try {
-                            $this->firebase
-                                ->getMessaging()
-                                ->send([
-                                    'token' => $user->firebase_token,
-                                    'notification' => [
-                                        'title' => $title,
-                                        'body' => $body,
-                                    ],
-                                    'android' => [
-                                        'priority' => 'normal',
-                                        'notification' => [
-                                            'title'      => $title,
-                                            'body'       => $body,
-                                            'channel_id' => 'myruble_channel',
-                                            'sound'      => 'default',
-                                            'color'      => '#474747'
-                                        ]
-                                    ]
-                                ]);
+                            // send notification
+                            $firebase->sendNotify($user->firebase_token, $title, $body);
     
                             // update user
-                            UserModel::updateUser(['id' => $user->id], [
+                            UserModel::update(['id' => $user->id], [
                                 'notify_heart_time' => 0
                             ]);
-                        } catch (\Throwable $th) {
+                        } catch (\Throwable $e) {
+                            // set json data
+                            $this->json = [
+                                'status'  => false,
+                                'message' => 'Error: ' . $e->getMessage()
+                            ];
                         }
                     }
                 }
@@ -73,7 +54,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
     } 

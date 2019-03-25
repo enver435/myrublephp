@@ -1,21 +1,45 @@
 {% extends "./dashboard/layout.html" %}
 
 {% block body %}
-    {% if session.login %}
-        <div class="my-3 my-md-5">
-            <div class="container">
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">İstifadəçi məlumatları</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <h5>İstifadəçi ID</h5>
+                            <p>{{ info.id }}</p>
+                        </div>
+                        <div class="form-group">
+                            <h5>İstifadəçi adı</h5>
+                            <p>{{ info.username }}</p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Email</h5>
+                            <p>{{ info.email }}</p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Heart</h5>
+                            <p>{{ info.heart }} <i class="fa fa-heart"></i></p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Balans</h5>
+                            <p>{{ info.balance }} <i class="fa fa-rub"></i></p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Qeydiyyat tarixi</h5>
+                            <p>{{ info.register_time|date("d.m.Y H:i") }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
                 <div class="page-header mt-0">
                     <h1 class="page-title">Ümumi statistikalar</h1>
                 </div>
                 <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-4">
-                        <div class="card">
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0">{{ totalUsers }}</div>
-                                <div class="text-muted"><b style="color: #495057;">Ümumi istifadəçi</b><br> sayı</div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-6 col-sm-4 col-lg-4">
                         <div class="card">
                             <div class="card-body p-3 text-center">
@@ -56,35 +80,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-lg-4">
-                        <div class="card">
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0">{{ totalPaidWithdraw }}</div>
-                                <div class="text-muted"><b style="color: #495057;">Ödənilən</b><br> pul çıxarma sayı</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-4">
-                        <div class="card">
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0">{{ totalWaitingWithdraw }}</div>
-                                <div class="text-muted"><b style="color: #495057;">Gözləyən</b><br> pul çıxarma sayı</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="page-header mt-0">
                     <h1 class="page-title">Günlük statistikalar</h1>
                 </div>
                 <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-4">
-                        <div class="card">
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0">{{ todayUsers }}</div>
-                                <div class="text-muted"><b style="color: #495057;">Günlük qeydiyyat</b><br> sayı</div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-6 col-sm-4 col-lg-4">
                         <div class="card">
                             <div class="card-body p-3 text-center">
@@ -128,30 +128,6 @@
                 </div>
             </div>
         </div>
-    {% else %}
-        <div class="page">
-            <div class="page-single">
-                <div class="container">
-                    <div class="row">
-                        <div class="col col-login mx-auto">
-                            <form class="card" action="" method="post">
-                                <div class="card-body p-6">
-                                    <div class="card-title">Admin Panel Giriş</div>
-                                    <div class="form-group">
-                                        <input type="text" name="username" class="form-control" placeholder="İstifadəçi adı">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="pass" class="form-control" placeholder="Şifrə">
-                                    </div>
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-primary btn-block">Giriş et</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    </div>
+</div>
 {% endblock %}

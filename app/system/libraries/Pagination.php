@@ -23,14 +23,17 @@
          */
         public static function init($totalItems, $currentPage, $perPage, $urlPattern = '')
         {
+            $params = $GLOBALS['container']->get('request')->getQueryParams();
+            unset($params['page']);
+
             self::$totalItems  = $totalItems;
             self::$currentPage = (!$currentPage ? 1 : $currentPage);
             self::$perPage     = $perPage;
             self::$offset      = (self::$currentPage-1) * self::$perPage;
-            $urlPattern        = $urlPattern . '/page/(:num)';
+            $urlPattern        = $urlPattern . (count($params) > 0 ? '&' : '?') . 'page=(:num)';
             self::$paginator   = new Paginator(self::$totalItems, self::$perPage, self::$currentPage, $urlPattern);
-            self::$paginator->setNextText($GLOBALS['container']->translator->trans('main.next'));
-            self::$paginator->setPreviousText($GLOBALS['container']->translator->trans('main.prev'));
+            self::$paginator->setNextText('İləri');
+            self::$paginator->setPreviousText('Geri');
 
             return new self;
         }

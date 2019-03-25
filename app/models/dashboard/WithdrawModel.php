@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Models\Api;
+    namespace App\Models\Dashboard;
 
     use App\Models\BaseModel;
 
@@ -16,6 +16,9 @@
             // select table
             $query = self::get('db')->table('withdraws');
 
+            // select columns
+            $query->selectRaw('withdraws.*, users.username AS username');
+
             // if where not null
             if($where != null) {
                 $query->where($where);
@@ -26,23 +29,46 @@
                 $query->offset($offset)->limit($limit);
             }
 
+            // relation user table
+            $query->join('users', 'users.id', '=', 'withdraws.user_id');
+
             // order by id desc
-            $results = $query->orderBy('id', 'desc')->get();
+            $results = $query->orderBy('withdraws.id', 'desc')->get();
             
             // return results
             return $results;
         }
 
         /**
-         * Insert Withdraw
+         * Get Withdraw Information
          *
-         * @param array $data
-         * @return integer
+         * @param string|array $where
+         * @return object
          */
-        public static function insert($data)
+        public function info($where)
+        {
+            $result = self::get('db')->table('withdraws')
+                ->where($where)
+                ->first();
+            
+            if(!empty($result)) {
+                return $result;
+            }
+            return false;
+        }
+
+        /**
+         * Update Withdraw
+         *
+         * @param string|array $where
+         * @param array $data
+         * @return boolean
+         */
+        public function update($where, $data)
         {
             return self::get('db')->table('withdraws')
-                ->insertGetId($data);
+                ->where($where)
+                ->update($data);
         }
 
         /**

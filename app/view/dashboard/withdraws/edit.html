@@ -1,0 +1,62 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        {% for message in flash.success %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.danger %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.info %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Pul çıxarış №{{ item.id }}</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 offset-3">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="amount">Məbləğ</label>
+                            <input id="amount" type="text" disabled class="form-control" value="{{ item.amount }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="commission">Komissiya (%)</label>
+                            <input id="commission" type="text" disabled class="form-control" value="{{ item.commission }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="wallet_number">Wallet</label>
+                            <input id="wallet_number" name="wallet_number" type="text" class="form-control" value="{{ item.wallet_number }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="payment_status">Ödəniş statusu</label>
+                            <select name="payment_status" id="payment_status" class="form-control">
+                                <option value="0">Gözləyir</option>
+                                <option value="1">Ödənildi</option>
+                                <option value="2">Ödənilmədi</option>
+                            </select>
+                        </div>
+                        <div class="form-group not_paid_message" style="{{ item.payment_status == 2 ? 'display: block;' : 'display: none;' }}">
+                            <label for="not_paid_message">Ödənişin olunmama səbəbi</label>
+                            <div class="form-group">
+                                <select name="not_paid_selectbox" id="not_paid_selectbox" class="form-control">
+                                    <option value="-1">Səbəb seçin</option>
+                                    <option value="1">Wallet səhfdir</option>
+                                    <option value="0">Başqa</option>
+                                </select>
+                            </div>
+                            <div class="form-group not_paid_message_textarea" style="{{ item.payment_status == 2 ? 'display: block;' : 'display: none;' }}">
+                                <textarea name="not_paid_message" id="not_paid_message" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" name="save" class="btn btn-primary w-100">Yadda saxla</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -37,7 +37,7 @@
          */
         public static function pathFor($name, $data = [], $queryParams = [])
         {
-            return self::baseUrl() . $GLOBALS['container']->get('router')->pathFor($name, $data, $queryParams);
+            return $GLOBALS['container']->get('router')->pathFor($name, $data, $queryParams);
         }
     }
     
