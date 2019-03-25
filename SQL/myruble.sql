@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2019 at 06:48 PM
+-- Generation Time: Mar 25, 2019 at 09:07 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -306,7 +306,10 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (241, 1, 0, 0, 0, 0, 1552936807),
 (242, 1, 1, 0, 0.25, 1, 1553072693),
 (243, 1, 1, 0, 0.25, 1, 1553073619),
-(244, 1, 1, 0, 0.25, 1, 1553073645);
+(244, 1, 1, 0, 0.25, 1, 1553073645),
+(245, 1, 0, 0, 0, 0, 1553104595),
+(246, 1, 0, 0, 0, 0, 1553104597),
+(247, 1, 0, 0, 0, 0, 1553104601);
 
 -- --------------------------------------------------------
 
@@ -346,20 +349,21 @@ CREATE TABLE `users` (
   `balance` float NOT NULL,
   `heart` int(11) NOT NULL,
   `notify_heart_time` int(11) NOT NULL,
-  `firebase_token` text COLLATE utf8_unicode_ci NOT NULL
+  `firebase_token` text COLLATE utf8_unicode_ci NOT NULL,
+  `register_time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `heart`, `notify_heart_time`, `firebase_token`) VALUES
-(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 5.75, 3, 1553072650, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA'),
-(2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, ''),
-(3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
-(4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, ''),
-(5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh'),
-(6, '', '', 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA');
+INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`) VALUES
+(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 56.22, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0),
+(2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, '', 0),
+(3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0),
+(4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 3, 0, '', 0),
+(5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0),
+(6, '', '', 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0);
 
 -- --------------------------------------------------------
 
@@ -375,6 +379,7 @@ CREATE TABLE `withdraws` (
   `payment_method` int(11) NOT NULL COMMENT '0 = unknown, 1 = yandex, 2 = payeer, 3 = webmoney',
   `wallet_number` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `payment_status` int(11) NOT NULL COMMENT ' 0 = waiting, 1 = paid, 2 = not paid',
+  `not_paid_message` text COLLATE utf8_unicode_ci NOT NULL,
   `time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -382,21 +387,29 @@ CREATE TABLE `withdraws` (
 -- Dumping data for table `withdraws`
 --
 
-INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `time`) VALUES
-(1, 1, 5, 0.5, 1, '156467567569', 1, 1549045007),
-(2, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(3, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(4, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(5, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(6, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(7, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(8, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(9, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(10, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(11, 1, 5, 0.5, 2, '156467567569', 1, 1549045007),
-(12, 1, 5.7, 0.5, 1, '344748383829', 1, 1553101232),
-(13, 1, 5.6, 0.5, 1, '63737e7', 1, 1553102484),
-(14, 1, 5.6, 0.5, 1, '374747', 0, 1553102668);
+INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `not_paid_message`, `time`) VALUES
+(1, 1, 5, 0.5, 1, '156467567569', 1, '', 1549045007),
+(2, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(3, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(4, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(5, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(6, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(7, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(8, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(9, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(10, 1, 5, 0.5, 2, '156467567569', 1, '', 1549045007),
+(11, 1, 5, 0.5, 2, '156467567569', 0, '', 1549045007),
+(12, 1, 5.7, 0.5, 1, '344748383829', 2, 'Ваш 344748383829 кошелек неверен. Пожалуйста, проверьте другой кошелек', 1553101232),
+(13, 1, 5.6, 0.5, 1, '63737e7', 1, '', 1553102484),
+(14, 1, 5.6, 0.5, 1, '374747', 2, 'dwqdqwdqwdqwdqwfefwef', 1553102668),
+(15, 0, 56, 0.5, 1, 'tyhhh', 0, '', 1553188967),
+(16, 0, 56, 0.5, 1, 'yyygg', 0, '', 1553189027),
+(17, 0, 56, 0.5, 1, 'hfghfh', 0, '', 1553189106),
+(18, 0, 56, 0.5, 1, 'yudh', 0, '', 1553189184),
+(19, 1, 5.9, 0.5, 1, 'hdhd', 2, 'Ваш hdhd кошелек неверен. Пожалуйста, проверьте другой кошелек', 1553189297),
+(20, 1, 5.9, 0.5, 1, '45566732244', 2, 'Ваш 45566732244 кошелек неверен. Пожалуйста, проверьте другой кошелек', 1553189559),
+(21, 1, 5.9, 0.5, 1, '56789', 2, '', 1553189776),
+(22, 1, 5.9, 0.5, 1, '45677', 1, '', 1553190900);
 
 --
 -- Indexes for dumped tables
@@ -406,7 +419,9 @@ INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_metho
 -- Indexes for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status` (`status`);
 
 --
 -- Indexes for table `users`
@@ -418,7 +433,10 @@ ALTER TABLE `users`
 -- Indexes for table `withdraws`
 --
 ALTER TABLE `withdraws`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `payment_method` (`payment_method`),
+  ADD KEY `payment_status` (`payment_status`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -428,7 +446,7 @@ ALTER TABLE `withdraws`
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=245;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=248;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -440,7 +458,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `withdraws`
 --
 ALTER TABLE `withdraws`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
