@@ -143,7 +143,7 @@
                         $this->flash->addMessage('danger', 'Zəhmət olmasa xanaları doldurun');
                     }
                     // redirect page
-                    return Url::redirect('dashboard.withdraw.edit', ['id' => $id]);
+                    return Url::redirect('dashboard.withdraws.edit', ['id' => $id]);
                 }
                 
                 // get information
@@ -157,7 +157,7 @@
                 }
             }
             // redirect page
-            return Url::redirect('dashboard.withdraw.index');
+            return Url::redirect('dashboard.withdraws.index');
         }
     }
 
