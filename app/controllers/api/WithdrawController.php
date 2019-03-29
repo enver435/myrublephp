@@ -19,7 +19,7 @@
             $where = null;
             if(!empty($params)) {
                 foreach ($params as $key => $value) {
-                    if(isset($value) && $value != '') {
+                    if($key != 'offset' && $key != 'limit' && isset($value) && $value != '') {
                         // set where
                         $where[] = [$key, '=', $value];
                     }
