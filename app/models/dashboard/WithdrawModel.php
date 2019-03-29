@@ -74,12 +74,12 @@
         /**
          * Payment Methods
          *
-         * @return object
+         * @return array
          */
         public static function paymentMethods()
         {
             return self::get('db')->table('payment_methods')
-                ->first();
+                ->get();
         }
     }
 

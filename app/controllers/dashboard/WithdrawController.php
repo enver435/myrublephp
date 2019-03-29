@@ -41,7 +41,7 @@
             (isset($params['status']) && $params['status'] >= 0 ? '?status=' . $params['status'] : null) .
             (isset($params['user_id']) && $params['user_id'] >= 0 ? '?user_id=' . $params['user_id'] : null);
 
-            $pagination  = Pagination::init($totalItems, @$params['page'], $perPage, $urlPattern);
+            $pagination = Pagination::init($totalItems, @$params['page'], $perPage, $urlPattern);
             
             // get withdraws
             $withdraws = WithdrawModel::withdraws($where, $pagination->offset(), $pagination->limit());
@@ -82,7 +82,7 @@
                         $update = false;
                     }
 
-                    if($update) {
+                    if($update === true) {
                         try {
                             
                             /**
@@ -100,7 +100,8 @@
                             WithdrawModel::update(['id' => $id], [
                                 'wallet_number'    => $body['wallet_number'],
                                 'payment_status'   => $body['payment_status'],
-                                'not_paid_message' => $not_paid_message
+                                'not_paid_type'    => $body['not_paid_selectbox'],
+                                'not_paid_message' => $body['not_paid_message']
                             ]);
 
                             // get withdraw information
