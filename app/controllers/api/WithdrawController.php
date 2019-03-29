@@ -17,17 +17,13 @@
             $params = $request->getQueryParams();
 
             $where = null;
-
-            // if exist status param
-            if(isset($params['status']) && $params['status'] >= 0) {
-                // set where
-                $where[] = ['payment_status', '=', $params['status']];
-            }
-
-            // if exist user_id param
-            if(isset($params['user_id']) && $params['user_id'] > 0) {
-                // set where
-                $where[] = ['user_id', '=', $params['user_id']];
+            if(!empty($params)) {
+                foreach ($params as $key => $value) {
+                    if(isset($value) && $value != '') {
+                        // set where
+                        $where[] = [$key, '=', $value];
+                    }
+                }
             }
 
             try {
