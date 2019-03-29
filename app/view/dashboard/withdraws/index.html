@@ -45,11 +45,11 @@
                                 </td>
                                 <td>
                                     {% if item.payment_status == 0 %}   
-                                        <a class="icon" href="{{ path_for('dashboard.withdraw.edit', {id: item.id}) }}" title="Editlə">
+                                        <a class="icon" href="{{ path_for('dashboard.withdraws.edit', {id: item.id}) }}" title="Editlə">
                                             <i class="fe fe-edit"></i>
                                         </a>
                                     {% endif %}
-                                    <a class="icon" href="{{ path_for('dashboard.withdraw.index') }}?user_id={{ item.user_id }}" title="Bu istifadəçinin pul çıxarışları">
+                                    <a class="icon" href="{{ path_for('dashboard.withdraws.index') }}?user_id={{ item.user_id }}" title="Bu istifadəçinin pul çıxarışları">
                                         <i class="fe fe-user"></i>
                                     </a>
                                 </td>

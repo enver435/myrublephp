@@ -5,7 +5,7 @@
     use App\Controllers\BaseController;
     use App\System\Helpers\Session;
     use App\System\Helpers\Url;
-use App\Models\BaseModel;
+    use App\Models\BaseModel;
 
     class MainController extends BaseController
     {

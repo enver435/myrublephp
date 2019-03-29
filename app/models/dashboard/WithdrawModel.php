@@ -81,6 +81,20 @@
             return self::get('db')->table('payment_methods')
                 ->get();
         }
+
+        /**
+         * Update Payment Method
+         *
+         * @param integer $methodID
+         * @param array $data
+         * @return boolean
+         */
+        public function updateMethod($methodID, $data)
+        {
+            return self::get('db')->table('payment_methods')
+                ->where(['method' => $methodID])
+                ->update($data);
+        }
     }
 
 ?>
