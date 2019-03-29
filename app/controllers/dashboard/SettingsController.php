@@ -16,6 +16,7 @@ use App\Models\Dashboard\WithdrawModel;
             if($request->isPost()) {
                 // get post body
                 $body = $request->getParsedBody();
+                unset($body['save']);
 
                 if($body['time'] > 0 && $body['task'] > 0 && $body['price'] > 0 && $body['heart_time'] > 0) {
                     try {
