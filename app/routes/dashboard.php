@@ -1,11 +1,29 @@
 <?php
 
+    use App\System\Helpers\Session;
+    use App\System\Helpers\Url;
+
+    /**
+     * Dashboard Middleware
+     */
+    $mw = function($request, $response, $next) {
+        if(Session::get('login')) {
+            return $next($request, $response);
+        } else if($request->getAttribute('route')->getName() != 'dashboard.index') {
+            return Url::redirect('dashboard.index');
+        }
+        return $next($request, $response);
+    };
+
     /**
      * DASHBOARD Routes
      */
     $app->group('/dashboard', function() {
         // index
         $this->map(['GET', 'POST'], '', '\App\Controllers\Dashboard\MainController:index')->setName('dashboard.index');
+
+        // logout
+        $this->get('/logout', '\App\Controllers\Dashboard\MainController:logout')->setName('dashboard.logout');
         
         /**
          * Users Routes
@@ -39,6 +57,6 @@
             $this->map(['GET', 'POST'], '/payment-methods', '\App\Controllers\Dashboard\SettingsController:paymentMethods')->setName('dashboard.settings.payment_methods');
         });
 
-    });
+    })->add($mw);
 
 ?>
