@@ -6,6 +6,7 @@
     use Twig_SimpleFunction;
     use Twig_Filter;
     use App\System\Helpers\Main;
+    use App\System\Helpers\Url;
 
     class TwigExtension extends Twig_Extension
     {
