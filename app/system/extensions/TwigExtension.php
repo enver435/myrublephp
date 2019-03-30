@@ -25,7 +25,10 @@
         {
             return [
                 new Twig_SimpleFunction('getEnv', [$this, 'getEnv']),
-                new Twig_SimpleFunction('isPost', [$this, 'isPost'])
+                new Twig_SimpleFunction('isPost', [$this, 'isPost']),
+                new Twig_SimpleFunction('inJson', [$this, 'inJson']),
+                new Twig_SimpleFunction('storagePath', [$this, 'storagePath']),
+                new Twig_SimpleFunction('publicPath', [$this, 'publicPath'])
             ];
         }
 
@@ -53,6 +56,22 @@
         }
 
         /**
+         * Exist In Json
+         *
+         * @param json $json
+         * @param string $search
+         * @return boolean
+         */
+        public function inJson($json, $search)
+        {
+            $json = json_decode($json, true);
+            if(in_array($search, $json)) {
+                return true;
+            }
+            return false;
+        }
+
+        /**
          * Get environment
          *
          * @param string $name
@@ -74,6 +93,30 @@
                 return true;
             }
             return false;
+        }
+
+        /**
+         * Get Storage Path
+         *
+         * @param string $file
+         * @param string $path
+         * @return string
+         */
+        public function storagePath($path)
+        {
+            return Url::baseUrl('storage/' . $path);
+        }
+
+        /**
+         * Get Public Path
+         *
+         * @param string $file
+         * @param string $path
+         * @return string
+         */
+        public function publicPath($path = '')
+        {
+            return Url::baseUrl('public/' . $path);
         }
     }
 

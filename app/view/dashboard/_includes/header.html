@@ -1,20 +1,20 @@
 <div class="header py-4">
     <div class="container">
         <div class="d-flex">
-            <a class="header-brand" href="{{ base_url() }}/dashboard">
-                <h2 class="mb-0">MyRuble</h2>
+            <a class="header-brand" href="{{ path_for('dashboard.index') }}">
+                <h2 class="mb-0">{{ getEnv('APP_NAME') }}</h2>
             </a>
             <div class="d-flex order-lg-2 ml-auto">
                 <div class="dropdown">
                     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                         <span class="avatar"></span>
                         <span class="ml-2 d-none d-lg-block">
-                            <span class="text-default">MyRuble</span>
+                            <span class="text-default">{{ getEnv('APP_NAME') }}</span>
                             <small class="text-muted d-block mt-1">Administrator</small>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" href="{{ base_url() }}/dashboard/logout">
+                        <a class="dropdown-item" href="{{ path_for('dashboard.logout') }}">
                             <i class="dropdown-icon fe fe-log-out"></i> Çıxış et
                         </a>
                     </div>
