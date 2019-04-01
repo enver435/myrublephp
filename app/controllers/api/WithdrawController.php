@@ -3,8 +3,9 @@
     namespace App\Controllers\Api;
 
     use App\Models\Api\WithdrawModel;
+    use App\Controllers\BaseController;
 
-    class WithdrawController
+    class WithdrawController extends BaseController
     {
         private $json = [];
 

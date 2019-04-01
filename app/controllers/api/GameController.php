@@ -3,8 +3,9 @@
     namespace App\Controllers\Api;
 
     use App\Models\Api\GameModel;
+    use App\Controllers\BaseController;
 
-    class GameController
+    class GameController extends BaseController
     {
         private $json = [];
 

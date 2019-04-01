@@ -3,8 +3,9 @@
     namespace App\Controllers\Api;
 
     use App\Models\Api\UserModel;
+    use App\Controllers\BaseController;
 
-    class UserController
+    class UserController extends BaseController
     {
         private $json     = [];
         private $validate = false;
@@ -72,7 +73,13 @@
                 // set array update data
                 $updateData = [];
                 foreach ($body['data'] as $key => $value) {
-                    $updateData[$key] = $value;
+                    if($body['data'][$key]['increment'] == "true") {
+                        $updateData[$key] = $this->db->raw($key . ' + ' . $body['data'][$key]['value']);
+                    } elseif($body['data'][$key]['decrement'] == "true") {
+                        $updateData[$key] = $this->db->raw($key . ' - ' . $body['data'][$key]['value']);
+                    } else {
+                        $updateData[$key] = $value;
+                    }
                 }
 
                 try {
@@ -86,7 +93,8 @@
 
                         // set json data
                         $this->json = [
-                            'status' => true
+                            'status' => true,
+                            'data'   => UserModel::infoFull(['users.id' => $body['id']])
                         ];
                     } else {
                         // set json data

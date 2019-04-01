@@ -2,7 +2,7 @@
 
     namespace App\Models;
 
-    Class BaseModel
+    class BaseModel
     {
         /**
          * Get Container
