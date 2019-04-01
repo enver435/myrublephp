@@ -147,11 +147,10 @@
             // if validation status true
             if($this->validate === true) {
                 try {
-                    $userInfo = UserModel::info([
-                        ['email', '=', $email],
-                        ['pass', '=', md5($pass)]
+                    $userInfo = UserModel::infoFull([
+                        ['users.email', '=', $email],
+                        ['users.pass', '=', md5($pass)]
                     ]);
-
                     if($userInfo !== false) {
                         // set json data
                         $this->json = [
@@ -294,9 +293,9 @@
                         // set json data
                         $this->json = [
                             'status' => true,
-                            'data'   => UserModel::info([
-                                ['email', '=', $email],
-                                ['pass', '=', md5($pass)]
+                            'data'   => UserModel::infoFull([
+                                ['users.email', '=', $email],
+                                ['users.pass', '=', md5($pass)]
                             ])
                         ];
                     }
