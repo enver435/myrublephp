@@ -7,17 +7,17 @@
     class GameModel extends BaseModel
     {
         /**
-         * Get Game Default
+         * Get Game Levels
          *
          * @return object
          */
-        public static function getDefault()
+        public static function gameLevels()
         {
-            $result = self::get('db')->table('game')
-                ->first();
+            $results = self::get('db')->table('game_levels')
+                ->get();
             
-            if(!empty($result)) {
-                return $result;
+            if(!empty($results)) {
+                return $results;
             }
             return false;
         }
@@ -28,7 +28,7 @@
          * @param array $data
          * @return integer
          */
-        public static function insertGame($data)
+        public static function insert($data)
         {
             return self::get('db')->table('game_logs')
                 ->insertGetId($data);

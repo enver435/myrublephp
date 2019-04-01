@@ -39,8 +39,8 @@
          * GAME Routes
          */
         $this->group('/game', function() {
-            // get default
-            $this->get('', '\App\Controllers\Api\GameController:getDefault');
+            // get game default info
+            $this->get('/levels', '\App\Controllers\Api\GameController:gameLevels');
             // insert
             $this->post('/insert', '\App\Controllers\Api\GameController:insertGame');
         });

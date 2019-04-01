@@ -9,15 +9,15 @@
         private $json = [];
 
         /**
-         * Get Game Default
+         * Get Game Levels
          */
-        public function getDefault($request, $response, $args)
+        public function gameLevels($request, $response, $args)
         {
             try {
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => GameModel::getDefault()
+                    'data'   => GameModel::gameLevels()
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data
@@ -38,13 +38,14 @@
         {
             $body = $request->getParsedBody();
 
+            // set array body data
             $data = [];
             foreach ($body as $key => $value) {
                 $data[$key] = $value;
             }
 
             try {
-                $lastId     = GameModel::insertGame($data);
+                $lastId     = GameModel::insert($data);
                 $data['id'] = $lastId;
                 
                 // set json data
