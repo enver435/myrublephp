@@ -30,7 +30,7 @@
          */
         $this->group('/user', function() {
             // get user
-            $this->get('/info', '\App\Controllers\Api\UserController:getUser');
+            $this->get('/info', '\App\Controllers\Api\UserController:userInfo');
             // update user
             $this->post('/update', '\App\Controllers\Api\UserController:updateUser');
         });

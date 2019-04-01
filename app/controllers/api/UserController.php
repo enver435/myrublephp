@@ -3,23 +3,30 @@
     namespace App\Controllers\Api;
 
     use App\Models\Api\UserModel;
+use App\System\Helpers\Str;
 
     class UserController
     {
         private $json     = [];
         private $validate = false;
 
-        public function getUser($request, $response, $args)
+        /**
+         * Get User Information
+         */
+        public function userInfo($request, $response, $args)
         {
             $params = $request->getQueryParams();
             
             if(@$params['id'] > 0) {
+
+                // set array where data
                 $where = [];
                 foreach ($params as $key => $value) {
                     $where[] = [$key, '=', $value];
                 }
     
                 try {
+                    // user information
                     $userInfo = UserModel::info($where);
                     if($userInfo !== false) {
                         // set json data
@@ -31,7 +38,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'User not exist'
+                            'message' => 'Пользователь не найден'
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -45,7 +52,7 @@
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'User not exist'
+                    'message' => 'Пользователь не найден'
                 ];
             }
 
@@ -53,12 +60,16 @@
             return $response->withJson($this->json);
         }
 
+        /**
+         * Update User
+         */
         public function updateUser($request, $response, $args)
         {
             $body = $request->getParsedBody();
 
             if($body['id'] > 0 && count($body['data']) > 0) {
                 
+                // set array update data
                 $updateData = [];
                 foreach ($body['data'] as $key => $value) {
                     $updateData[$key] = $value;
@@ -67,22 +78,21 @@
                 try {
                     $where = ['id' => $body['id']];
 
-                    // update user
-                    UserModel::update($where, $updateData);
+                    // check exist user
+                    $exist = UserModel::exist($where);
+                    if($exist) {
+                        // update user
+                        UserModel::update($where, $updateData);
 
-                    // get user information
-                    $userInfo = UserModel::info($where);
-                    if($userInfo !== false) {
                         // set json data
                         $this->json = [
-                            'status' => true,
-                            'data'   => $userInfo
+                            'status' => true
                         ];
                     } else {
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'User not exist'
+                            'message' => 'Пользователь не найден'
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -240,16 +250,41 @@
                         ];
                         // set insert status
                         $insert = false;
+                    } elseif($body['ref_code'] != '') {
+                        $refInfo = UserModel::info(['referral_code' => $body['ref_code']], ['id']);
+                        if($refInfo === false) {
+                            // set json data
+                            $this->json = [
+                                'status'  => false,
+                                'message' => 'Код реферала не найден'
+                            ];
+                            // set insert status
+                            $insert = false;
+                        }
                     }
 
                     if($insert === true) {
                         // modify insert data
-                        $insertData          = $body;
-                        $insertData['pass']  = md5($insertData['pass']);
-                        $insertData['heart'] = 3;
+                        $insertData                  = $body;
+                        $insertData['pass']          = md5($insertData['pass']);
+                        $insertData['heart']         = 3;
+                        $insertData['register_time'] = time();
+                        $insertData['referral_code'] = substr(preg_replace('/[a-z]/', '', md5(uniqid($body['username']))), 0, 6);
+
+                        // destroy insert data in keys
+                        unset($insertData['ref_code']);
 
                         // insert user
-                        UserModel::insert($insertData);
+                        $lastId = UserModel::insert($insertData);
+
+                        // insert referral
+                        if($body['ref_code'] != '' && $lastId > 0) {
+                            UserModel::insertReferral([
+                                'user_id'     => $lastId,
+                                'ref_user_id' => $refInfo->id,
+                                'time'        => time()
+                            ]);
+                        }
                         
                         // set json data
                         $this->json = [

@@ -24,11 +24,13 @@
          * Get User Information
          *
          * @param string|array $where
+         * @param array $select
          * @return object
          */
-        public static function info($where)
+        public static function info($where, $select = ['*'])
         {
             $result = self::get('db')->table('users')
+                ->select($select)
                 ->where($where)
                 ->first();
             
@@ -79,6 +81,18 @@
                 return true;
             }
             return false;
+        }
+
+        /**
+         * Insert Referral
+         *
+         * @param array $data
+         * @return integer
+         */
+        public static function insertReferral($data)
+        {
+            return self::get('db')->table('user_referals')
+                ->insertGetId($data);
         }
     }
 
