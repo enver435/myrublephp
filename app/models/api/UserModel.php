@@ -41,6 +41,39 @@
         }
 
         /**
+         * Get User Full Information
+         *
+         * @param string|array $where
+         * @return object
+         */
+        public static function infoFull($where)
+        {
+            $result = self::get('db')->table('users')
+                ->selectRaw('
+                    users.*,
+                    user_referrals.ref_user_id,
+                    COUNT(user_referrals.id) AS total_referral,
+                    CASE
+                        WHEN (SUM(game_logs.earn_referral) IS NULL) THEN 0
+                        ELSE SUM(game_logs.earn_referral)
+                    END AS total_earn_referral
+                ')
+                ->join('user_referrals', function($join) {
+                    $join->on('user_referrals.user_id', '=', 'users.id');
+                })
+                ->join('game_logs', function($join) {
+                    $join->on('game_logs.user_id', '=', 'user_referrals.user_id');
+                })
+                ->where($where)
+                ->first();
+            
+            if(!empty($result)) {
+                return $result;
+            }
+            return false;
+        }
+
+        /**
          * Update User
          *
          * @param string|array $where

@@ -3,7 +3,6 @@
     namespace App\Controllers\Api;
 
     use App\Models\Api\UserModel;
-use App\System\Helpers\Str;
 
     class UserController
     {
@@ -16,18 +15,19 @@ use App\System\Helpers\Str;
         public function userInfo($request, $response, $args)
         {
             $params = $request->getQueryParams();
-            
-            if(@$params['id'] > 0) {
 
-                // set array where data
-                $where = [];
-                foreach ($params as $key => $value) {
-                    $where[] = [$key, '=', $value];
+            // set array where data
+            $where = [];
+            foreach ($params as $key => $value) {
+                if($key != 'full') {
+                    $where[] = [(@$params['full'] == "true" ? "users.$key" : $key), '=', $value];
                 }
-    
+            }
+
+            if(count($where) > 0) {
                 try {
                     // user information
-                    $userInfo = UserModel::info($where);
+                    $userInfo = (@$params['full'] == "true" ? UserModel::infoFull($where) : UserModel::info($where));
                     if($userInfo !== false) {
                         // set json data
                         $this->json = [
