@@ -51,18 +51,21 @@
             $result = self::get('db')->table('users')
                 ->selectRaw('
                     users.*,
-                    user_referrals.ref_user_id,
-                    COUNT(user_referrals.id) AS total_referral,
+                    refuser.ref_user_id,
+                    COUNT(refusers.id) AS total_referral,
                     CASE
                         WHEN (SUM(game_logs.earn_referral) IS NULL) THEN 0
                         ELSE SUM(game_logs.earn_referral)
                     END AS total_earn_referral
                 ')
-                ->join('user_referrals', function($join) {
-                    $join->on('user_referrals.user_id', '=', 'users.id');
+                ->leftJoin('user_referrals AS refuser', function($join) {
+                    $join->on('refuser.user_id', '=', 'users.id');
                 })
-                ->join('game_logs', function($join) {
-                    $join->on('game_logs.user_id', '=', 'user_referrals.user_id');
+                ->leftJoin('user_referrals AS refusers', function($join) {
+                    $join->on('refusers.ref_user_id', '=', 'users.id');
+                })
+                ->leftJoin('game_logs', function($join) {
+                    $join->on('game_logs.user_id', '=', 'refuser.user_id');
                 })
                 ->where($where)
                 ->first();
@@ -124,7 +127,7 @@
          */
         public static function insertReferral($data)
         {
-            return self::get('db')->table('user_referals')
+            return self::get('db')->table('user_referrals')
                 ->insertGetId($data);
         }
     }
