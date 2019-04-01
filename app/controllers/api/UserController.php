@@ -269,21 +269,26 @@ use App\System\Helpers\Str;
                         $insertData['pass']          = md5($insertData['pass']);
                         $insertData['heart']         = 3;
                         $insertData['register_time'] = time();
-                        $insertData['referral_code'] = substr(preg_replace('/[a-z]/', '', md5(uniqid($body['username']))), 0, 6);
 
                         // destroy insert data in keys
                         unset($insertData['ref_code']);
 
                         // insert user
                         $lastId = UserModel::insert($insertData);
-
-                        // insert referral
-                        if($body['ref_code'] != '' && $lastId > 0) {
-                            UserModel::insertReferral([
-                                'user_id'     => $lastId,
-                                'ref_user_id' => $refInfo->id,
-                                'time'        => time()
+                        if($lastId > 0) {
+                            // update referral code
+                            UserModel::update(['id' => $lastId], [
+                                'referral_code' => str_pad($lastId, 6, '0', STR_PAD_BOTH)
                             ]);
+
+                            // insert referral
+                            if($body['ref_code'] != '') {
+                                UserModel::insertReferral([
+                                    'user_id'     => $lastId,
+                                    'ref_user_id' => $refInfo->id,
+                                    'time'        => time()
+                                ]);
+                            }
                         }
                         
                         // set json data
