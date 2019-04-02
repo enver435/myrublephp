@@ -21,13 +21,17 @@
                 $query->where($where);
             }
 
+            // order by id desc
+            $query->orderBy('id', 'desc')->get();
+
             // if exist pagination
             if($offset >= 0 && $limit > 0) {
+                echo $offset;
                 $query->offset($offset)->limit($limit);
             }
 
-            // order by id desc
-            $results = $query->orderBy('id', 'desc')->get();
+            // get results
+            $results = $query->get();
             
             // return results
             return $results;

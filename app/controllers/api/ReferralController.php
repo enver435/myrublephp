@@ -17,21 +17,11 @@
             // get query params
             $params = $request->getQueryParams();
 
-            $where = null;
-            if(!empty($params)) {
-                foreach ($params as $key => $value) {
-                    if($key != 'offset' && $key != 'limit' && isset($value) && $value != '') {
-                        // set where
-                        $where[] = [$key, '=', $value];
-                    }
-                }
-            }
-
             try {
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => ReferralModel::referrals($where, @$params['offset'], @$params['limit'])
+                    'data'   => ReferralModel::referrals(@$params['user_id'], @$params['offset'], @$params['limit'])
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data

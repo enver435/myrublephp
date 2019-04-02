@@ -11,25 +11,76 @@
          *
          * @return array
          */
-        public static function referrals($where = null, $offset = null, $limit = null)
+        public static function referrals($user_id, $offset = null, $limit = null)
         {
             // select table
             $query = self::get('db')->table('user_referrals');
 
-            // if where not null
-            if($where != null) {
-                $query->where($where);
-            }
+            // select columns
+            $query->selectRaw('
+                user_referrals.*,
+                users.username,
+                users.level_xp,
+                (
+                    CASE WHEN game_levels.level IS NULL
+                    THEN
+                        (SELECT level FROM game_levels ORDER BY level DESC LIMIT 1)
+                    ELSE
+                        game_levels.level
+                    END
+                ) AS level,
+                (
+                    CASE WHEN game_levels.referral_percent IS NULL
+                    THEN
+                        (SELECT referral_percent FROM game_levels ORDER BY level DESC LIMIT 1)
+                    ELSE
+                        game_levels.referral_percent
+                    END
+                ) AS referral_percent,
+                (
+                    CASE WHEN SUM(game_logs.earn_referral) IS NULL
+                    THEN
+                        0
+                    ELSE
+                        SUM(game_logs.earn_referral)
+                    END
+                ) AS earn_referral
+            ');
+
+            // users join
+            $query->join('users', function($join) {
+                $join->on('user_referrals.user_id', '=', 'users.id');
+            });
+
+            // game_levels join
+            $query->leftJoin('game_levels', function($join) {
+                $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
+                    ->on('game_levels.level_end_xp', '>', 'users.level_xp');
+            });
+
+            // game_logs join
+            $query->leftJoin('game_logs', function($join) {
+                $join->on('game_logs.user_id', '=', 'user_referrals.user_id')
+                    ->where('game_logs.earn_referral', '>', 0);
+            });
+
+            // where columns
+            $query->where(['user_referrals.ref_user_id' => $user_id]);
+
+            // order by
+            $query->orderBy('user_referrals.id', 'desc');
+
+            // group by
+            $query->groupBy('user_referrals.id');
+
+            // get results
+            $results = $query->get();
 
             // if exist pagination
             if($offset >= 0 && $limit > 0) {
                 $query->offset($offset)->limit($limit);
             }
 
-            // order by id desc
-            $results = $query->orderBy('id', 'desc')->get();
-            
-            // return results
             return $results;
         }
 
