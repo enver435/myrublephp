@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2019 at 10:09 PM
+-- Generation Time: Apr 02, 2019 at 05:57 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -46,8 +46,9 @@ CREATE TABLE `game_levels` (
 --
 
 INSERT INTO `game_levels` (`id`, `level`, `level_start_xp`, `level_end_xp`, `time`, `task`, `heart_time`, `earn`, `referral_percent`, `earn_xp`) VALUES
-(1, 0, 0, 300, 60, 5, 10, 0.01, 50, 1),
-(2, 1, 300, 600, 120, 10, 10, 0.02, 6, 2);
+(1, 0, 0, 300, 60, 5, 10, 0.01, 5, 1),
+(2, 1, 300, 600, 120, 10, 10, 0.02, 6, 2),
+(3, 2, 600, 900, 120, 10, 10, 0.02, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -368,7 +369,26 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (295, 9, 5, 0, 0.01, 0.005, 1, 1554148193),
 (296, 9, 0, 0, 0, 0, 0, 1554148217),
 (297, 9, 5, 0, 0.01, 0.005, 1, 1554148265),
-(298, 9, 5, 1, 0.01, 0.005, 1, 1554148347);
+(298, 9, 5, 1, 0.01, 0.005, 1, 1554148347),
+(299, 9, 0, 0, 0, 0, 0, 1554194455),
+(300, 9, 0, 0, 0, 0, 0, 1554194716),
+(301, 9, 0, 0, 0, 0, 0, 1554195338),
+(302, 9, 4, 3, 0, 0, 0, 1554195503),
+(303, 9, 0, 0, 0, 0, 0, 1554195951),
+(304, 9, 0, 0, 0, 0, 0, 1554195987),
+(305, 9, 0, 0, 0, 0, 0, 1554196003),
+(306, 9, 0, 0, 0, 0, 0, 1554196050),
+(307, 9, 5, 3, 0.01, 0.005, 1, 1554196251),
+(308, 9, 0, 0, 0, 0, 0, 1554196383),
+(309, 9, 0, 0, 0, 0, 0, 1554196520),
+(310, 9, 0, 0, 0, 0, 0, 1554197389),
+(311, 9, 0, 0, 0, 0, 0, 1554198223),
+(312, 9, 0, 0, 0, 0, 0, 1554198272),
+(313, 7, 0, 0, 0, 0, 0, 1554218132),
+(314, 7, 0, 0, 0, 0, 0, 1554218137),
+(315, 7, 0, 0, 0, 0, 0, 1554218140),
+(316, 7, 0, 0, 0, 0, 0, 1554220161),
+(317, 7, 0, 0, 0, 0, 0, 1554220343);
 
 -- --------------------------------------------------------
 
@@ -420,15 +440,15 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `referral_code`) VALUES
-(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 61.75, 299, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, NULL),
+(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 61.75, 200, 1, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, NULL),
 (2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, NULL),
 (3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, NULL),
 (4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, '', 0, NULL),
 (5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, NULL),
 (6, '', '', 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, NULL),
-(7, '', '', 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.035, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554130670, '007000'),
+(7, '', '', 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.04, 0, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554130670, '007000'),
 (8, '', '', 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131201, '008000'),
-(9, '', '', 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.08, 0, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, '009000');
+(9, '', '', 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.09, 950, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, '009000');
 
 -- --------------------------------------------------------
 
@@ -558,13 +578,13 @@ ALTER TABLE `withdraws`
 -- AUTO_INCREMENT for table `game_levels`
 --
 ALTER TABLE `game_levels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=299;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=318;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
