@@ -56,6 +56,16 @@
             // insert withdraw
             $this->post('/insert', '\App\Controllers\Api\WithdrawController:insertWithdraw');
         });
+
+        /**
+         * REFERRAL Routes
+         */
+        $this->group('/referral', function() {
+            // get referral
+            $this->get('', '\App\Controllers\Api\ReferralController:referrals');
+            // insert referral
+            $this->post('/insert', '\App\Controllers\Api\ReferralController:insertReferral');
+        });
     });
 
 ?>

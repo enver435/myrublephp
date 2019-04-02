@@ -121,18 +121,6 @@
             }
             return false;
         }
-
-        /**
-         * Insert Referral
-         *
-         * @param array $data
-         * @return integer
-         */
-        public static function insertReferral($data)
-        {
-            return self::get('db')->table('user_referrals')
-                ->insertGetId($data);
-        }
     }
 
 ?>

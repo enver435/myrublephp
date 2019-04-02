@@ -4,6 +4,7 @@
 
     use App\Models\Api\UserModel;
     use App\Controllers\BaseController;
+    use App\Models\Api\ReferralModel;
 
     class UserController extends BaseController
     {
@@ -73,9 +74,12 @@
                 // set array update data
                 $updateData = [];
                 foreach ($body['data'] as $key => $value) {
-                    if($body['data'][$key]['increment'] == "true") {
+                    $increment = @$body['data'][$key]['increment'];
+                    $decrement = @$body['data'][$key]['decrement'];
+
+                    if(isset($increment) && $increment == "true") {
                         $updateData[$key] = $this->db->raw($key . ' + ' . $body['data'][$key]['value']);
-                    } elseif($body['data'][$key]['decrement'] == "true") {
+                    } elseif(isset($decrement) && $decrement == "true") {
                         $updateData[$key] = $this->db->raw($key . ' - ' . $body['data'][$key]['value']);
                     } else {
                         $updateData[$key] = $value;
@@ -290,7 +294,7 @@
 
                             // insert referral
                             if($body['ref_code'] != '') {
-                                UserModel::insertReferral([
+                                ReferralModel::insert([
                                     'user_id'     => $lastId,
                                     'ref_user_id' => $refInfo->id,
                                     'time'        => time()
