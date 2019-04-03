@@ -89,7 +89,7 @@
             // get result
             $result = $query->first();
             
-            if(!empty($result)) {
+            if($result->id) {
                 return $result;
             }
             return false;
