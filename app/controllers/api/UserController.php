@@ -74,13 +74,12 @@
                 // set array update data
                 $updateData = [];
                 foreach ($body['data'] as $key => $value) {
-                    $increment = @$body['data'][$key]['increment'];
-                    $decrement = @$body['data'][$key]['decrement'];
-
-                    if(isset($increment) && $increment == "true") {
+                    if(isset($body['data'][$key]['increment']) && $body['data'][$key]['increment'] == "true") {
                         $updateData[$key] = $this->db->raw($key . ' + ' . $body['data'][$key]['value']);
-                    } elseif(isset($decrement) && $decrement == "true") {
+                    } elseif(isset($body['data'][$key]['decrement']) && $body['data'][$key]['decrement'] == "true") {
                         $updateData[$key] = $this->db->raw($key . ' - ' . $body['data'][$key]['value']);
+                    } elseif(isset($body['data'][$key]['currentTime']) && $body['data'][$key]['currentTime'] == "true") {
+                        $updateData[$key] = time();
                     } else {
                         $updateData[$key] = $value;
                     }

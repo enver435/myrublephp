@@ -42,17 +42,21 @@
             // set array body data
             $data = [];
             foreach ($body as $key => $value) {
-                $data[$key] = $value;
+                if(isset($body[$key]['currentTime']) && $body[$key]['currentTime'] == "true") {
+                    $data[$key] = time();
+                } else {
+                    $data[$key] = $value;
+                }
             }
 
             try {
-                $lastId     = GameModel::insert($data);
-                $data['id'] = $lastId;
-                
+                $insertData         = $data;
+                $insertData['time'] = time();
+                GameModel::insert($insertData);
+
                 // set json data
                 $this->json = [
-                    'status' => true,
-                    'data'   => $data
+                    'status' => true
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data

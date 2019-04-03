@@ -23,6 +23,26 @@
         }
 
         /**
+         * Get Game Information
+         *
+         * @param string|array $where
+         * @param array $select
+         * @return object
+         */
+        public static function info($where, $select = ['*'])
+        {
+            $result = self::get('db')->table('game_logs')
+                ->select($select)
+                ->where($where)
+                ->first();
+            
+            if(!empty($result)) {
+                return $result;
+            }
+            return false;
+        }
+
+        /**
          * Insert Game
          *
          * @param array $data

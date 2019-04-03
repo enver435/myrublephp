@@ -9,9 +9,13 @@
          */
         $this->map(['GET', 'POST'], '', function($request, $response, $args) {
             return $response->withJson([
-                'appName'    => getenv('APP_NAME'),
-                'appVersion' => getenv('APP_VERSION'),
-                'appStatus'  => getenv('APP_STATUS')
+                'status' => true,
+                'data'   => [
+                    'appName'    => getenv('APP_NAME'),
+                    'appVersion' => getenv('APP_VERSION'),
+                    'appStatus'  => getenv('APP_STATUS'),
+                    'appTime'    => time()
+                ]
             ]);
         });
     

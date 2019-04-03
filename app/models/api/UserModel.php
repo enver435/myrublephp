@@ -56,28 +56,29 @@
                 users.*,
                 refuser.ref_user_id,
                 COUNT(DISTINCT refusers.id) AS total_referral,
+                IFNULL(ROUND(SUM(game_logs.earn_referral), 2), 0) AS total_earn_referral,
                 (
-                    CASE WHEN SUM(game_logs.earn_referral) IS NULL
+                    CASE WHEN game_levels.level IS NULL
                     THEN
-                        0 
+                        (SELECT level FROM game_levels ORDER BY level DESC LIMIT 1)
                     ELSE
-                        SUM(game_logs.earn_referral)
+                        game_levels.level
                     END
-                ) AS total_earn_referral
+                ) AS level
             ');
 
-            // user_referrals join for refuser
+            // join tables
             $query->leftJoin('user_referrals AS refuser', function($join) {
                 $join->on('refuser.user_id', '=', 'users.id');
-            });
-
-            // user_referrals join for refusers
-            $query->leftJoin('user_referrals AS refusers', function($join) {
+            })
+            ->leftJoin('user_referrals AS refusers', function($join) {
                 $join->on('refusers.ref_user_id', '=', 'users.id');
-            });
-
-            // game_logs join
-            $query->leftJoin('game_logs', function($join) {
+            })
+            ->leftJoin('game_levels', function($join) {
+                $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
+                    ->on('game_levels.level_end_xp', '>', 'users.level_xp');
+            })
+            ->leftJoin('game_logs', function($join) {
                 $join->on('game_logs.user_id', '=', 'refusers.user_id')
                     ->where('game_logs.earn_referral', '>', 0);
             });

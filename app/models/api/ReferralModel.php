@@ -37,29 +37,18 @@
                         game_levels.referral_percent
                     END
                 ) AS referral_percent,
-                (
-                    CASE WHEN SUM(game_logs.earn_referral) IS NULL
-                    THEN
-                        0
-                    ELSE
-                        SUM(game_logs.earn_referral)
-                    END
-                ) AS earn_referral
+                IFNULL(ROUND(SUM(game_logs.earn_referral), 2), 0) AS total_earn_referral
             ');
 
-            // users join
+            // join tables
             $query->join('users', function($join) {
                 $join->on('user_referrals.user_id', '=', 'users.id');
-            });
-
-            // game_levels join
-            $query->leftJoin('game_levels', function($join) {
+            })
+            ->leftJoin('game_levels', function($join) {
                 $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
                     ->on('game_levels.level_end_xp', '>', 'users.level_xp');
-            });
-
-            // game_logs join
-            $query->leftJoin('game_logs', function($join) {
+            })
+            ->leftJoin('game_logs', function($join) {
                 $join->on('game_logs.user_id', '=', 'user_referrals.user_id')
                     ->where('game_logs.earn_referral', '>', 0);
             });

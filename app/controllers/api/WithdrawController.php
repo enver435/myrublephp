@@ -52,9 +52,14 @@
         {
             $body = $request->getParsedBody();
 
+            // set array body data
             $data = [];
             foreach ($body as $key => $value) {
-                $data[$key] = $value;
+                if(isset($body[$key]['currentTime']) && $body[$key]['currentTime'] == "true") {
+                    $data[$key] = time();
+                } else {
+                    $data[$key] = $value;
+                }
             }
 
             try {
