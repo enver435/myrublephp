@@ -5,6 +5,9 @@
     // start session
     session_start();
 
+    // set default time zone
+    date_default_timezone_set('Asia/Baku');
+
     // get environment
     switch ($_SERVER["HTTP_HOST"]) {
         case "localhost":
