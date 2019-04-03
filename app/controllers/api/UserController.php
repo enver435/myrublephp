@@ -288,7 +288,7 @@
                         if($lastId > 0) {
                             // update referral code
                             UserModel::update(['id' => $lastId], [
-                                'referral_code' => str_pad($lastId, 6, '0', STR_PAD_BOTH)
+                                'referral_code' => str_pad($lastId, 6, '0', STR_PAD_LEFT)
                             ]);
 
                             // insert referral
