@@ -2,8 +2,9 @@
 
     namespace App\Controllers\Api;
 
-    use App\Models\Api\ReferralModel;
     use App\Controllers\BaseController;
+    use App\Models\Api\ReferralModel;
+    use App\Models\Api\UserModel;
 
     class ReferralController extends BaseController
     {
@@ -42,30 +43,57 @@
         {
             $body = $request->getParsedBody();
 
-            // set array body data
-            $data = [];
-            foreach ($body as $key => $value) {
-                if(isset($body[$key]['currentTime']) && $body[$key]['currentTime'] == "true") {
-                    $data[$key] = time();
-                } else {
-                    $data[$key] = $value;
+            if(
+                isset($body['ref_code']) && $body['ref_code'] != '' &&
+                isset($body['user_id']) && $body['user_id'] > 0
+            ) {
+                try {
+                    $refInfo = UserModel::info(['referral_code' => $body['ref_code']], ['id', 'referral_code']);
+                    if($refInfo !== false) {
+                        if($refInfo->id != $body['user_id']) {
+                            $lastId = ReferralModel::insert([
+                                'user_id'     => $body['user_id'],
+                                'ref_user_id' => $refInfo->id,
+                                'time'        => time()
+                            ]);
+    
+                            // referral information
+                            $data['id']          = $lastId;
+                            $data['user_id']     = $body['user_id'];
+                            $data['ref_user_id'] = $refInfo->id;
+                            $data['time']        = time();
+                            
+                            // set json data
+                            $this->json = [
+                                'status' => true,
+                                'data'   => $data
+                            ];
+                        } else {
+                            // set json data
+                            $this->json = [
+                                'status'  => false,
+                                'message' => 'Код реферала не найден'
+                            ];
+                        }
+                    } else {
+                        // set json data
+                        $this->json = [
+                            'status'  => false,
+                            'message' => 'Код реферала не найден'
+                        ];
+                    }
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // set json data
+                    $this->json = [
+                        'status'  => false,
+                        'message' => 'Database Error: ' . $e->getMessage()
+                    ];
                 }
-            }
-
-            try {
-                $lastId     = ReferralModel::insert($data);
-                $data['id'] = $lastId;
-                
-                // set json data
-                $this->json = [
-                    'status' => true,
-                    'data'   => $data
-                ];
-            } catch (\Illuminate\Database\QueryException $e) {
+            } else {
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Database Error: ' . $e->getMessage()
+                    'message' => 'Код реферала не найден'
                 ];
             }
 
