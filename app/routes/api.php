@@ -1,5 +1,19 @@
 <?php
 
+    use App\System\Helpers\Main;
+
+    $mw = function($request, $response, $next) {
+        if(
+            Main::getServer('PHP_AUTH_USER') == getenv('API_USER') &&
+            Main::getServer('PHP_AUTH_PW') == getenv('API_PASS')
+        ) {
+            $response = $next($request, $response);
+        } else {
+            $response = $response->withStatus(401)->withHeader('WWW-Authenticate', 'Basic realm="Protected Area"');
+        }
+        return $response;
+    };
+
     /**
      * API Routes
      */
@@ -70,6 +84,6 @@
             // insert referral
             $this->post('/insert', '\App\Controllers\Api\ReferralController:insertReferral');
         });
-    });
+    })->add($mw);
 
 ?>
