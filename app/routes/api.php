@@ -3,13 +3,17 @@
     use App\System\Helpers\Main;
 
     $mw = function($request, $response, $next) {
-        if(
-            Main::getServer('PHP_AUTH_USER') == getenv('API_USER') &&
-            Main::getServer('PHP_AUTH_PW') == getenv('API_PASS')
-        ) {
-            $response = $next($request, $response);
+        if(ENVIRONMENT == 'production') {
+            if(
+                Main::getServer('PHP_AUTH_USER') == getenv('API_USER') &&
+                Main::getServer('PHP_AUTH_PW') == getenv('API_PASS')
+            ) {
+                $response = $next($request, $response);
+            } else {
+                $response = $response->withStatus(401)->withHeader('WWW-Authenticate', 'Basic realm="Protected Area"');
+            }
         } else {
-            $response = $response->withStatus(401)->withHeader('WWW-Authenticate', 'Basic realm="Protected Area"');
+            $response = $next($request, $response);
         }
         return $response;
     };
