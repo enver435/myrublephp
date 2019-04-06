@@ -128,7 +128,7 @@
 
                                 // update user balance
                                 UserModel::update(['id' => $userInfo->id], [
-                                    'balance' => $userInfo->balance + round(($info->amount + ($info->amount * $info->commission / 100)), 2)
+                                    'balance' => $userInfo->balance + round(($info->amount + ($info->amount * $info->commission / 100)), 3)
                                 ]);
                             }
 

@@ -3,11 +3,9 @@
     namespace App\Controllers\Dashboard;
 
     use App\Controllers\BaseController;
-    use App\System\Helpers\Session;
     use App\System\Helpers\Url;
-    use App\Models\BaseModel;
     use App\Models\Dashboard\GameModel;
-use App\Models\Dashboard\WithdrawModel;
+    use App\Models\Dashboard\WithdrawModel;
 
     class SettingsController extends BaseController
     {

@@ -56,7 +56,7 @@
                 users.*,
                 refuser.ref_user_id,
                 COUNT(DISTINCT refusers.id) AS total_referral,
-                IFNULL(ROUND(SUM(game_logs.earn_referral), 2), 0) AS total_earn_referral,
+                IFNULL(ROUND(SUM(game_logs.earn_referral), 3), 0) AS total_earn_referral,
                 (
                     CASE WHEN game_levels.level IS NULL
                     THEN

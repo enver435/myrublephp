@@ -37,7 +37,7 @@
                         game_levels.referral_percent
                     END
                 ) AS referral_percent,
-                IFNULL(ROUND(SUM(game_logs.earn_referral), 2), 0) AS total_earn_referral
+                IFNULL(ROUND(SUM(game_logs.earn_referral), 3), 0) AS total_earn_referral
             ');
 
             // join tables
