@@ -1,4 +1,10 @@
 RewriteEngine On
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
+
+<FilesMatch "^(composer.json|composer.lock|.env|.env.dev|.gitignore)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
