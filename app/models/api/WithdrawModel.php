@@ -26,7 +26,6 @@
 
             // if exist pagination
             if($offset >= 0 && $limit > 0) {
-                echo $offset;
                 $query->offset($offset)->limit($limit);
             }
 
