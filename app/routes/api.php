@@ -4,15 +4,16 @@
 
     $mw = function($request, $response, $next) {
         if(ENVIRONMENT == 'production') {
-            if(
-                Main::getServer('PHP_AUTH_USER') == getenv('API_USER') &&
-                Main::getServer('PHP_AUTH_PW') == getenv('API_PASS') ||
-                $request->getUri()->getPath() == 'api' // burani yadda saxla sonra silersen
-            ) {
-                $response = $next($request, $response);
-            } else {
-                $response = $response->withStatus(401)->withHeader('WWW-Authenticate', 'Basic realm="Protected Area"');
-            }
+            // if(
+            //     Main::getServer('PHP_AUTH_USER') == getenv('API_USER') &&
+            //     Main::getServer('PHP_AUTH_PW') == getenv('API_PASS') ||
+            //     $request->getUri()->getPath() == 'api' // burani yadda saxla sonra silersen
+            // ) {
+            //     $response = $next($request, $response);
+            // } else {
+            //     $response = $response->withStatus(401)->withHeader('WWW-Authenticate', 'Basic realm="Protected Area"');
+            // }
+            $response = $next($request, $response);
         } else {
             $response = $next($request, $response);
         }
