@@ -20,7 +20,7 @@
 
             // init pagination
             $perPage     = 10;
-            $urlPattern  = getenv('APP_URL') . '/dashboard/users';
+            $urlPattern  = Url::pathFor('dashboard.users');
             $pagination  = Pagination::init($totalItems, @$params['page'], $perPage, $urlPattern);
             
             // get users
@@ -46,11 +46,12 @@
                     $username = mb_strtolower($body['username'], 'UTF-8');
                     $heart    = $body['heart'];
                     $balance  = $body['balance'];
+                    $referrer = $body['referrer'];
 
                     $validate = false;
 
                     // validate body
-                    if($email != '' && $username != '' && $heart >= 0 && $balance >= 0) {
+                    if($email != '' && $username != '') {
                         if(filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
                             if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
                                 $validate = true;
@@ -92,7 +93,8 @@
                                     'username' => $username,
                                     'email'    => $email,
                                     'heart'    => $heart,
-                                    'balance'  => $balance
+                                    'balance'  => $balance,
+                                    'referrer' => $referrer
                                 ]);
                                 
                                 // add flash message
@@ -102,6 +104,9 @@
                             // add flash message
                             $this->flash->addMessage('danger', 'Database Error: ' . $e->getMessage());
                         }
+                    } else {
+                        // add flash message
+                        $this->flash->addMessage('danger'. 'Zəhmət olmasa xanaları düzgün doldurun');
                     }
                     // redirect page
                     return Url::redirect('dashboard.users.edit', ['id' => $id]);
@@ -118,7 +123,7 @@
                 }
             }
             // redirect page
-            return Url::redirect('dashboard.users.index');
+            return Url::redirect('dashboard.users');
         }
 
         public function show($request, $response, $args)
@@ -126,7 +131,7 @@
             $id = $args['id'];
             if($id > 0) {
                 // get information
-                $info = UserModel::info(['id' => $id]);
+                $info = UserModel::infoFull(['users.id' => $id]);
                 if($info !== false) {
 
                     $dayStart = strtotime(date('d.m.Y') . ' 00:00');
@@ -194,7 +199,7 @@
                 }
             }
             // redirect page
-            return Url::redirect('dashboard.users.index');
+            return Url::redirect('dashboard.users');
         }
     }
 

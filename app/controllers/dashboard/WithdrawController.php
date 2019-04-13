@@ -37,7 +37,7 @@
             // init pagination
             $perPage     = 10;
 
-            $urlPattern  = getenv('APP_URL') . '/dashboard/withdraws' . 
+            $urlPattern  = Url::pathFor('dashboard.withdraws') . 
             (isset($params['status']) && $params['status'] >= 0 ? '?status=' . $params['status'] : null) .
             (isset($params['user_id']) && $params['user_id'] >= 0 ? '?user_id=' . $params['user_id'] : null);
 
@@ -157,7 +157,7 @@
                 }
             }
             // redirect page
-            return Url::redirect('dashboard.withdraws.index');
+            return Url::redirect('dashboard.withdraws');
         }
     }
 

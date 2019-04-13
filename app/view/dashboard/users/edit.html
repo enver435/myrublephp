@@ -21,7 +21,8 @@
                     <form action="" method="POST">
                         <div class="form-group">
                             <label for="username">İstifadəçi adı</label>
-                            <input id="username" type="text" name="username" value="{{ item.username }}" class="form-control">
+                            <input id="username" type="text" name="username" value="{{ item.username }}"
+                                class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -29,11 +30,27 @@
                         </div>
                         <div class="form-group">
                             <label for="balance">Balans</label>
-                            <input id="balance" type="number" name="balance" step="any" value="{{ item.balance }}" class="form-control">
+                            <input id="balance" type="number" name="balance" step="any" value="{{ item.balance }}"
+                                class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="heart">Heart</label>
                             <input id="heart" type="number" name="heart" value="{{ item.heart }}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label">Referrer</div>
+                            <div class="custom-controls-stacked">
+                                <label class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="referrer"
+                                        value="1" {{ item.referrer == 1 ? 'checked="checked"' : null }}>
+                                    <div class="custom-control-label">Seosprint</div>
+                                </label>
+                                <label class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="referrer"
+                                        value="0" {{ item.referrer == 0 ? 'checked="checked"' : null }}>
+                                    <div class="custom-control-label">Bilinmir</div>
+                                </label>
+                            </div>
                         </div>
                         <button type="submit" name="save" class="btn btn-primary w-100">Yadda saxla</button>
                     </form>

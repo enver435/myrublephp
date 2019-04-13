@@ -4,42 +4,10 @@
 
     use App\Controllers\BaseController;
     use App\System\Helpers\Url;
-    use App\Models\Dashboard\GameModel;
     use App\Models\Dashboard\WithdrawModel;
 
     class SettingsController extends BaseController
     {
-        public function game($request, $response, $args)
-        {
-            if($request->isPost()) {
-                // get post body
-                $body = $request->getParsedBody();
-                unset($body['save']);
-
-                if($body['time'] > 0 && $body['task'] > 0 && $body['price'] > 0 && $body['heart_time'] > 0) {
-                    try {
-                        // update
-                        GameModel::update($body);
-                        // add flash message
-                        $this->flash->addMessage('success', 'Məlumatlar yeniləndi');
-                    } catch (\Illuminate\Database\QueryException $e) {
-                        // add flash message
-                        $this->flash->addMessage('danger', 'Database Error: ' . $e->getMessage());
-                    }
-                } else {
-                    // add flash message
-                    $this->flash->addMessage('danger', 'Zəhmət olmasa xanaları düzgün şəkildə doldurun');
-                }
-                return Url::redirect('dashboard.settings.game');
-            }
-
-            $info = GameModel::getDefault();
-            return $this->view->render($response, 'dashboard/settings/game.html', [
-                'flash' => $this->flash->getMessages(),
-                'info'  => $info
-            ]);
-        }
-
         public function paymentMethods($request, $response, $args)
         {
             if($request->isPost()) {

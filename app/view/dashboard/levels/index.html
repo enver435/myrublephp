@@ -5,38 +5,33 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">İstifadəçilər</h3>
+                <div class="w-50">
+                    <h3 class="card-title">Oyun levelləri</h3>
+                </div>
+                <div class="w-50 text-right">
+                    <a href="{{ path_for('dashboard.levels.add') }}" class="btn btn-sm btn-primary">Əlavə et</a>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table card-table table-vcenter text-nowrap">
                     <thead>
                         <tr>
                             <th class="w-1">No.</th>
-                            <th>İstifadəçi adı</th>
-                            <th>Email</th>
-                            <th>Balans</th>
                             <th>Level</th>
-                            <th>Qeydiyyat tarixi</th>
-                            <th>Referrer</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for item in users %}    
+                        {% for item in levels %}    
                             <tr>
                                 <td><span class="text-muted">{{ item.id }}</span></td>
-                                <td>{{ item.username }}</td>
-                                <td>{{ item.email }}</td>
-                                <td>{{ item.balance|number_format(2, '.', ',') }} <i class="fa fa-rub"></i></td>
                                 <td>{{ item.level }}</td>
-                                <td>{{ item.register_time|date("d.m.Y H:i") }}</td>
-                                <td>{{ item.referrer == 1 ? 'Seosprint' : 'Bilinmir' }}</td>
                                 <td>
-                                    <a class="icon" href="{{ path_for('dashboard.users.edit', {id: item.id}) }}" title="Editlə">
+                                    <a class="icon" href="{{ path_for('dashboard.levels.edit', {id: item.id}) }}" title="Editlə">
                                         <i class="fe fe-edit"></i>
                                     </a>
-                                    <a class="icon" href="{{ path_for('dashboard.users.show', {id: item.id}) }}" title="İstifadəçiyə bax">
-                                        <i class="fe fe-user"></i>
+                                    <a class="icon" href="{{ path_for('dashboard.levels.delete', {id: item.id}) }}" title="Sil">
+                                        <i class="fe fe-trash"></i>
                                     </a>
                                 </td>
                             </tr>

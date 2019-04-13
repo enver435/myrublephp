@@ -76,7 +76,7 @@
             if(Session::get('login')) {
                 Session::destroy('login');
             }
-            return Url::redirect('dashboard.index');
+            return Url::redirect('dashboard');
         }
     }
 

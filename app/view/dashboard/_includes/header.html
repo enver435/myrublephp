@@ -1,7 +1,7 @@
 <div class="header py-4">
     <div class="container">
         <div class="d-flex">
-            <a class="header-brand" href="{{ path_for('dashboard.index') }}">
+            <a class="header-brand" href="{{ path_for('dashboard') }}">
                 <h2 class="mb-0">{{ getEnv('APP_NAME') }}</h2>
             </a>
             <div class="d-flex order-lg-2 ml-auto">
@@ -34,26 +34,26 @@
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="{{ path_for('dashboard.index') }}" class="nav-link"><i class="fe fe-home"></i> Ana səhifə</a>
+                        <a href="{{ path_for('dashboard') }}" class="nav-link"><i class="fe fe-home"></i> Ana səhifə</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ path_for('dashboard.users.index') }}" class="nav-link"><i class="fe fe-users"></i> İstifadəçilər</a>
+                        <a href="{{ path_for('dashboard.users') }}" class="nav-link"><i class="fe fe-users"></i> İstifadəçilər</a>
                     </li>
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>
                             Pul çıxarışları</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{ path_for('dashboard.withdraws.index') }}" class="dropdown-item ">Hamısı <b style="color: #495057;">({{ headerWithdraws.all }})</b></a>
-                            <a href="{{ path_for('dashboard.withdraws.index') }}?status=0" class="dropdown-item ">Gözləyənlər <b style="color: #495057;">({{ headerWithdraws.waiting }})</b></a>
-                            <a href="{{ path_for('dashboard.withdraws.index') }}?status=1" class="dropdown-item ">Ödənilənlər <b style="color: #495057;">({{ headerWithdraws.paid }})</b></a>
-                            <a href="{{ path_for('dashboard.withdraws.index') }}?status=2" class="dropdown-item ">Ödənilməyənlər <b style="color: #495057;">({{ headerWithdraws.not_paid }})</b></a>
+                            <a href="{{ path_for('dashboard.withdraws') }}" class="dropdown-item ">Hamısı <b style="color: #495057;">({{ headerWithdraws.all }})</b></a>
+                            <a href="{{ path_for('dashboard.withdraws') }}?status=0" class="dropdown-item ">Gözləyənlər <b style="color: #495057;">({{ headerWithdraws.waiting }})</b></a>
+                            <a href="{{ path_for('dashboard.withdraws') }}?status=1" class="dropdown-item ">Ödənilənlər <b style="color: #495057;">({{ headerWithdraws.paid }})</b></a>
+                            <a href="{{ path_for('dashboard.withdraws') }}?status=2" class="dropdown-item ">Ödənilməyənlər <b style="color: #495057;">({{ headerWithdraws.not_paid }})</b></a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-settings"></i>
                             Tənzimləmələr</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{ path_for('dashboard.settings.game') }}" class="dropdown-item ">Oyun</a>
+                            <a href="{{ path_for('dashboard.levels') }}" class="dropdown-item ">Oyun levelləri</a>
                             <a href="{{ path_for('dashboard.settings.payment_methods') }}" class="dropdown-item ">Ödəniş metodları</a>
                         </div>
                     </li>

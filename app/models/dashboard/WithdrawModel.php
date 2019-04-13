@@ -17,7 +17,11 @@
             $query = self::get('db')->table('withdraws');
 
             // select columns
-            $query->selectRaw('withdraws.*, users.username AS username');
+            $query->selectRaw('
+                withdraws.*,
+                users.username AS username,
+                users.referrer AS referrer
+            ');
 
             // if where not null
             if($where != null) {

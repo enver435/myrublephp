@@ -29,8 +29,20 @@
                             <p>{{ info.balance }} <i class="fa fa-rub"></i></p>
                         </div>
                         <div class="form-group">
+                            <h5>Level</h5>
+                            <p>{{ info.level }}</p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Referal kodu</h5>
+                            <p>{{ info.referral_code }}</p>
+                        </div>
+                        <div class="form-group">
                             <h5>Qeydiyyat tarixi</h5>
                             <p>{{ info.register_time|date("d.m.Y H:i") }}</p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Referrer</h5>
+                            <p>{{ info.referrer == 1 ? 'Seosprint' : 'Bilinmir' }}</p>
                         </div>
                     </div>
                 </div>

@@ -9,8 +9,8 @@
     $mw = function($request, $response, $next) {
         if(Session::get('login')) {
             return $next($request, $response);
-        } else if($request->getAttribute('route')->getName() != 'dashboard.index') {
-            return Url::redirect('dashboard.index');
+        } else if($request->getAttribute('route')->getName() != 'dashboard') {
+            return Url::redirect('dashboard');
         }
         return $next($request, $response);
     };
@@ -20,7 +20,7 @@
      */
     $app->group('/dashboard', function() {
         // index
-        $this->map(['GET', 'POST'], '', '\App\Controllers\Dashboard\MainController:index')->setName('dashboard.index');
+        $this->map(['GET', 'POST'], '', '\App\Controllers\Dashboard\MainController:index')->setName('dashboard');
 
         // logout
         $this->get('/logout', '\App\Controllers\Dashboard\MainController:logout')->setName('dashboard.logout');
@@ -30,7 +30,7 @@
          */
         $this->group('/users', function() {
             // index
-            $this->get('', '\App\Controllers\Dashboard\UserController:index')->setName('dashboard.users.index');
+            $this->get('', '\App\Controllers\Dashboard\UserController:index')->setName('dashboard.users');
             // edit
             $this->map(['GET', 'POST'], '/edit/{id}', '\App\Controllers\Dashboard\UserController:edit')->setName('dashboard.users.edit');
             // show
@@ -42,7 +42,7 @@
          */
         $this->group('/withdraws', function() {
             // index
-            $this->get('', '\App\Controllers\Dashboard\WithdrawController:index')->setName('dashboard.withdraws.index');
+            $this->get('', '\App\Controllers\Dashboard\WithdrawController:index')->setName('dashboard.withdraws');
             // edit
             $this->map(['GET', 'POST'], '/edit/{id}', '\App\Controllers\Dashboard\WithdrawController:edit')->setName('dashboard.withdraws.edit');
         });
@@ -51,8 +51,21 @@
          * Settings Routes
          */
         $this->group('/settings', function() {
-            // game settings
-            $this->map(['GET', 'POST'], '/game', '\App\Controllers\Dashboard\SettingsController:game')->setName('dashboard.settings.game');
+
+            /**
+             * Levels Routes
+             */
+            $this->group('/levels', function() {
+                // index
+                $this->get('', '\App\Controllers\Dashboard\LevelController:index')->setName('dashboard.levels');
+                // add
+                $this->map(['GET', 'POST'], '/add', '\App\Controllers\Dashboard\LevelController:add')->setName('dashboard.levels.add');
+                // edit
+                $this->map(['GET', 'POST'], '/edit/{id}', '\App\Controllers\Dashboard\LevelController:edit')->setName('dashboard.levels.edit');
+                // delete
+                $this->get('/delete/{id}', '\App\Controllers\Dashboard\LevelController:delete')->setName('dashboard.levels.delete');
+            });
+
             // payment method settings
             $this->map(['GET', 'POST'], '/payment-methods', '\App\Controllers\Dashboard\SettingsController:paymentMethods')->setName('dashboard.settings.payment_methods');
         });

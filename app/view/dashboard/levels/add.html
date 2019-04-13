@@ -1,0 +1,69 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        {% for message in flash.success %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.danger %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.info %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Level əlavə et</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 offset-3">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="level">Level</label>
+                            <input id="level" type="number" name="level" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="level_start_xp">Level başlanğıc (XP)</label>
+                            <input id="level_start_xp" type="number" name="level_start_xp" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="level_end_xp">Level bitiş (XP)</label>
+                            <input id="level_end_xp" type="number" name="level_end_xp" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Oyun vaxtı</label>
+                            <input id="time" type="number" name="time" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="task">Task sayı</label>
+                            <input id="task" type="number" name="task" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="heart">Ürək sayı</label>
+                            <input id="heart" type="number" name="heart" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="heart_time">Ürək alma vaxtı</label>
+                            <input id="heart_time" type="number" name="heart_time" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="earn">Qazanc</label>
+                            <input id="earn" type="number" name="earn" step="any" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="referral_percent">Referal qazancı (%)</label>
+                            <input id="referral_percent" type="number" name="referral_percent" step="any" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="earn_xp">XP Qazancı</label>
+                            <input id="earn_xp" type="number" name="earn_xp" class="form-control">
+                        </div>
+                        <button type="submit" name="save" class="btn btn-primary w-100">Əlavə et</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
