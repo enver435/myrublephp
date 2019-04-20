@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2019 at 07:23 PM
+-- Generation Time: Apr 20, 2019 at 09:13 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -35,6 +35,7 @@ CREATE TABLE `game_levels` (
   `level_end_xp` int(11) NOT NULL,
   `time` int(11) NOT NULL,
   `task` int(11) NOT NULL,
+  `heart` int(11) NOT NULL,
   `heart_time` int(11) NOT NULL,
   `earn` float NOT NULL,
   `referral_percent` float NOT NULL,
@@ -45,10 +46,10 @@ CREATE TABLE `game_levels` (
 -- Dumping data for table `game_levels`
 --
 
-INSERT INTO `game_levels` (`id`, `level`, `level_start_xp`, `level_end_xp`, `time`, `task`, `heart_time`, `earn`, `referral_percent`, `earn_xp`) VALUES
-(1, 0, 0, 300, 60, 5, 10, 0.01, 5, 1),
-(2, 1, 300, 600, 120, 10, 10, 0.02, 6, 2),
-(3, 2, 600, 900, 120, 10, 10, 0.02, 7, 2);
+INSERT INTO `game_levels` (`id`, `level`, `level_start_xp`, `level_end_xp`, `time`, `task`, `heart`, `heart_time`, `earn`, `referral_percent`, `earn_xp`) VALUES
+(1, 0, 0, 300, 60, 5, 1, 10, 0.01, 5, 1),
+(2, 1, 300, 600, 120, 10, 5, 10, 0.02, 6, 2),
+(3, 2, 600, 0, 120, 10, 10, 10, 0.02, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -404,7 +405,66 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (330, 7, 0, 0, 0, 0, 0, 1554291212),
 (331, 1, 5, 0, 0.01, 0, 1, 1554310929),
 (332, 1, 0, 0, 0, 0, 0, 1554310952),
-(333, 10, 0, 0, 0, 0, 0, 1554311615);
+(333, 10, 0, 0, 0, 0, 0, 1554311615),
+(334, 10, 0, 0, 0, 0, 0, 1554525976),
+(335, 10, 0, 0, 0, 0, 0, 1554525981),
+(336, 10, 5, 3, 0.01, 0.0005, 1, 1554526100),
+(337, 10, 4, 4, 0, 0, 0, 1554526490),
+(338, 10, 5, 0, 0.01, 0.0005, 1, 1554526565),
+(339, 10, 3, 2, 0, 0, 0, 1554526886),
+(340, 10, 5, 0, 0.01, 0.0005, 1, 1554526934),
+(341, 7, 0, 0, 0, 0, 0, 1554534481),
+(342, 8, 5, 1, 0.01, 0.0005, 1, 1554538393),
+(343, 8, 5, 0, 0.01, 0.0005, 1, 1554538473),
+(344, 8, 5, 0, 0.01, 0.0005, 1, 1554742379),
+(345, 8, 5, 1, 0.01, 0.0005, 1, 1554742443),
+(346, 8, 5, 0, 0.01, 0.0005, 1, 1554742548),
+(347, 8, 10, 1, 0.02, 0.0012, 1, 1554742760),
+(348, 8, 5, 0, 0.01, 0.0005, 1, 1554743187),
+(349, 8, 5, 1, 0.01, 0.0005, 1, 1554744092),
+(350, 8, 10, 0, 0.02, 0.0012, 1, 1554744198),
+(351, 8, 2, 0, 0, 0, 0, 1554744231),
+(352, 8, 5, 0, 0.01, 0.0005, 1, 1554744294),
+(353, 8, 10, 0, 0.02, 0.0012, 1, 1554744503),
+(354, 8, 10, 1, 0.02, 0.0012, 1, 1554744806),
+(355, 8, 10, 2, 0.02, 0.0012, 1, 1554745560),
+(356, 8, 10, 2, 0.02, 0.0012, 1, 1554746254),
+(357, 8, 0, 0, 0, 0, 0, 1554805358),
+(358, 8, 10, 1, 0.02, 0.0012, 1, 1554805438),
+(359, 8, 0, 0, 0, 0, 0, 1554805580),
+(360, 8, 10, 2, 0.02, 0.0012, 1, 1554805794),
+(361, 8, 0, 0, 0, 0, 0, 1554806153),
+(362, 8, 0, 0, 0, 0, 0, 1554806487),
+(363, 8, 0, 0, 0, 0, 0, 1554806538),
+(364, 8, 0, 0, 0, 0, 0, 1554806775),
+(365, 8, 0, 0, 0, 0, 0, 1554806869),
+(366, 8, 0, 0, 0, 0, 0, 1554806869),
+(367, 8, 0, 0, 0, 0, 0, 1554806884),
+(368, 8, 0, 0, 0, 0, 0, 1554806884),
+(369, 8, 0, 0, 0, 0, 0, 1554806895),
+(370, 8, 0, 0, 0, 0, 0, 1554806895),
+(371, 8, 0, 0, 0, 0, 0, 1554806895),
+(372, 8, 0, 0, 0, 0, 0, 1554806895),
+(373, 8, 0, 0, 0, 0, 0, 1554806895),
+(374, 8, 0, 0, 0, 0, 0, 1554806895),
+(375, 8, 0, 0, 0, 0, 0, 1554806896),
+(376, 8, 0, 0, 0, 0, 0, 1554807592),
+(377, 8, 0, 0, 0, 0, 0, 1554807830),
+(378, 8, 10, 0, 0.02, 0.0012, 1, 1554807922),
+(379, 8, 10, 3, 0.02, 0.0012, 1, 1554808191),
+(380, 11, 0, 0, 0, 0, 0, 1554830466),
+(381, 11, 0, 0, 0, 0, 0, 1554830470),
+(382, 11, 0, 0, 0, 0, 0, 1554830476),
+(383, 11, 5, 1, 0.01, 0, 1, 1554830535),
+(384, 8, 0, 0, 0, 0, 0, 1554831526),
+(385, 8, 1, 0, 0, 0, 0, 1554831905),
+(386, 8, 0, 0, 0, 0, 0, 1554832063),
+(387, 8, 10, 0, 0.02, 0.0012, 1, 1554832122),
+(388, 8, 10, 0, 0.02, 0.0012, 1, 1554832272),
+(389, 8, 0, 0, 0, 0, 0, 1554832280),
+(390, 8, 10, 0, 0.02, 0.0012, 1, 1554832349),
+(391, 8, 10, 0, 0.02, 0.0012, 1, 1554832441),
+(392, 8, 0, 0, 0, 0, 0, 1554832449);
 
 -- --------------------------------------------------------
 
@@ -437,8 +497,6 @@ INSERT INTO `payment_methods` (`id`, `method`, `min_withdraw`, `commission`, `st
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `surname` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
@@ -448,24 +506,27 @@ CREATE TABLE `users` (
   `notify_heart_time` int(11) NOT NULL,
   `firebase_token` text NOT NULL,
   `register_time` int(11) NOT NULL,
-  `referral_code` varchar(255) DEFAULT NULL
+  `referral_code` varchar(255) DEFAULT NULL,
+  `referrer` int(11) NOT NULL COMMENT '1 = seosprint'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `referral_code`) VALUES
-(1, 'Enver', 'Abbasov', 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 61.76, 201, 1, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001'),
-(2, '', '', 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, '000002'),
-(3, '', '', 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000003'),
-(4, '', '', 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, '', 0, '000004'),
-(5, '', '', 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000005'),
-(6, '', '', 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000006'),
-(7, '', '', 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.05, 1, 0, 1554291216, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554130670, '000007'),
-(8, '', '', 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131201, '000008'),
-(9, '', '', 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.09, 599, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, '000009'),
-(10, '', '', 'yyy435', 'avb@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 2, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554311138, '000010');
+INSERT INTO `users` (`id`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `referral_code`, `referrer`) VALUES
+(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 117.09, 201, -5, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001', 0),
+(2, 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, '000002', 0),
+(3, 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000003', 0),
+(4, 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, '', 0, '000004', 0),
+(5, 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000005', 0),
+(6, 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0015, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000006', 0),
+(7, 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0708, 1, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554130670, '000007', 0),
+(8, 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 72.94, 324, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131201, '000008', 0),
+(9, 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.09, 599, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, '000009', 0),
+(10, 'yyy435', 'avb@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 100, 605, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554311138, '000010', 0),
+(11, 'uuu435', 'hfdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.01, 1, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830030, '000011', 0),
+(12, 'ififi435', 'gdhdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830591, '000012', 0);
 
 -- --------------------------------------------------------
 
@@ -485,10 +546,10 @@ CREATE TABLE `user_referrals` (
 --
 
 INSERT INTO `user_referrals` (`id`, `user_id`, `ref_user_id`, `time`) VALUES
-(1, 8, 7, 1534693171),
 (2, 9, 7, 1554131269),
 (3, 7, 6, 1554304636),
-(4, 10, 6, 1554311139);
+(4, 10, 6, 1554311139),
+(6, 8, 7, 1554832641);
 
 -- --------------------------------------------------------
 
@@ -504,8 +565,8 @@ CREATE TABLE `withdraws` (
   `payment_method` int(11) NOT NULL COMMENT '0 = unknown, 1 = yandex, 2 = payeer, 3 = webmoney',
   `wallet_number` varchar(255) NOT NULL,
   `payment_status` int(11) NOT NULL COMMENT ' 0 = waiting, 1 = paid, 2 = not paid',
-  `not_paid_type` int(11) NOT NULL COMMENT '0 = other, 1 = wallet incorrect',
-  `not_paid_message` text NOT NULL,
+  `not_paid_type` int(11) NOT NULL COMMENT '1 = wallet incorrect',
+  `payment_id` varchar(50) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -513,30 +574,53 @@ CREATE TABLE `withdraws` (
 -- Dumping data for table `withdraws`
 --
 
-INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `not_paid_type`, `not_paid_message`, `time`) VALUES
-(1, 1, 5, 0.5, 1, '156467567569', 1, 0, '', 1549045007),
-(2, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(3, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(4, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(5, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(6, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(7, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(8, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(9, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(10, 1, 5, 0.5, 2, '156467567569', 1, 0, '', 1549045007),
-(11, 1, 5, 0.5, 2, '156467567569', 0, 0, '', 1549045007),
-(12, 1, 5.7, 0.5, 1, '344748383829', 2, 0, 'Ваш 344748383829 кошелек неверен. Пожалуйста, проверьте другой кошелек', 1553101232),
-(13, 1, 5.6, 0.5, 1, '63737e7', 1, 0, '', 1553102484),
-(14, 1, 5.6, 0.5, 1, '374747', 2, 0, 'dwqdqwdqwdqwdqwfefwef', 1553102668),
-(15, 0, 56, 0.5, 1, 'tyhhh', 0, 0, '', 1553188967),
-(16, 0, 56, 0.5, 1, 'yyygg', 0, 0, '', 1553189027),
-(17, 0, 56, 0.5, 1, 'hfghfh', 0, 0, '', 1553189106),
-(18, 0, 56, 0.5, 1, 'yudh', 0, 0, '', 1553189184),
-(19, 1, 5.9, 0.5, 1, 'hdhd', 2, 0, 'Ваш hdhd кошелек неверен. Пожалуйста, проверьте другой кошелек', 1553189297),
-(20, 1, 5.9, 0.5, 1, '45566732244', 2, 0, 'Ваш 45566732244 кошелек неверен. Пожалуйста, проверьте другой кошелек', 1553189559),
-(21, 1, 5.9, 0.5, 1, '56789', 2, 0, '', 1553189776),
-(22, 1, 5.9, 0.5, 1, '45677', 1, 0, '', 1553190900),
-(23, 1, 5, 0.5, 1, '6666666555', 2, 1, '', 1553840493);
+INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `not_paid_type`, `payment_id`, `time`) VALUES
+(1, 1, 5, 0.5, 1, '156467567569', 2, 1, '0', 1549045007),
+(2, 1, 1, 0.95, 2, 'P55598111', 1, 0, '778231071', 1549045007),
+(3, 1, 5, 0.5, 2, '1009735513', 2, 1, '0', 1549045007),
+(4, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(5, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(6, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(7, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(8, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(9, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(10, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(11, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
+(12, 1, 5.7, 0.5, 1, '344748383829', 1, 0, '0', 1553101232),
+(13, 1, 5.6, 0.5, 1, '63737e7', 1, 0, '0', 1553102484),
+(14, 1, 5.6, 0.5, 1, '374747', 1, 0, '0', 1553102668),
+(15, 0, 56, 0.5, 1, 'tyhhh', 1, 0, '0', 1553188967),
+(16, 0, 56, 0.5, 1, 'yyygg', 1, 0, '0', 1553189027),
+(17, 0, 56, 0.5, 1, 'hfghfh', 1, 0, '0', 1553189106),
+(18, 0, 56, 0.5, 1, 'yudh', 1, 0, '0', 1553189184),
+(19, 1, 5.9, 0.5, 1, 'hdhd', 1, 0, '0', 1553189297),
+(20, 1, 5.9, 0.5, 1, '45566732244', 1, 0, '0', 1553189559),
+(21, 1, 5.9, 0.5, 1, '56789', 1, 0, '0', 1553189776),
+(22, 1, 5.9, 0.5, 1, '45677', 1, 0, '0', 1553190900),
+(23, 1, 5, 0.5, 1, '6666666555', 1, 1, '0', 1553840493),
+(24, 10, 5, 0.5, 1, 'gyyi56778', 1, 0, '0', 1554527911),
+(25, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824786),
+(26, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824787),
+(27, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824787),
+(28, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824788),
+(29, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824788),
+(30, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824788),
+(31, 8, 50, 0.5, 1, '474748494949', 1, 0, '0', 1554824789),
+(32, 8, 20, 0.5, 1, '6656887655', 1, 0, '0', 1554828656),
+(33, 8, 20, 0.5, 1, '6656887655', 1, 0, '0', 1554828658),
+(34, 8, 10, 0.5, 1, '5678778', 1, 0, '0', 1554828733),
+(35, 8, 10, 0.5, 1, '5678778', 1, 0, '0', 1554828734),
+(36, 8, 5, 0.5, 1, '84849488t', 1, 0, '0', 1554829795),
+(37, 8, 5, 0.5, 1, '647473747', 1, 0, '0', 1554829823),
+(38, 8, 5, 0.5, 1, '47474747', 1, 0, '0', 1554829839);
+
+--
+-- Triggers `withdraws`
+--
+DELIMITER $$
+CREATE TRIGGER `ucase_insert` BEFORE INSERT ON `withdraws` FOR EACH ROW SET NEW.wallet_number = UPPER(NEW.wallet_number)
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -603,7 +687,7 @@ ALTER TABLE `game_levels`
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=393;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -615,19 +699,19 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_referrals`
 --
 ALTER TABLE `user_referrals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `withdraws`
 --
 ALTER TABLE `withdraws`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
