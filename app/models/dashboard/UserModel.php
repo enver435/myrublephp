@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Models\Dashboard;
-
     use App\Models\BaseModel;
 
     class UserModel extends BaseModel
@@ -11,7 +10,7 @@
          *
          * @return array
          */
-        public static function users($where = null, $offset = null, $limit = null)
+        public static function users($where = null, $limit = 0, $offset = 0)
         {
             // select table
             $query = self::get('db')->table('users');
@@ -43,16 +42,13 @@
             // order by id asc
             $query->orderBy('users.id', 'asc')->get();
 
-            // if exist pagination
-            if($offset >= 0 && $limit > 0) {
-                $query->offset($offset)->limit($limit);
+            // if exist limit
+            if($limit > 0 && $offset >= 0) {
+                $query->limit($limit)->offset($offset);
             }
-            
-            // get rows
-            $results = $query->get();
 
             // return results
-            return $results;
+            return $query->get();
         }
 
         /**
@@ -108,7 +104,6 @@
 
             // get result
             $result = $query->first();
-            
             if($result->id) {
                 return $result;
             }
@@ -118,8 +113,9 @@
         /**
          * Update User
          *
-         * @param string|array $where
-         * @return object
+         * @param array $where
+         * @param array $data
+         * @return boolean
          */
         public static function update($where, $data)
         {
@@ -132,15 +128,15 @@
          * Exist User
          *
          * @param string|array $where
-         * @return object
+         * @return boolean
          */
         public static function exist($where)
         {
-            $result = self::get('db')->table('users')
+            $count = self::get('db')->table('users')
                 ->where($where)
                 ->count('id');
             
-            if($result > 0) {
+            if($count > 0) {
                 return true;
             }
             return false;

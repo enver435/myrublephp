@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Api;
-
     use App\Controllers\BaseController;
     use App\Models\Api\ReferralModel;
     use App\Models\Api\UserModel;
@@ -22,7 +21,7 @@
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => ReferralModel::referrals(@$params['user_id'], @$params['offset'], @$params['limit'])
+                    'data'   => ReferralModel::referrals(@$params['user_id'], @$params['limit'], @$params['offset'])
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data
@@ -32,7 +31,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
 
@@ -48,7 +47,10 @@
                 isset($body['user_id']) && $body['user_id'] > 0
             ) {
                 try {
-                    $refInfo = UserModel::info(['referral_code' => $body['ref_code']], ['id', 'referral_code']);
+                    $refInfo = UserModel::info(
+                        ['referral_code' => $body['ref_code']],
+                        ['id', 'referral_code']
+                    );
                     if($refInfo !== false) {
                         if($refInfo->id != $body['user_id']) {
                             $lastId = ReferralModel::insert([
@@ -97,7 +99,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
     }

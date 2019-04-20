@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Api;
-
     use App\Models\Api\GameModel;
     use App\Controllers\BaseController;
 

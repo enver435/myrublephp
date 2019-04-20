@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Dashboard;
-
     use App\Controllers\BaseController;
     use App\Models\BaseModel;
     use App\Models\Dashboard\UserModel;
@@ -24,7 +23,7 @@
             $pagination  = Pagination::init($totalItems, @$params['page'], $perPage, $urlPattern);
             
             // get users
-            $users = UserModel::users(null, $pagination->offset(), $pagination->limit());
+            $users = UserModel::users(null, $pagination->limit(), $pagination->offset());
 
             // render page
             return $this->view->render($response, 'dashboard/users/index.html', [

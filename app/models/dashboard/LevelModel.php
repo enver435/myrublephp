@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Models\Dashboard;
-
     use App\Models\BaseModel;
 
     class LevelModel extends BaseModel
@@ -13,13 +12,8 @@
          */
         public static function all()
         {
-            $results = self::get('db')->table('game_levels')
+            return self::get('db')->table('game_levels')
                 ->get();
-            
-            if(!empty($results)) {
-                return $results;
-            }
-            return false;
         }
 
         /**

@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Dashboard;
-
     use App\Controllers\BaseController;
     use App\Models\BaseModel;
     use App\Models\Dashboard\WithdrawModel;
@@ -44,7 +43,7 @@
             $pagination = Pagination::init($totalItems, @$params['page'], $perPage, $urlPattern);
             
             // get withdraws
-            $withdraws = WithdrawModel::withdraws($where, $pagination->offset(), $pagination->limit());
+            $withdraws = WithdrawModel::withdraws($where, $pagination->limit(), $pagination->offset());
 
             // render page
             return $this->view->render($response, 'dashboard/withdraws/index.html', [
@@ -67,41 +66,19 @@
                     // update status
                     $update = true;
 
-                    // eger payment status odenilmeyibse
-                    if($body['payment_status'] == 2) {
-                        // eger sebeb basqadisa ve mesaj bosdusa
-                        if($body['not_paid_selectbox'] == 0 && trim($body['not_paid_message']) == '') {
-                            $update = false;
-                        } elseif($body['not_paid_selectbox'] == -1) { // sebeb secilmeyibse
-                            $update = false;
-                        }
-                    }
-
-                    // setirler bosdusa
                     if($body['wallet_number'] == '') {
+                        $update = false;
+                    } elseif($body['payment_status'] == 2 && $body['not_paid_selectbox'] == 0) {
                         $update = false;
                     }
 
                     if($update === true) {
                         try {
-                            
-                            /**
-                             * Odenis Olunmayibsa ve Sebebler
-                             * 1 => wallet sehfdir
-                             */
-                            $not_paid_message = $body['not_paid_message'];
-                            if($body['payment_status'] == 2) {
-                                if($body['not_paid_selectbox'] == 1) {
-                                    $not_paid_message = 'Ваш ' . $body['wallet_number'] . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
-                                }
-                            }
-
                             // update information
                             WithdrawModel::update(['id' => $id], [
-                                'wallet_number'    => $body['wallet_number'],
-                                'payment_status'   => $body['payment_status'],
-                                'not_paid_type'    => $body['not_paid_selectbox'],
-                                'not_paid_message' => $body['not_paid_message']
+                                'wallet_number'  => $body['wallet_number'],
+                                'payment_status' => $body['payment_status'],
+                                'not_paid_type'  => $body['not_paid_selectbox']
                             ]);
 
                             // get withdraw information
@@ -112,24 +89,30 @@
                             
                             // eger odenilibse
                             if($body['payment_status'] == 1) {
+                                // send notification
                                 $title   = 'Ваш платеж успешен';
                                 $message = $info->amount . ' рублей было отправлено на ваш счет ' . $info->wallet_number;
-
-                                // send notification
                                 $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                             }
                             // eger odenilmeyibse
                             elseif($body['payment_status'] == 2) {
-                                $title   = 'Ваш платеж не успешен';
-                                $message = $not_paid_message;
-
-                                // send notification
-                                $firebase->sendNotify($userInfo->firebase_token, $title, $message);
-
                                 // update user balance
                                 UserModel::update(['id' => $userInfo->id], [
-                                    'balance' => $userInfo->balance + round(($info->amount + ($info->amount * $info->commission / 100)), 3)
+                                    'balance' => $this->db->raw('balance + ' . round(($info->amount + ($info->amount * $info->commission / 100)), 2))
                                 ]);
+
+                                // send notification
+                                $title = 'Ваш платеж не успешен';
+
+                                /**
+                                 * 1 => wallet incorrect
+                                 */
+                                if($body['not_paid_selectbox'] == 1) {
+                                    $message = 'Ваш ' . $body['wallet_number'] . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                } else {
+                                    $message = '';
+                                }
+                                $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                             }
 
                             // add flash message

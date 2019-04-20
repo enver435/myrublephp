@@ -39,18 +39,17 @@
                                 <option value="2">Ödənilmədi</option>
                             </select>
                         </div>
-                        <div class="form-group not_paid_message" style="{{ item.payment_status == 2 ? 'display: block;' : 'display: none;' }}">
-                            <label for="not_paid_message">Ödənişin olunmama səbəbi</label>
+                        <div class="form-group not_paid_selectbox" style="display: none;">
+                            <label for="not_paid_selectbox">Ödənişin olunmama səbəbi</label>
                             <div class="form-group">
                                 <select name="not_paid_selectbox" id="not_paid_selectbox" class="form-control">
-                                    <option value="-1">Səbəb seçin</option>
+                                    <option value="0">Səbəb seçin</option>
                                     <option value="1">Wallet səhfdir</option>
-                                    <option value="0">Başqa</option>
                                 </select>
                             </div>
-                            <div class="form-group not_paid_message_textarea" style="{{ item.payment_status == 2 ? 'display: block;' : 'display: none;' }}">
+                            {# <div class="form-group not_paid_message_textarea" style="{{ item.payment_status == 2 ? 'display: block;' : 'display: none;' }}">
                                 <textarea name="not_paid_message" id="not_paid_message" cols="30" rows="5" class="form-control"></textarea>
-                            </div>
+                            </div> #}
                         </div>
                         <button type="submit" name="save" class="btn btn-primary w-100">Yadda saxla</button>
                     </form>

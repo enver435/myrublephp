@@ -1,6 +1,6 @@
 <?php
 
-    namespace App\Models\Api;
+    namespace App\Models\Crons;
     use App\Models\BaseModel;
 
     class WithdrawModel extends BaseModel
@@ -20,9 +20,6 @@
                 $query->where($where);
             }
 
-            // order by id desc
-            $query->orderBy('id', 'desc')->get();
-
             // if exist limit
             if($limit > 0 && $offset >= 0) {
                 $query->limit($limit)->offset($offset);
@@ -33,26 +30,16 @@
         }
 
         /**
-         * Insert Withdraw
+         * Update Withdraw
          *
-         * @param array $data
-         * @return integer
+         * @param string|array $where
+         * @return boolean
          */
-        public static function insert($data)
+        public static function update($where, $data)
         {
             return self::get('db')->table('withdraws')
-                ->insertGetId($data);
-        }
-
-        /**
-         * Payment Methods
-         *
-         * @return array
-         */
-        public static function paymentMethods()
-        {
-            return self::get('db')->table('payment_methods')
-                ->get();
+                ->where($where)
+                ->update($data);
         }
     }
 

@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Models\Dashboard;
-
     use App\Models\BaseModel;
 
     class WithdrawModel extends BaseModel
@@ -28,7 +27,7 @@
                 $query->where($where);
             }
 
-            // if exist pagination
+            // if exist limit
             if($offset >= 0 && $limit > 0) {
                 $query->offset($offset)->limit($limit);
             }

@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Api;
-
     use App\Models\Api\UserModel;
     use App\Controllers\BaseController;
     use App\Models\Api\ReferralModel;
@@ -58,7 +57,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
 
@@ -121,7 +120,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
 
@@ -184,7 +183,7 @@
                 }
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
 
@@ -319,7 +318,7 @@
                 }
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
     }

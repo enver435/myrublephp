@@ -107,17 +107,17 @@ $(document).ready(function () {
 
     $('select[name=payment_status]').change(function () {
         if ($(this).val() == 2) {
-            $('.not_paid_message').show();
+            $('.not_paid_selectbox').show();
         } else {
-            $('.not_paid_message').hide();
+            $('.not_paid_selectbox').hide();
         }
     });
     
-    $('select[name=not_paid_selectbox]').change(function () {
-        if ($(this).val() == 0) {
-            $('.not_paid_message_textarea').show();
-        } else {
-            $('.not_paid_message_textarea').hide();
-        }
-    });
+    // $('select[name=not_paid_selectbox]').change(function () {
+    //     if ($(this).val() == 0) {
+    //         $('.not_paid_message_textarea').show();
+    //     } else {
+    //         $('.not_paid_message_textarea').hide();
+    //     }
+    // });
 });

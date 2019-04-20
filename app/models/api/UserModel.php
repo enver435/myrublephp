@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Models\Api;
-
     use App\Models\BaseModel;
 
     class UserModel extends BaseModel
@@ -13,11 +12,11 @@
          */
         public static function users($where = null)
         {
-            $results = self::get('db')->table('users');
+            $query = self::get('db')->table('users');
             if($where != null) {
-                $results->where($where);
+                $query->where($where);
             }
-            return $results->get();
+            return $query->get();
         }
 
         /**
@@ -88,7 +87,6 @@
 
             // get result
             $result = $query->first();
-            
             if($result->id) {
                 return $result;
             }
@@ -98,8 +96,9 @@
         /**
          * Update User
          *
-         * @param string|array $where
-         * @return object
+         * @param array $where
+         * @param array $data
+         * @return boolean
          */
         public static function update($where, $data)
         {
@@ -124,15 +123,15 @@
          * Exist User
          *
          * @param string|array $where
-         * @return object
+         * @return boolean
          */
         public static function exist($where)
         {
-            $result = self::get('db')->table('users')
+            $count = self::get('db')->table('users')
                 ->where($where)
                 ->count('id');
             
-            if($result > 0) {
+            if($count > 0) {
                 return true;
             }
             return false;

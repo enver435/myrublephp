@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Dashboard;
-
     use App\Controllers\BaseController;
     use App\System\Helpers\Session;
     use App\System\Helpers\Url;

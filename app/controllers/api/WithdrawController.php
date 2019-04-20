@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Controllers\Api;
-
     use App\Models\Api\WithdrawModel;
     use App\Controllers\BaseController;
 
@@ -20,7 +19,7 @@
             $where = null;
             if(!empty($params)) {
                 foreach ($params as $key => $value) {
-                    if($key != 'offset' && $key != 'limit' && isset($value) && $value != '') {
+                    if($key != 'limit' && $key != 'offset' && isset($value) && $value != '') {
                         // set where
                         $where[] = [$key, '=', $value];
                     }
@@ -31,7 +30,7 @@
                 // set json data
                 $this->json = [
                     'status' => true,
-                    'data'   => WithdrawModel::withdraws($where, @$params['offset'], @$params['limit'])
+                    'data'   => WithdrawModel::withdraws($where, @$params['limit'], @$params['offset'])
                 ];
             } catch (\Illuminate\Database\QueryException $e) {
                 // set json data
@@ -41,7 +40,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
 
@@ -79,7 +78,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
 
@@ -102,7 +101,7 @@
                 ];
             }
 
-            // return reponse json data
+            // return response json data
             return $response->withJson($this->json);
         }
     }

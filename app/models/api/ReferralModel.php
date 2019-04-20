@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Models\Api;
-
     use App\Models\BaseModel;
 
     class ReferralModel extends BaseModel
@@ -11,7 +10,7 @@
          *
          * @return array
          */
-        public static function referrals($user_id, $offset = null, $limit = null)
+        public static function referrals($user_id, $limit = 0, $offset = 0)
         {
             // select table
             $query = self::get('db')->table('user_referrals');
@@ -61,16 +60,14 @@
 
             // group by
             $query->groupBy('user_referrals.id');
-
-            // get results
-            $results = $query->get();
-
-            // if exist pagination
-            if($offset >= 0 && $limit > 0) {
-                $query->offset($offset)->limit($limit);
+            
+            // if exist limit
+            if($limit > 0 && $offset >= 0) {
+                $query->limit($limit)->offset($offset);
             }
 
-            return $results;
+            // return rows
+            return $query->get();
         }
 
         /**
