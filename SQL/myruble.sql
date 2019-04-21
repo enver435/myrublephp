@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2019 at 09:13 PM
+-- Generation Time: Apr 21, 2019 at 06:26 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -477,17 +477,18 @@ CREATE TABLE `payment_methods` (
   `method` int(11) NOT NULL COMMENT '1 = yandex, 2 = payeer, 3 = webmoney',
   `min_withdraw` float NOT NULL,
   `commission` float NOT NULL,
-  `status` int(11) NOT NULL COMMENT '0 = deactive, 1 = active'
+  `status` int(11) NOT NULL COMMENT '0 = deactive, 1 = active',
+  `auto_payment` int(11) NOT NULL COMMENT '0 = deactive, 1 = active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `payment_methods`
 --
 
-INSERT INTO `payment_methods` (`id`, `method`, `min_withdraw`, `commission`, `status`) VALUES
-(1, 1, 5, 0.5, 1),
-(2, 2, 5, 0.95, 1),
-(3, 3, 5, 0.8, 1);
+INSERT INTO `payment_methods` (`id`, `method`, `min_withdraw`, `commission`, `status`, `auto_payment`) VALUES
+(1, 1, 5, 0.5, 1, 1),
+(2, 2, 5, 0.95, 1, 1),
+(3, 3, 5, 0.8, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -515,7 +516,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `referral_code`, `referrer`) VALUES
-(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 117.09, 201, -5, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001', 0),
+(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 119.11, 201, -5, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001', 0),
 (2, 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, '000002', 0),
 (3, 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000003', 0),
 (4, 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, '', 0, '000004', 0),
@@ -576,8 +577,8 @@ CREATE TABLE `withdraws` (
 
 INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_method`, `wallet_number`, `payment_status`, `not_paid_type`, `payment_id`, `time`) VALUES
 (1, 1, 5, 0.5, 1, '156467567569', 2, 1, '0', 1549045007),
-(2, 1, 1, 0.95, 2, 'P55598111', 1, 0, '778231071', 1549045007),
-(3, 1, 5, 0.5, 2, '1009735513', 2, 1, '0', 1549045007),
+(2, 1, 1, 0.95, 2, 'P55598111', 1, 0, '0', 1549045007),
+(3, 1, 1, 0.5, 1, '410014399542709', 1, 0, '609170787164000302', 1549045007),
 (4, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
 (5, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
 (6, 1, 5, 0.5, 2, '156467567569', 1, 0, '0', 1549045007),
