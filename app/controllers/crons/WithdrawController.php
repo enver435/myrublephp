@@ -13,19 +13,11 @@
         private $json = [];
 
         public function withdrawYandex($request, $response, $args)
-        {
-            // $scope = ['account-info', 'operation-history', 'operation-details', 'payment-p2p'];
-            // $auth_url = API::buildObtainTokenUrl(getenv('YANDEX_CLIENT_ID'), getenv('YANDEX_REDIRECT_URI'), $scope);
-            // echo $auth_url;
-
-            // $access_token_response = API::getAccessToken(getenv('YANDEX_CLIENT_ID'), getenv('YANDEX_CODE'), getenv('YANDEX_REDIRECT_URI'), null);
-            // $access_token = $access_token_response->access_token;
-            // echo $access_token;
-            
+        {            
             try {
                 // get payment method information
                 $methodInfo = WithdrawModel::methodInfo(1);
-                
+
                 if($methodInfo->auto_payment == 1) {
                     // init firebase
                     $firebase = Firebase::init();
@@ -109,7 +101,7 @@
             }
 
             // return response json data
-            // return $response->withJson($this->json);
+            return $response->withJson($this->json);
         }
 
         public function withdrawPayeer($request, $response, $args)
