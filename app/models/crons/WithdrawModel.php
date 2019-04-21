@@ -41,6 +41,19 @@
                 ->where($where)
                 ->update($data);
         }
+
+        /**
+         * Payment Method Information
+         *
+         * @param integer $method
+         * @return object
+         */
+        public static function methodInfo($method)
+        {
+            return self::get('db')->table('payment_methods')
+                ->where(['method' => $method])
+                ->first();
+        }
     }
 
 ?>

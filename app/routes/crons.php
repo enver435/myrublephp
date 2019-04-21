@@ -9,6 +9,8 @@
 
         // withdraw notify
         $this->group('/withdraw', function() {
+            // yandex
+            $this->get('/yandex', '\App\Controllers\Crons\WithdrawController:withdrawYandex');
             // payeer
             $this->get('/payeer', '\App\Controllers\Crons\WithdrawController:withdrawPayeer');
         });

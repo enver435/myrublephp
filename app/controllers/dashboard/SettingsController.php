@@ -21,7 +21,8 @@
                         WithdrawModel::updateMethod($methodID, [
                             'min_withdraw' => $body['min_withdraw'][$methodID],
                             'commission'   => $body['commission'][$methodID],
-                            'status'       => (!$body['status'][$methodID] ? 0 : 1)
+                            'status'       => (!$body['status'][$methodID] ? 0 : 1),
+                            'auto_payment' => (!$body['auto_payment'][$methodID] ? 0 : 1)
                         ]);
                     } catch (\Illuminate\Database\QueryException $e) {
                         // add flash message
