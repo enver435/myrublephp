@@ -10,7 +10,7 @@
          *
          * @return array
          */
-        public static function withdraws($where = null, $offset = null, $limit = null)
+        public static function withdraws($where = null, $limit = 0, $offset = 0)
         {
             // select table
             $query = self::get('db')->table('withdraws');
@@ -28,8 +28,8 @@
             }
 
             // if exist limit
-            if($offset >= 0 && $limit > 0) {
-                $query->offset($offset)->limit($limit);
+            if($limit > 0 && $offset >= 0) {
+                $query->limit($limit)->offset($offset);
             }
 
             // relation user table
