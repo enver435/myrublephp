@@ -15,6 +15,7 @@
                 if($body['username'] == getenv('ADMIN_USERNAME') && $body['pass'] == getenv('ADMIN_PASS')) {
                     Session::set('login', true);
                 }
+                return Url::redirect('dashboard');
             }
 
             $renderData = [];
