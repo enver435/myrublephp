@@ -3,21 +3,23 @@
     use App\Models\BaseModel;
 
     $container = $app->getContainer();
+    unset($container['errorHandler']);
+    unset($container['phpErrorHandler']);
 
     // exception handler
-    $container['errorHandler'] = function($container) {
-        return function($request, $response, $exception) use($container) {
-            $data = [
-                'status'  => false,
-                'code'    => $exception->getCode(),
-                'message' => $exception->getMessage(),
-                'file'    => $exception->getFile(),
-                'line'    => $exception->getLine(),
-                'trace'   => explode("\n", $exception->getTraceAsString()),
-            ];
-            return $response->withJson($data);
-        };
-    };
+    // $container['errorHandler'] = function($container) {
+    //     return function($request, $response, $exception) use($container) {
+    //         $data = [
+    //             'status'  => false,
+    //             'code'    => $exception->getCode(),
+    //             'message' => $exception->getMessage(),
+    //             'file'    => $exception->getFile(),
+    //             'line'    => $exception->getLine(),
+    //             'trace'   => explode("\n", $exception->getTraceAsString()),
+    //         ];
+    //         return $response->withJson($data);
+    //     };
+    // };
 
     // page not found handler
     $container['notFoundHandler'] = function ($container) {
