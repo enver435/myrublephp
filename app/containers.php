@@ -3,8 +3,8 @@
     use App\Models\BaseModel;
 
     $container = $app->getContainer();
-    unset($container['errorHandler']);
-    unset($container['phpErrorHandler']);
+    unset($app->getContainer()['errorHandler']);
+    unset($app->getContainer()['phpErrorHandler']);
 
     // exception handler
     // $container['errorHandler'] = function($container) {
