@@ -88,7 +88,7 @@
                             ]);
 
                             // update user for referral
-                            if($userInfo->ref_user_id) {
+                            if($userInfo->ref_user_id > 0) {
                                 UserModel::update(['id' => $userInfo->ref_user_id], [
                                     'balance' => $this->db->raw('balance + ' . $earn_referral)
                                 ]);
