@@ -55,7 +55,7 @@
             $user_id = $body['user_id'];
             $method = $body['method'];
             $amount = $body['amount'];
-            $wallet_number = $body['wallet_number'];
+            $wallet_number = strtoupper(strip_tags(trim($body['wallet_number'])));
 
             if($user_id > 0 && $method > 0 && $amount > 0 && strlen($wallet_number) > 0) {
                 try {

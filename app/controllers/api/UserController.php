@@ -80,7 +80,7 @@
                     } elseif(isset($body['data'][$key]['currentTime']) && $body['data'][$key]['currentTime'] == "true") {
                         $updateData[$key] = time();
                     } else {
-                        $updateData[$key] = $value;
+                        $updateData[$key] = strip_tags(trim($value));
                     }
                 }
 
@@ -133,7 +133,7 @@
 
             // post body get data
             $email = filter_var(mb_strtolower(trim($body['email']), 'UTF-8'), FILTER_SANITIZE_EMAIL);
-            $pass  = trim($body['pass']);
+            $pass  = strip_tags(trim($body['pass']));
             
             // validate body
             if($email != '' && $pass != '') {
@@ -197,7 +197,8 @@
             // post body get data
             $email    = filter_var(mb_strtolower(trim($body['email']), 'UTF-8'), FILTER_SANITIZE_EMAIL);
             $username = mb_strtolower(trim($body['username']), 'UTF-8');
-            $pass     = trim($body['pass']);
+            $pass     = strip_tags(trim($body['pass']));
+            $ref_code = strip_tags(trim($body['ref_code']));
 
             // validate body
             if($email != '' && $username != '' && $pass != '') {
@@ -259,8 +260,8 @@
                         ];
                         // set insert status
                         $insert = false;
-                    } elseif($body['ref_code'] != '') {
-                        $refInfo = UserModel::info(['referral_code' => $body['ref_code']], ['id']);
+                    } elseif($ref_code != '') {
+                        $refInfo = UserModel::info(['referral_code' => $ref_code], ['id']);
                         if($refInfo === false) {
                             // set json data
                             $this->json = [
@@ -279,7 +280,7 @@
                         $insertData['heart']         = 3;
                         $insertData['register_time'] = time();
 
-                        // destroy insert data in keys
+                        // destroy ref_code from $insertData
                         unset($insertData['ref_code']);
 
                         // insert user
@@ -291,7 +292,7 @@
                             ]);
 
                             // insert referral
-                            if($body['ref_code'] != '') {
+                            if($ref_code != '') {
                                 ReferralModel::insert([
                                     'user_id'     => $lastId,
                                     'ref_user_id' => $refInfo->id,

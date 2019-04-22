@@ -42,26 +42,29 @@
         {
             $body = $request->getParsedBody();
 
+            $user_id = strip_tags(trim($body['user_id']));
+            $ref_code = strip_tags(trim($body['ref_code']));
+
             if(
-                isset($body['ref_code']) && $body['ref_code'] != '' &&
-                isset($body['user_id']) && $body['user_id'] > 0
+                isset($ref_code) && $ref_code != '' &&
+                isset($user_id) && $user_id > 0
             ) {
                 try {
                     $refInfo = UserModel::info(
-                        ['referral_code' => $body['ref_code']],
+                        ['referral_code' => $ref_code],
                         ['id', 'referral_code']
                     );
                     if($refInfo !== false) {
-                        if($refInfo->id != $body['user_id']) {
+                        if($refInfo->id != $user_id) {
                             $lastId = ReferralModel::insert([
-                                'user_id'     => $body['user_id'],
+                                'user_id'     => $user_id,
                                 'ref_user_id' => $refInfo->id,
                                 'time'        => time()
                             ]);
     
                             // referral information
                             $data['id']          = $lastId;
-                            $data['user_id']     = $body['user_id'];
+                            $data['user_id']     = $user_id;
                             $data['ref_user_id'] = $refInfo->id;
                             $data['time']        = time();
                             

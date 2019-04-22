@@ -39,84 +39,91 @@
         {
             $body = $request->getParsedBody();
 
-            try {
-                // get max level information
-                $maxLevel = GameModel::gameLevels(true);
+            $user_id = $body['user_id'];
+            $task_success = $body['task_success'];
+            $task_fail = $body['task_fail'];
+            $answer_click_count = $body['answer_click_count'];
 
-                // get user information
-                $userInfo = UserModel::infoFull(['users.id' => $body['user_id']]);
-
-                if($userInfo !== false) {
-                    // get level information
-                    $levelData = GameModel::levelInfo(['level' => $userInfo->level]);
-
-                    if($levelData !== false) {
-                        
-                        $level_xp = 0;
-                        $earn = 0;
-                        $earn_referral = 0;
-                        $status = 0;
-
-                        if(
-                            $levelData->task == $body['task_success'] &&
-                            $body['answer_click_count'] >= $levelData->task
-                        ) {
-                            $earn = $levelData->earn;
-                            $status = 1;
+            if($user_id > 0 && $task_success >= 0 && $task_fail >= 0 && $answer_click_count >= 0) {
+                try {
+                    // get max level information
+                    $maxLevel = GameModel::gameLevels(true);
+    
+                    // get user information
+                    $userInfo = UserModel::infoFull(['users.id' => $user_id]);
+    
+                    if($userInfo !== false) {
+                        // get level information
+                        $levelData = GameModel::levelInfo(['level' => $userInfo->level]);
+    
+                        if($levelData !== false) {
                             
-                            if($maxLevel->level > $userInfo->level) {
-                                $level_xp = $levelData->earn_xp;
+                            $level_xp = 0;
+                            $earn = 0;
+                            $earn_referral = 0;
+                            $status = 0;
+    
+                            if(
+                                $levelData->task == $task_success &&
+                                $answer_click_count >= $levelData->task
+                            ) {
+                                $earn = $levelData->earn;
+                                $status = 1;
+    
+                                if($maxLevel->level > $userInfo->level) {
+                                    $level_xp = $levelData->earn_xp;
+                                }
+                                if($userInfo->ref_user_id > 0) {
+                                    $earn_referral = $levelData->earn * $levelData->referral_percent / 100;
+                                }
                             }
-                            if($userInfo->ref_user_id > 0) {
-                                $earn_referral = $levelData->earn * $levelData->referral_percent / 100;
-                            }
-                        }
-
-                        // insert game
-                        $lastID = GameModel::insert([
-                            'user_id' => $body['user_id'],
-                            'task_success' => $body['task_success'],
-                            'task_fail' => $body['task_fail'],
-                            'earn' => $earn,
-                            'earn_referral' => $earn_referral,
-                            'status' => $status,
-                            'time' => time()
-                        ]);
-
-                        if($lastID > 0) {
-                            // update user for me
-                            UserModel::update(['id' => $body['user_id']], [
-                                'balance' => $this->db->raw('balance + ' . $earn),
-                                'level_xp' => $this->db->raw('level_xp + ' . $level_xp)
+    
+                            // insert game
+                            $lastID = GameModel::insert([
+                                'user_id' => $user_id,
+                                'task_success' => $task_success,
+                                'task_fail' => $task_fail,
+                                'earn' => $earn,
+                                'earn_referral' => $earn_referral,
+                                'status' => $status,
+                                'time' => time()
                             ]);
-
-                            // update user for referral
-                            if($userInfo->ref_user_id > 0) {
-                                UserModel::update(['id' => $userInfo->ref_user_id], [
-                                    'balance' => $this->db->raw('balance + ' . $earn_referral)
+    
+                            if($lastID > 0) {
+                                // update user for me
+                                UserModel::update(['id' => $user_id], [
+                                    'balance' => $this->db->raw('balance + ' . $earn),
+                                    'level_xp' => $this->db->raw('level_xp + ' . $level_xp)
                                 ]);
+    
+                                // update user for referral
+                                if($userInfo->ref_user_id > 0) {
+                                    UserModel::update(['id' => $userInfo->ref_user_id], [
+                                        'balance' => $this->db->raw('balance + ' . $earn_referral)
+                                    ]);
+                                }
+    
+                                // set json data
+                                $this->json = [
+                                    'status' => true,
+                                    'data' => UserModel::infoFull(['users.id' => $user_id])
+                                ];
+                            } else {
+                                // set json data
+                                $this->json = [
+                                    'status'  => false,
+                                    'message' => 'Error: Insert Game'
+                                ];
                             }
-
-                            // set json data
-                            $this->json = [
-                                'status' => true,
-                                'data' => UserModel::infoFull(['users.id' => $body['user_id']])
-                            ];
-                        } else {
-                            // set json data
-                            $this->json = [
-                                'status'  => false,
-                                'message' => 'Error: Insert Game'
-                            ];
                         }
                     }
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // set json data
+                    $this->json = [
+                        'status'  => false,
+                        'message' => 'Database Error: ' . $e->getMessage()
+                    ];
                 }
-            } catch (\Illuminate\Database\QueryException $e) {
-                // set json data
-                $this->json = [
-                    'status'  => false,
-                    'message' => 'Database Error: ' . $e->getMessage()
-                ];
             }
 
             // return reponse json data
