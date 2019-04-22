@@ -3,8 +3,9 @@
     namespace App\Controllers\Api;
     use App\Models\Api\WithdrawModel;
     use App\Controllers\BaseController;
+use App\Models\Dashboard\UserModel;
 
-    class WithdrawController extends BaseController
+class WithdrawController extends BaseController
     {
         private $json = [];
 
@@ -51,30 +52,74 @@
         {
             $body = $request->getParsedBody();
 
-            // set array body data
-            $data = [];
-            foreach ($body as $key => $value) {
-                if(isset($body[$key]['currentTime']) && $body[$key]['currentTime'] == "true") {
-                    $data[$key] = time();
-                } else {
-                    $data[$key] = $value;
-                }
-            }
+            $user_id = $body['user_id'];
+            $method = $body['method'];
+            $amount = $body['amount'];
+            $wallet_number = $body['wallet_number'];
 
-            try {
-                $lastId     = WithdrawModel::insert($data);
-                $data['id'] = $lastId;
-                
-                // set json data
-                $this->json = [
-                    'status' => true,
-                    'data'   => $data
-                ];
-            } catch (\Illuminate\Database\QueryException $e) {
+            if($user_id > 0 && $method > 0 && $amount > 0 && strlen($wallet_number) > 0) {
+                try {
+                    // get payment method information
+                    $methodInfo = WithdrawModel::methodInfo($method);
+    
+                    // get user information
+                    $userInfo = UserModel::info(['id' => $user_id]);
+    
+                    if($userInfo !== false && $methodInfo !== false) {
+                        if($amount >= $methodInfo->min_withdraw) {
+                            // calculate commission balance
+                            $commissionBalance = round($amount + ($amount * $methodInfo->commission / 100), 2);
+
+                            if($userInfo->balance >= $commissionBalance) {
+                                $lastID = WithdrawModel::insert([
+                                    'user_id' => $user_id,
+                                    'amount' => $amount,
+                                    'commission' => $methodInfo->commission,
+                                    'payment_method' => $method,
+                                    'wallet_number' => $wallet_number,
+                                    'time' => time()
+                                ]);
+        
+                                if($lastID > 0) {
+                                    // update user for me
+                                    UserModel::update(['id' => $user_id], [
+                                        'balance' => $this->db->raw('balance - ' . $commissionBalance),
+                                    ]);
+    
+                                    // set json data
+                                    $this->json = [
+                                        'status' => true,
+                                        'data' => UserModel::infoFull(['users.id' => $user_id]),
+                                        'message' => 'Ваш запрос был успешно отправлен. Это будет сделано в течение 3 дней.'
+                                    ];
+                                }
+                            } else {
+                                // set json data
+                                $this->json = [
+                                    'status' => false,
+                                    'message' => 'Ваш баланс не хватает'
+                                ];
+                            }
+                        } else {
+                            // set json data
+                            $this->json = [
+                                'status' => false,
+                                'message' => 'Можно снять как минимум ' . round($methodInfo->min_withdraw, 2) . ' рублей'
+                            ];
+                        }
+                    }
+                } catch (\Illuminate\Database\QueryException $e) {
+                    // set json data
+                    $this->json = [
+                        'status'  => false,
+                        'message' => 'Database Error: ' . $e->getMessage()
+                    ];
+                }
+            } else {
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Database Error: ' . $e->getMessage()
+                    'message' => 'Пожалуйста, заполните информацию'
                 ];
             }
 

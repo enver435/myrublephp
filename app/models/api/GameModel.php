@@ -8,12 +8,36 @@
         /**
          * Get Game Levels
          *
+         * @param boolean $maxLevel
+         * @return array|object
+         */
+        public static function gameLevels($maxLevel = false)
+        {
+            $query = self::get('db')->table('game_levels');
+            if($maxLevel) {
+                $result = $query->orderBy('level', 'desc')->limit(1)->first();
+            } else {
+                $result = $query->get();
+            }
+            return $result;
+        }
+
+        /**
+         * Get Game Level Information
+         *
+         * @param array $where
          * @return object
          */
-        public static function gameLevels()
+        public static function levelInfo($where)
         {
-            return self::get('db')->table('game_levels')
-                ->get();
+            $result = self::get('db')->table('game_levels')
+                ->where($where)
+                ->first();
+            
+            if(!empty($result)) {
+                return $result;
+            }
+            return false;
         }
 
         /**
