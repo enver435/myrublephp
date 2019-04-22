@@ -30,6 +30,24 @@
         }
 
         /**
+         * Get Withdraw Information
+         *
+         * @param string|array $where
+         * @return object
+         */
+        public function info($where)
+        {
+            $result = self::get('db')->table('withdraws')
+                ->where($where)
+                ->first();
+            
+            if(!empty($result)) {
+                return $result;
+            }
+            return false;
+        }
+
+        /**
          * Update Withdraw
          *
          * @param string|array $where
