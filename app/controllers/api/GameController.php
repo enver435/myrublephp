@@ -58,8 +58,7 @@
                         $status = 0;
 
                         if(
-                            $levelData->task == $body['task_success'] &&
-                            $body['answer_click_count'] >= $levelData->task
+                            $levelData->task == $body['task_success']
                         ) {
                             if($maxLevel->level > $userInfo->level) {
                                 $level_xp = $levelData->earn_xp;
