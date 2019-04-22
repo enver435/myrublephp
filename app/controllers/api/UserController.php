@@ -132,8 +132,8 @@
             $body = $request->getParsedBody();
 
             // post body get data
-            $email = filter_var(mb_strtolower($body['email'], 'UTF-8'), FILTER_SANITIZE_EMAIL);
-            $pass  = $body['pass'];
+            $email = filter_var(mb_strtolower(trim($body['email']), 'UTF-8'), FILTER_SANITIZE_EMAIL);
+            $pass  = trim($body['pass']);
             
             // validate body
             if($email != '' && $pass != '') {
@@ -195,9 +195,9 @@
             $body = $request->getParsedBody();
 
             // post body get data
-            $email    = filter_var(mb_strtolower($body['email'], 'UTF-8'), FILTER_SANITIZE_EMAIL);
-            $username = mb_strtolower($body['username'], 'UTF-8');
-            $pass     = $body['pass'];
+            $email    = filter_var(mb_strtolower(trim($body['email']), 'UTF-8'), FILTER_SANITIZE_EMAIL);
+            $username = mb_strtolower(trim($body['username']), 'UTF-8');
+            $pass     = trim($body['pass']);
 
             // validate body
             if($email != '' && $username != '' && $pass != '') {
