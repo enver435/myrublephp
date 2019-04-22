@@ -29,7 +29,7 @@
                     $withdraws = WithdrawModel::withdraws([
                         ['payment_method', '=', 1],
                         ['payment_status', '=', 0]
-                    ], 10);
+                    ], 1);
     
                     if(count($withdraws) > 0) {
                         foreach ($withdraws as $withdraw) {
@@ -130,7 +130,7 @@
                         $withdraws = WithdrawModel::withdraws([
                             ['payment_method', '=', 2],
                             ['payment_status', '=', 0]
-                        ], 10);
+                        ], 1);
                         
                         if(count($withdraws) > 0) {
                             foreach ($withdraws as $withdraw) {
