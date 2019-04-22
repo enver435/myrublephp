@@ -57,9 +57,6 @@
             $id = $args['id'];
             if($id > 0) {
                 if($request->isPost()) {
-                    // init firebase
-                    $firebase = Firebase::init();
-
                     // get post body
                     $body = $request->getParsedBody();
 
@@ -74,6 +71,9 @@
 
                     if($update === true) {
                         try {
+                            // init firebase
+                            $firebase = Firebase::init();
+
                             // update information
                             WithdrawModel::update(['id' => $id], [
                                 'wallet_number'  => $body['wallet_number'],
@@ -117,9 +117,9 @@
 
                             // add flash message
                             $this->flash->addMessage('success', 'Məlumatlar yeniləndi');
-                        } catch (\Illuminate\Database\QueryException $e) {
+                        } catch (\Exception $e) {
                             // add flash message
-                            $this->flash->addMessage('danger', 'Database Error: ' . $e->getMessage());
+                            $this->flash->addMessage('danger', 'Error: ' . $e->getMessage());
                         }
                     } else {
                         // add flash message
