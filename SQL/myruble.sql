@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2019 at 06:26 PM
+-- Generation Time: Apr 22, 2019 at 09:42 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -464,7 +464,27 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (389, 8, 0, 0, 0, 0, 0, 1554832280),
 (390, 8, 10, 0, 0.02, 0.0012, 1, 1554832349),
 (391, 8, 10, 0, 0.02, 0.0012, 1, 1554832441),
-(392, 8, 0, 0, 0, 0, 0, 1554832449);
+(392, 8, 0, 0, 0, 0, 0, 1554832449),
+(393, 8, 10, 0, 0, 0, 0, 1555935593),
+(394, 8, 0, 0, 0.01, 0.0005, 1, 1555935677),
+(395, 8, 5, 0, 0, 0, 0, 1555936328),
+(396, 8, 5, 0, 0, 0, 0, 1555936358),
+(397, 8, 5, 0, 0.01, 0.0005, 1, 1555936396),
+(398, 8, 5, 0, 0, 0, 0, 1555936413),
+(399, 8, 1, 0, 0, 0, 0, 1555936426),
+(400, 8, 5, 2, 0.01, 0.0005, 1, 1555936509),
+(401, 8, 5, 0, 0.01, 0.0005, 1, 1555936636),
+(402, 8, 5, 0, 0.01, 0.0005, 1, 1555936768),
+(403, 8, 5, 1, 0.01, 0.0005, 1, 1555936908),
+(404, 8, 0, 0, 0, 0, 0, 1555937021),
+(405, 8, 5, 0, 0.01, 0.0005, 1, 1555937083),
+(406, 8, 10, 3, 0.02, 0.0012, 1, 1555937196),
+(407, 8, 10, 1, 0.02, 0.0012, 1, 1555939007),
+(408, 8, 1, 0, 0, 0, 0, 1555939727),
+(409, 8, 10, 1, 0.02, 0.0012, 1, 1555942520),
+(410, 8, 0, 0, 0, 0, 0, 1555942597),
+(411, 8, 10, 4, 0.02, 0.0012, 1, 1555942693),
+(412, 8, 10, 1, 0.02, 0.0012, 1, 1555943810);
 
 -- --------------------------------------------------------
 
@@ -516,14 +536,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `referral_code`, `referrer`) VALUES
-(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 119.11, 201, -5, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001', 0),
+(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 119.11, 201, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001', 0),
 (2, 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, '000002', 0),
 (3, 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000003', 0),
 (4, 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, '', 0, '000004', 0),
 (5, 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000005', 0),
 (6, 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0015, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000006', 0),
-(7, 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0708, 1, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554130670, '000007', 0),
-(8, 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 72.94, 324, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131201, '000008', 0),
+(7, 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0803, 1, 0, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1554130670, '000007', 0),
+(8, 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 68.08, 310, 4, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1554131201, '000008', 0),
 (9, 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.09, 599, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, '000009', 0),
 (10, 'yyy435', 'avb@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 100, 605, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554311138, '000010', 0),
 (11, 'uuu435', 'hfdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.01, 1, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830030, '000011', 0),
@@ -613,7 +633,8 @@ INSERT INTO `withdraws` (`id`, `user_id`, `amount`, `commission`, `payment_metho
 (35, 8, 10, 0.5, 1, '5678778', 1, 0, '0', 1554828734),
 (36, 8, 5, 0.5, 1, '84849488t', 1, 0, '0', 1554829795),
 (37, 8, 5, 0.5, 1, '647473747', 1, 0, '0', 1554829823),
-(38, 8, 5, 0.5, 1, '47474747', 1, 0, '0', 1554829839);
+(38, 8, 5, 0.5, 1, '47474747', 1, 0, '0', 1554829839),
+(40, 8, 5, 0.5, 1, '1273737474747Y7', 1, 0, '0', 1555937461);
 
 --
 -- Triggers `withdraws`
@@ -688,7 +709,7 @@ ALTER TABLE `game_levels`
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=393;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=413;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -712,7 +733,7 @@ ALTER TABLE `user_referrals`
 -- AUTO_INCREMENT for table `withdraws`
 --
 ALTER TABLE `withdraws`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
