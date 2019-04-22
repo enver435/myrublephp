@@ -20,15 +20,19 @@
             
             if(count($users) > 0) {
                 foreach ($users as $user) {
-                    // update user
-                    UserModel::update(['id' => $user->id], [
-                        'notify_heart_time' => 0
-                    ]);
-
-                    // send notification
-                    $title = 'Возможность играть';
-                    $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
-                    $firebase->sendNotify($user->firebase_token, $title, $body);
+                    try {
+                        // update user
+                        UserModel::update(['id' => $user->id], [
+                            'notify_heart_time' => 0
+                        ]);
+    
+                        // send notification
+                        $title = 'Возможность играть';
+                        $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
+                        $firebase->sendNotify($user->firebase_token, $title, $body);
+                    } catch (\Exception $e) {
+                        continue;
+                    }
                 }
             }
         }
