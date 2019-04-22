@@ -9,30 +9,26 @@
     {
         public function heart($request, $response, $args)
         {
-            // get now time
-            $nowTime = time();
-
             // init firebase
             $firebase = Firebase::init();
 
             // get users
             $users = UserModel::users([
-                ['notify_heart_time', '>', 0]
-            ]);
+                ['notify_heart_time', '>', 0],
+                ['notify_heart_time', '<=', time()]
+            ], 15);
             
             if(count($users) > 0) {
                 foreach ($users as $user) {
-                    if($nowTime >= $user->notify_heart_time) {
-                        // send notification
-                        $title = 'Возможность играть';
-                        $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
-                        $firebase->sendNotify($user->firebase_token, $title, $body);
-    
-                        // update user
-                        UserModel::update(['id' => $user->id], [
-                            'notify_heart_time' => 0
-                        ]);
-                    }
+                    // update user
+                    UserModel::update(['id' => $user->id], [
+                        'notify_heart_time' => 0
+                    ]);
+
+                    // send notification
+                    $title = 'Возможность играть';
+                    $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
+                    $firebase->sendNotify($user->firebase_token, $title, $body);
                 }
             }
         }

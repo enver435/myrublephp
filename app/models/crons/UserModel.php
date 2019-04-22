@@ -10,12 +10,22 @@
          *
          * @return array
          */
-        public static function users($where = null)
+        public static function users($where = null, $limit = 0, $offset = 0)
         {
+            // select table
             $query = self::get('db')->table('users');
+
+            // if where not null
             if($where != null) {
                 $query->where($where);
             }
+
+            // if exist limit
+            if($limit > 0 && $offset >= 0) {
+                $query->limit($limit)->offset($offset);
+            }
+
+            // return results
             return $query->get();
         }
         
