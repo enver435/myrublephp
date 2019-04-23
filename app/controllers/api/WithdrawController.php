@@ -66,47 +66,56 @@
                     $userInfo = UserModel::info(['id' => $user_id]);
     
                     if($userInfo !== false && $methodInfo !== false) {
-                        if($amount >= $methodInfo->min_withdraw) {
-                            // calculate commission balance
-                            $commissionBalance = round($amount + ($amount * $methodInfo->commission / 100), 2);
 
-                            if($userInfo->balance >= $commissionBalance) {
-                                $lastID = WithdrawModel::insert([
-                                    'user_id' => $user_id,
-                                    'amount' => $amount,
-                                    'commission' => $methodInfo->commission,
-                                    'payment_method' => $method,
-                                    'wallet_number' => $wallet_number,
-                                    'time' => time()
-                                ]);
-        
-                                if($lastID > 0) {
-                                    // update user for me
-                                    UserModel::update(['id' => $user_id], [
-                                        'balance' => $this->db->raw('balance - ' . $commissionBalance),
+                        if($userInfo->ban == 0) {
+                            if($amount >= $methodInfo->min_withdraw) {
+                                // calculate commission balance
+                                $commissionBalance = round($amount + ($amount * $methodInfo->commission / 100), 2);
+                                if($userInfo->balance >= $commissionBalance) {
+                                    $lastID = WithdrawModel::insert([
+                                        'user_id' => $user_id,
+                                        'amount' => $amount,
+                                        'commission' => $methodInfo->commission,
+                                        'payment_method' => $method,
+                                        'wallet_number' => $wallet_number,
+                                        'time' => time()
                                     ]);
-    
+            
+                                    if($lastID > 0) {
+                                        // update user for me
+                                        UserModel::update(['id' => $user_id], [
+                                            'balance' => $this->db->raw('balance - ' . $commissionBalance),
+                                        ]);
+            
+                                        // set json data
+                                        $this->json = [
+                                            'status' => true,
+                                            'data' => UserModel::infoFull(['users.id' => $user_id]),
+                                            'message' => 'Ваш запрос был успешно отправлен. Это будет сделано в течение 3 дней.'
+                                        ];
+                                    }
+                                } else {
                                     // set json data
                                     $this->json = [
-                                        'status' => true,
-                                        'data' => UserModel::infoFull(['users.id' => $user_id]),
-                                        'message' => 'Ваш запрос был успешно отправлен. Это будет сделано в течение 3 дней.'
+                                        'status' => false,
+                                        'message' => 'Ваш баланс не хватает'
                                     ];
                                 }
                             } else {
                                 // set json data
                                 $this->json = [
                                     'status' => false,
-                                    'message' => 'Ваш баланс не хватает'
+                                    'message' => 'Можно снять как минимум ' . round($methodInfo->min_withdraw, 2) . ' рублей'
                                 ];
                             }
                         } else {
                             // set json data
                             $this->json = [
                                 'status' => false,
-                                'message' => 'Можно снять как минимум ' . round($methodInfo->min_withdraw, 2) . ' рублей'
+                                'message' => 'Ваш аккаунт заблокирован'
                             ];
                         }
+                                             
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
                     // set json data

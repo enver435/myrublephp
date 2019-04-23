@@ -19,6 +19,7 @@
                             <th>Ödəniş metodu</th>
                             <th>Wallet</th>
                             <th>Çıxarma tarixi</th>
+                            <th>Ödənilmə tarixi</th>
                             <th>Status</th>
                             <th></th>
                         </tr>
@@ -36,6 +37,7 @@
                                 <td>{{ item.payment_method == 1 ? 'Yandex Money' : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</td>
                                 <td>{{ item.wallet_number }}</td>
                                 <td>{{ item.time|date("d.m.Y H:i") }}</td>
+                                <td>{{ item.payment_time > 0 ? item.payment_time|date("d.m.Y H:i") : '-' }}</td>
                                 <td>
                                     {% if item.payment_status == 0 %}
                                         <span class="badge badge-warning">Gözləyir</span>

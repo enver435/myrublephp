@@ -74,19 +74,20 @@
                             // init firebase
                             $firebase = Firebase::init();
 
+                            // get withdraw information
+                            $info = WithdrawModel::info(['id' => $id]);
+                            
+                            // get user information
+                            $userInfo = UserModel::info(['id' => $info->user_id]);
+                            
                             // update information
                             WithdrawModel::update(['id' => $id], [
                                 'wallet_number'  => $body['wallet_number'],
                                 'payment_status' => $body['payment_status'],
-                                'not_paid_type'  => $body['not_paid_selectbox']
+                                'not_paid_type'  => $body['not_paid_selectbox'],
+                                'payment_time'   => ($body['payment_status'] == 1 ? time() : 0)
                             ]);
 
-                            // get withdraw information
-                            $info = WithdrawModel::info(['id' => $id]);
-
-                            // get user information
-                            $userInfo = UserModel::info(['id' => $info->user_id]);
-                            
                             // eger odenilibse
                             if($body['payment_status'] == 1) {
                                 // send notification

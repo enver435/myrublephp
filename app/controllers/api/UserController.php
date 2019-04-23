@@ -4,6 +4,7 @@
     use App\Models\Api\UserModel;
     use App\Controllers\BaseController;
     use App\Models\Api\ReferralModel;
+    use App\System\Helpers\Email;
 
     class UserController extends BaseController
     {
@@ -146,12 +147,12 @@
             $body = $request->getParsedBody();
 
             // post body get data
-            $email = filter_var(mb_strtolower(trim($body['email']), 'UTF-8'), FILTER_SANITIZE_EMAIL);
+            $email = mb_strtolower(trim($body['email']), 'UTF-8');
             $pass  = strip_tags(trim($body['pass']));
             
             // validate body
             if($email != '' && $pass != '') {
-                if(filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+                if(Email::valid($email)) {
                     $this->validate = true;
                 } else {
                     // set json data
@@ -176,11 +177,19 @@
                         ['users.pass', '=', md5($pass)]
                     ]);
                     if($userInfo !== false) {
-                        // set json data
-                        $this->json = [
-                            'status' => true,
-                            'data'   => $userInfo
-                        ];
+                        if($userInfo->ban == 0) {
+                            // set json data
+                            $this->json = [
+                                'status' => true,
+                                'data'   => $userInfo
+                            ];
+                        } else {
+                            // set json data
+                            $this->json = [
+                                'status' => false,
+                                'message' => 'Ваш аккаунт заблокирован'
+                            ];
+                        }
                     } else {
                         // set json data
                         $this->json = [
@@ -209,14 +218,14 @@
             $body = $request->getParsedBody();
 
             // post body get data
-            $email    = filter_var(mb_strtolower(trim($body['email']), 'UTF-8'), FILTER_SANITIZE_EMAIL);
+            $email    = mb_strtolower(trim($body['email']), 'UTF-8');
             $username = mb_strtolower(trim($body['username']), 'UTF-8');
             $pass     = strip_tags(trim($body['pass']));
             $ref_code = strip_tags(trim($body['ref_code']));
 
             // validate body
             if($email != '' && $username != '' && $pass != '') {
-                if(filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+                if(Email::valid($email)) {
                     if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
                         if(strlen($pass) >= 6) {
                             $this->validate = true;

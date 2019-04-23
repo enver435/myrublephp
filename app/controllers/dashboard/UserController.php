@@ -5,6 +5,7 @@
     use App\Models\BaseModel;
     use App\Models\Dashboard\UserModel;
     use App\System\Helpers\Url;
+    use App\System\Helpers\Email;
     use App\System\Libraries\Pagination;
 
     class UserController extends BaseController
@@ -41,17 +42,18 @@
                     $body = $request->getParsedBody();
 
                     // post body get data
-                    $email    = filter_var(mb_strtolower($body['email'], 'UTF-8'), FILTER_SANITIZE_EMAIL);
+                    $email    = mb_strtolower($body['email'], 'UTF-8');
                     $username = mb_strtolower($body['username'], 'UTF-8');
                     $heart    = $body['heart'];
                     $balance  = $body['balance'];
                     $referrer = $body['referrer'];
+                    $ban      = $body['ban'];
 
                     $validate = false;
 
                     // validate body
                     if($email != '' && $username != '') {
-                        if(filter_var($email, FILTER_VALIDATE_EMAIL) !== false) {
+                        if(Email::valid($email)) {
                             if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
                                 $validate = true;
                             }
@@ -93,7 +95,8 @@
                                     'email'    => $email,
                                     'heart'    => $heart,
                                     'balance'  => $balance,
-                                    'referrer' => $referrer
+                                    'referrer' => $referrer,
+                                    'ban'      => $ban
                                 ]);
                                 
                                 // add flash message

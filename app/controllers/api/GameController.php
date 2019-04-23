@@ -52,7 +52,7 @@
                     // get user information
                     $userInfo = UserModel::infoFull(['users.id' => $user_id]);
     
-                    if($userInfo !== false) {
+                    if($userInfo !== false && $userInfo->ban == 0) {
                         // get level information
                         $levelData = GameModel::levelInfo(['level' => $userInfo->level]);
     
