@@ -4,8 +4,105 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90451aa3d7d235aef2ad832f245763a4",
+    "content-hash": "7e7c8a3c1208824a2c0475c7c78573c9",
     "packages": [
+        {
+            "name": "baibaratsky/php-webmoney",
+            "version": "v0.17.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/baibaratsky/php-webmoney.git",
+                "reference": "64b52ab914606725dfbdcadc223aab52c3952114"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/baibaratsky/php-webmoney/zipball/64b52ab914606725dfbdcadc223aab52c3952114",
+                "reference": "64b52ab914606725dfbdcadc223aab52c3952114",
+                "shasum": ""
+            },
+            "require": {
+                "baibaratsky/php-wmsigner": "2.0.*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "baibaratsky\\WebMoney\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Andrei Baibaratsky",
+                    "email": "andrei@baibaratsky.com"
+                },
+                {
+                    "name": "Constantin Chuprik",
+                    "email": "constantinchuprik@gmail.com"
+                }
+            ],
+            "description": "WebMoney API PHP Library",
+            "homepage": "http://github.com/baibaratsky/php-webmoney",
+            "keywords": [
+                "WMXI",
+                "capitaller",
+                "megastock",
+                "webmoney",
+                "wmsigner"
+            ],
+            "time": "2018-03-17T09:46:29+00:00"
+        },
+        {
+            "name": "baibaratsky/php-wmsigner",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/baibaratsky/php-wmsigner.git",
+                "reference": "e75858af085a9c26ce760436f80df9e778a6d162"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/baibaratsky/php-wmsigner/zipball/e75858af085a9c26ce760436f80df9e778a6d162",
+                "reference": "e75858af085a9c26ce760436f80df9e778a6d162",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "baibaratsky\\WebMoney\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Andrei Baibaratsky",
+                    "email": "andrei@baibaratsky.com"
+                }
+            ],
+            "description": "WebMoney Signer: a native PHP implementation of the WMSigner module",
+            "homepage": "http://github.com/baibaratsky/php-wmsigner",
+            "keywords": [
+                "WMXI",
+                "signer",
+                "webmoney",
+                "wmsigner"
+            ],
+            "time": "2016-06-12T14:33:36+00:00"
+        },
         {
             "name": "container-interop/container-interop",
             "version": "1.2.0",
