@@ -33,61 +33,66 @@
 
                     if(!empty($withdraw)) {
                         // get user information
-                        $userInfo = UserModel::info(
-                            ['id' => $withdraw->user_id],
-                            ['firebase_token']
-                        );
-    
-                        // make request payment
-                        $request_payment = $api->requestPayment([
-                            'pattern_id' => 'p2p',
-                            'to' => $withdraw->wallet_number,
-                            'amount_due' => $withdraw->amount,
-                            'message' => 'myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?',
-                            'comment' => 'myRuble: Перевод #' . $withdraw->id,
-                            'label' => 'myRuble: Перевод #' . $withdraw->id
-                        ]);
-    
-                        if($request_payment->status == 'success') {
-                            if($request_payment->balance >= $request_payment->contract_amount) {
-                                // call process payment to finish payment
-                                $process_payment = $api->processPayment([
-                                    'request_id' => $request_payment->request_id
-                                ]);
-    
-                                if($process_payment->status == 'success') {
-                                    // update withdraw
-                                    WithdrawModel::update(['id' => $withdraw->id], [
-                                        'payment_id' => $process_payment->payment_id,
-                                        'payment_status' => 1,
-                                        'payment_time' => time()
-                                    ]);
-    
-                                    // send notification
-                                    $title   = 'Ваш платеж успешен';
-                                    $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
-                                    $firebase->sendNotify($userInfo->firebase_token, $title, $message);
-                                }
-                            }
-                        } elseif (
-                            $request_payment->status == 'refused' && 
-                            ($request_payment->error == 'illegal_param_to' || $request_payment->error == 'payee_not_found')
-                        ) {
+                        $userInfo = UserModel::info(['id' => $withdraw->user_id]);
+                        
+                        if($userInfo->ban == 1) {
                             // update withdraw
                             WithdrawModel::update(['id' => $withdraw->id], [
                                 'payment_status' => 2,
-                                'not_paid_type' => 1 // wallet incorrect
+                                'not_paid_type' => 2 // user banned
                             ]);
-    
-                            // update user balance
-                            UserModel::update(['id' => $withdraw->user_id], [
-                                'balance' => $this->db->raw('balance + ' . round(($withdraw->amount + ($withdraw->amount * $withdraw->commission / 100)), 2))
+                        } else {
+                            // make request payment
+                            $request_payment = $api->requestPayment([
+                                'pattern_id' => 'p2p',
+                                'to' => $withdraw->wallet_number,
+                                'amount_due' => $withdraw->amount,
+                                'message' => 'myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?',
+                                'comment' => 'myRuble: Перевод #' . $withdraw->id,
+                                'label' => 'myRuble: Перевод #' . $withdraw->id
                             ]);
-    
-                            // send notification
-                            $title   = 'Ваш платеж не успешен';
-                            $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
-                            $firebase->sendNotify($userInfo->firebase_token, $title, $message);
+        
+                            if($request_payment->status == 'success') {
+                                if($request_payment->balance >= $request_payment->contract_amount) {
+                                    // call process payment to finish payment
+                                    $process_payment = $api->processPayment([
+                                        'request_id' => $request_payment->request_id
+                                    ]);
+        
+                                    if($process_payment->status == 'success') {
+                                        // update withdraw
+                                        WithdrawModel::update(['id' => $withdraw->id], [
+                                            'payment_id' => $process_payment->payment_id,
+                                            'payment_status' => 1,
+                                            'payment_time' => time()
+                                        ]);
+        
+                                        // send notification
+                                        $title   = 'Ваш платеж успешен';
+                                        $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                        $firebase->sendNotify($userInfo->firebase_token, $title, $message);
+                                    }
+                                }
+                            } elseif (
+                                $request_payment->status == 'refused' && 
+                                ($request_payment->error == 'illegal_param_to' || $request_payment->error == 'payee_not_found')
+                            ) {
+                                // update withdraw
+                                WithdrawModel::update(['id' => $withdraw->id], [
+                                    'payment_status' => 2,
+                                    'not_paid_type' => 1 // wallet incorrect
+                                ]);
+        
+                                // update user balance
+                                UserModel::update(['id' => $withdraw->user_id], [
+                                    'balance' => $this->db->raw('balance + ' . round(($withdraw->amount + ($withdraw->amount * $withdraw->commission / 100)), 2))
+                                ]);
+        
+                                // send notification
+                                $title   = 'Ваш платеж не успешен';
+                                $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                $firebase->sendNotify($userInfo->firebase_token, $title, $message);
+                            }
                         }
                     }
                 }
@@ -132,55 +137,60 @@
                             $comissionBalance = round(($withdraw->amount + ($withdraw->amount * 0.95 / 100)), 2);
                             if($balance >= $comissionBalance) {
                                 // get user information
-                                $userInfo = UserModel::info(
-                                    ['id' => $withdraw->user_id],
-                                    ['firebase_token']
-                                );
+                                $userInfo = UserModel::info(['id' => $withdraw->user_id]);
                                 
-                                // check wallet
-                                $checkWallet = $payeer->checkUser([
-                                    'user' => $withdraw->wallet_number
-                                ]);
-                                if($checkWallet) {
-                                    $arTransfer = $payeer->transfer([
-                                        'curIn' => 'RUB',
-                                        'sum' => $comissionBalance, // komissiya ile birlikde (tam mebleg gondermek ucun)
-                                        'curOut' => 'RUB',
-                                        'to' => $withdraw->wallet_number,
-                                        'comment' => 'myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?'
-                                    ]);
-                                    if (empty($arTransfer['errors'])) {
-                                        // update withdraw
-                                        WithdrawModel::update(['id' => $withdraw->id], [
-                                            'payment_id' => $arTransfer['historyId'],
-                                            'payment_status' => 1,
-                                            'payment_time' => time()
-                                        ]);
-    
-                                        // payeer balance decrement
-                                        $balance -= $comissionBalance;
-    
-                                        // send notification
-                                        $title   = 'Ваш платеж успешен';
-                                        $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
-                                        $firebase->sendNotify($userInfo->firebase_token, $title, $message);
-                                    }
-                                } else {
+                                if($userInfo->ban == 1) {
                                     // update withdraw
                                     WithdrawModel::update(['id' => $withdraw->id], [
                                         'payment_status' => 2,
-                                        'not_paid_type' => 1 // wallet incorrect
+                                        'not_paid_type' => 2 // user banned
                                     ]);
-    
-                                    // update user balance
-                                    UserModel::update(['id' => $withdraw->user_id], [
-                                        'balance' => $this->db->raw('balance + ' . round(($withdraw->amount + ($withdraw->amount * $withdraw->commission / 100)), 2))
+                                } else {
+                                    // check wallet
+                                    $checkWallet = $payeer->checkUser([
+                                        'user' => $withdraw->wallet_number
                                     ]);
-    
-                                    // send notification
-                                    $title   = 'Ваш платеж не успешен';
-                                    $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
-                                    $firebase->sendNotify($userInfo->firebase_token, $title, $message);
+                                    if($checkWallet) {
+                                        $arTransfer = $payeer->transfer([
+                                            'curIn' => 'RUB',
+                                            'sum' => $comissionBalance, // komissiya ile birlikde (tam mebleg gondermek ucun)
+                                            'curOut' => 'RUB',
+                                            'to' => $withdraw->wallet_number,
+                                            'comment' => 'myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?'
+                                        ]);
+                                        if (empty($arTransfer['errors'])) {
+                                            // update withdraw
+                                            WithdrawModel::update(['id' => $withdraw->id], [
+                                                'payment_id' => $arTransfer['historyId'],
+                                                'payment_status' => 1,
+                                                'payment_time' => time()
+                                            ]);
+        
+                                            // payeer balance decrement
+                                            $balance -= $comissionBalance;
+        
+                                            // send notification
+                                            $title   = 'Ваш платеж успешен';
+                                            $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                            $firebase->sendNotify($userInfo->firebase_token, $title, $message);
+                                        }
+                                    } else {
+                                        // update withdraw
+                                        WithdrawModel::update(['id' => $withdraw->id], [
+                                            'payment_status' => 2,
+                                            'not_paid_type' => 1 // wallet incorrect
+                                        ]);
+        
+                                        // update user balance
+                                        UserModel::update(['id' => $withdraw->user_id], [
+                                            'balance' => $this->db->raw('balance + ' . round(($withdraw->amount + ($withdraw->amount * $withdraw->commission / 100)), 2))
+                                        ]);
+        
+                                        // send notification
+                                        $title   = 'Ваш платеж не успешен';
+                                        $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                        $firebase->sendNotify($userInfo->firebase_token, $title, $message);
+                                    }
                                 }
                             }
                         }
