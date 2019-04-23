@@ -9,32 +9,32 @@
     {
         public function heart($request, $response, $args)
         {
-            // init firebase
-            $firebase = Firebase::init();
+            // // init firebase
+            // $firebase = Firebase::init();
 
-            // get users
-            $users = UserModel::users([
-                ['notify_heart_time', '>', 0],
-                ['notify_heart_time', '<=', time()]
-            ], 15);
+            // // get users
+            // $users = UserModel::users([
+            //     ['notify_heart_time', '>', 0],
+            //     ['notify_heart_time', '<=', time()]
+            // ], 15);
             
-            if(count($users) > 0) {
-                foreach ($users as $user) {
-                    try {
-                        // update user
-                        UserModel::update(['id' => $user->id], [
-                            'notify_heart_time' => 0
-                        ]);
+            // if(count($users) > 0) {
+            //     foreach ($users as $user) {
+            //         try {
+            //             // update user
+            //             UserModel::update(['id' => $user->id], [
+            //                 'notify_heart_time' => 0
+            //             ]);
     
-                        // send notification
-                        $title = 'Возможность играть';
-                        $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
-                        $firebase->sendNotify($user->firebase_token, $title, $body);
-                    } catch (\Exception $e) {
-                        continue;
-                    }
-                }
-            }
+            //             // send notification
+            //             $title = 'Возможность играть';
+            //             $body  = 'У вас есть 1 шанс начать игру прямо сейчас!';
+            //             $firebase->sendNotify($user->firebase_token, $title, $body);
+            //         } catch (\Exception $e) {
+            //             continue;
+            //         }
+            //     }
+            // }
         }
     } 
 
