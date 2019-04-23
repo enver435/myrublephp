@@ -59,7 +59,8 @@
                                     // update withdraw
                                     WithdrawModel::update(['id' => $withdraw->id], [
                                         'payment_id' => $process_payment->payment_id,
-                                        'payment_status' => 1
+                                        'payment_status' => 1,
+                                        'payment_time' => time()
                                     ]);
     
                                     // send notification
@@ -152,7 +153,8 @@
                                         // update withdraw
                                         WithdrawModel::update(['id' => $withdraw->id], [
                                             'payment_id' => $arTransfer['historyId'],
-                                            'payment_status' => 1
+                                            'payment_status' => 1,
+                                            'payment_time' => time()
                                         ]);
     
                                         // payeer balance decrement
