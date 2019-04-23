@@ -73,12 +73,26 @@
                 // set array update data
                 $updateData = [];
                 foreach ($body['data'] as $key => $value) {
-                    if(isset($body['data'][$key]['increment']) && $body['data'][$key]['increment'] == "true") {
+                    if(
+                        isset($body['data'][$key]['increment']) &&
+                        $body['data'][$key]['increment'] == "true"
+                    ) {
                         $updateData[$key] = $this->db->raw($key . ' + ' . $body['data'][$key]['value']);
-                    } elseif(isset($body['data'][$key]['decrement']) && $body['data'][$key]['decrement'] == "true") {
+                    } elseif(
+                        isset($body['data'][$key]['decrement']) &&
+                        $body['data'][$key]['decrement'] == "true"
+                    ) {
                         $updateData[$key] = $this->db->raw($key . ' - ' . $body['data'][$key]['value']);
-                    } elseif(isset($body['data'][$key]['currentTime']) && $body['data'][$key]['currentTime'] == "true") {
+                    } elseif(
+                        isset($body['data'][$key]['currentTime']) &&
+                        $body['data'][$key]['currentTime'] == "true"
+                    ) {
                         $updateData[$key] = time();
+                    } elseif(
+                        isset($body['data'][$key]['strToTime']) &&
+                        $body['data'][$key]['strToTime'] == "true"
+                    ) {
+                        $updateData[$key] = strtotime($body['data'][$key]['value'], time());
                     } else {
                         $updateData[$key] = strip_tags(trim($value));
                     }
