@@ -58,6 +58,16 @@
             $wallet_number = strtoupper(strip_tags(trim($body['wallet_number'])));
 
             if($user_id > 0 && $method > 0 && $amount > 0 && strlen($wallet_number) > 0) {
+
+                // if webmoney and wallet incorrect
+                if($method == 3 && !preg_match('#^R[0-9]{12}$#i', $wallet_number)) {
+                    // return response json data
+                    return $response->withJson([
+                        'status' => false,
+                        'message' => 'Неверный кошелек'
+                    ]);
+                }
+
                 try {
                     // get payment method information
                     $methodInfo = WithdrawModel::methodInfo($method);
