@@ -27,6 +27,7 @@
         //     // If we don't have an authorization code then get one
         //     $scope = ['account-info', 'operation-history', 'operation-details', 'payment-p2p'];
         //     $auth_url = API::buildObtainTokenUrl($clientId, $redirectUri, $scope);
+        //     // echo $auth_url;
         //     header('Location: ' . $auth_url);
         //     exit;
         // } else {
