@@ -55,12 +55,14 @@
                                 'comment' => 'myRuble: Перевод #' . $withdraw->id,
                                 'label' => 'myRuble: Перевод #' . $withdraw->id
                             ]);
+                            var_dump($request_payment);
         
                             if($request_payment->status == 'success') {
                                 // call process payment to finish payment
                                 $process_payment = $api->processPayment([
                                     'request_id' => $request_payment->request_id
                                 ]);
+                                var_dump($process_payment);
     
                                 if($process_payment->status == 'success') {
                                     // update withdraw
