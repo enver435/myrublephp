@@ -30,6 +30,9 @@
                 $renderData['totalGameCount']       = BaseModel::count('game_logs');
                 $renderData['totalWinGameCount']    = BaseModel::count('game_logs', ['status' => 1]);
                 $renderData['totalLoseGameCount']   = BaseModel::count('game_logs', ['status' => 0]);
+                $renderData['totalTaskSuccessSum']  = BaseModel::sum('game_logs', 'task_success');
+                $renderData['totalTaskFailSum']     = BaseModel::sum('game_logs', 'task_fail');
+                $renderData['totalLoseGameCount']   = BaseModel::count('game_logs', ['status' => 0]);
                 $renderData['totalPaidWithdraw']    = BaseModel::count('withdraws', ['payment_status' => 1]);
                 $renderData['totalWaitingWithdraw'] = BaseModel::count('withdraws', ['payment_status' => 0]);
                 $renderData['totalSumEarn']         = BaseModel::sum('game_logs', 'earn', ['status' => 1]);
