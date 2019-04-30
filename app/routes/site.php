@@ -5,8 +5,10 @@
     /**
      * Site Routes
      */
-    $app->get('/privacy', function($request, $response, $args) use ($container) {
-        return $container->view->render($response, 'privacy.html');
+    $app->get('/privacy[/{app}]', function($request, $response, $args) use ($container) {
+        return $container->view->render($response, 'privacy.html', [
+            'appName' => @$args['app'] == 'incoin' ? 'INcoin' : 'myRuble'
+        ]);
     });
 
     /**
