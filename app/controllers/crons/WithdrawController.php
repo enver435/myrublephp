@@ -242,6 +242,7 @@
                             $wrequest->setPayeePurse($withdraw->wallet_number);
                             $wrequest->setAmount($withdraw->amount); // Payment amount
                             $wrequest->setDescription('myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?');
+                            $wrequest->setOnlyAuth(false);
 
                             // auth webmoney
                             $wrequest->sign(new Signer(getenv('WEBMONEY_WMID'), getenv('WEBMONEY_WMID') . '.kwm', getenv('WEBMONEY_PASS')));
