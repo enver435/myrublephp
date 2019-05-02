@@ -254,7 +254,6 @@
 
                                 // get response code
                                 $resCode = $wresponse->getReturnCode();
-                                echo $resCode;
 
                                 if ($resCode == 0) {
                                     // update withdraw
