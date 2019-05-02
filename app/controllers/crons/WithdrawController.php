@@ -267,7 +267,7 @@
                                     $title   = 'Ваш платеж успешен';
                                     $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
                                     $firebase->sendNotify($userInfo->firebase_token, $title, $message);
-                                } elseif($resCode == -5 || $resCode == 7) {
+                                } elseif($resCode == -5 || $resCode == 7 || $resCode == 29) {
                                     // update withdraw
                                     WithdrawModel::update(['id' => $withdraw->id], [
                                         'payment_status' => 2,
