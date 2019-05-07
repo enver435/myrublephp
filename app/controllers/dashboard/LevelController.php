@@ -36,6 +36,15 @@
                 $referral_percent = $body['referral_percent'];
                 $earn_xp = $body['earn_xp'];
 
+                // math body
+                $math_num_one = $body['math_num_one'];
+                $math_num_two = $body['math_num_two'];
+                $math_num_three = $body['math_num_three'];
+                $math_positive = $body['math_positive'];
+                $math_negative = $body['math_negative'];
+                $math_multiplication = $body['math_multiplication'];
+                $math_division = $body['math_division'];
+
                 try {
                     // insert level
                     $lastID = LevelModel::insert([
@@ -48,7 +57,14 @@
                         'heart_time' => $heart_time,
                         'earn' => $earn,
                         'referral_percent' => $referral_percent,
-                        'earn_xp' => $earn_xp
+                        'earn_xp' => $earn_xp,
+                        'math_num_one' => $math_num_one,
+                        'math_num_two' => $math_num_two,
+                        'math_num_three' => $math_num_three,
+                        'math_positive' => $math_positive,
+                        'math_negative' => $math_negative,
+                        'math_multiplication' => $math_multiplication,
+                        'math_division' => $math_division
                     ]);
                     
                     // add flash message
@@ -89,6 +105,15 @@
                     $referral_percent = $body['referral_percent'];
                     $earn_xp = $body['earn_xp'];
 
+                    // math body
+                    $math_num_one = $body['math_num_one'];
+                    $math_num_two = $body['math_num_two'];
+                    $math_num_three = $body['math_num_three'];
+                    $math_positive = $body['math_positive'];
+                    $math_negative = $body['math_negative'];
+                    $math_multiplication = $body['math_multiplication'];
+                    $math_division = $body['math_division'];
+
                     try {
                         // update level
                         LevelModel::update(['id' => $id], [
@@ -101,7 +126,14 @@
                             'heart_time' => $heart_time,
                             'earn' => $earn,
                             'referral_percent' => $referral_percent,
-                            'earn_xp' => $earn_xp
+                            'earn_xp' => $earn_xp,
+                            'math_num_one' => $math_num_one,
+                            'math_num_two' => $math_num_two,
+                            'math_num_three' => $math_num_three,
+                            'math_positive' => $math_positive,
+                            'math_negative' => $math_negative,
+                            'math_multiplication' => $math_multiplication,
+                            'math_division' => $math_division
                         ]);
                         
                         // add flash message

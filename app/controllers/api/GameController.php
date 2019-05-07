@@ -73,6 +73,7 @@
                                 if($maxLevel->level > $userInfo->level) {
                                     $level_xp = $levelData->earn_xp;
                                 }
+                                
                                 if($userInfo->ref_user_id > 0) {
                                     $earn_referral = $levelData->earn * $levelData->referral_percent / 100;
                                 }
