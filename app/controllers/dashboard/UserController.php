@@ -188,8 +188,8 @@
                     ]);
                     $renderData['todaySumWithdraw'] = BaseModel::sum('withdraws', 'amount', [
                         ['user_id', '=', $id],
-                        ['time', '>=', $dayStart],
-                        ['time', '<=', $dayEnd],
+                        ['payment_time', '>=', $dayStart],
+                        ['payment_time', '<=', $dayEnd],
                         ['payment_status', '=', 1]
                     ]);
 
