@@ -302,6 +302,7 @@
                         $insertData['pass']          = md5($insertData['pass']);
                         $insertData['heart']         = 3;
                         $insertData['register_time'] = time();
+                        $insertData['referrer']      = 1; // app
 
                         // destroy ref_code from $insertData
                         unset($insertData['ref_code']);
