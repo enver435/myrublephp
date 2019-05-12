@@ -68,7 +68,7 @@
          */
         public function strMask($str, $length, $direction = 'right')
         {
-            return str_pad(substr($str, $length), strlen($str), '*', ($direction == 'right' ? STR_PAD_RIGHT : STR_PAD_LEFT));
+            return str_pad(substr($str, 0, strlen($str)+$length), strlen($str), '*', ($direction == 'right' ? STR_PAD_RIGHT : STR_PAD_LEFT));
         }
 
         /**

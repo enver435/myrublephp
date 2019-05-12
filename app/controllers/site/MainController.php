@@ -123,7 +123,7 @@ class MainController extends BaseController
             }
 
             // render page
-            $withdraws = WithdrawModel::withdraws(null, 5);
+            $withdraws = WithdrawModel::withdraws(['payment_status' => 1], 5);
             $totalSumWithdraw = BaseModel::sum('withdraws', 'amount', ['payment_status' => 1]);
             return $this->view->render($response, 'site/register.html', [
                 'flash' => $this->flash->getMessages(),

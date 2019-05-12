@@ -16,7 +16,7 @@
                                 <div class="list-col">{{ item.id }}</div>
                                 <div class="list-col">
                                     <span>{{ item.payment_method == 1 ? 'Yandex Money' : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</span>
-                                    <small>{{ item.wallet_number|strMask(4, 'right') }}</small>
+                                    <small>{{ item.wallet_number|strMask(-4, 'right') }}</small>
                                 </div>
                                 <div class="list-col">оплаченный</div>
                                 <div class="list-col">{{ item.amount }} руб.</div>
