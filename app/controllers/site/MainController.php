@@ -84,16 +84,15 @@ class MainController extends BaseController
                         }
 
                         if($insert) {
-                            // modify insert data
-                            $insertData['email']         = $email;
-                            $insertData['username']      = $username;
-                            $insertData['pass']          = md5($pass);
-                            $insertData['heart']         = 3;
-                            $insertData['register_time'] = time();
-                            $insertData['referrer']      = 2; // site
-
                             // insert user
-                            $lastId = UserModel::insert($insertData);
+                            $lastId = UserModel::insert([
+                                'email'         => $email,
+                                'username'      => $username,
+                                'pass'          => md5($pass),
+                                'heart'         => 3,
+                                'register_time' => time(),
+                                'referrer'      => 2 // site
+                            ]);
                             if($lastId > 0) {
                                 // update referral code
                                 UserModel::update(['id' => $lastId], [
