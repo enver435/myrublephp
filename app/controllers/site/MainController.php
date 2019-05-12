@@ -89,6 +89,7 @@ class MainController extends BaseController
                             $insertData['pass']          = md5($insertData['pass']);
                             $insertData['heart']         = 3;
                             $insertData['register_time'] = time();
+                            $insertData['referrer']      = 2; // site
 
                             // destroy ref_code from $insertData
                             unset($insertData['ref_code']);
