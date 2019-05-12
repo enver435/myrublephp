@@ -29,7 +29,8 @@
                 new Twig_SimpleFunction('isPost', [$this, 'isPost']),
                 new Twig_SimpleFunction('inJson', [$this, 'inJson']),
                 new Twig_SimpleFunction('storagePath', [$this, 'storagePath']),
-                new Twig_SimpleFunction('publicPath', [$this, 'publicPath'])
+                new Twig_SimpleFunction('publicPath', [$this, 'publicPath']),
+                new Twig_SimpleFunction('strMask', [$this, 'strMask'])
             ];
         }
 
@@ -41,7 +42,8 @@
         public function getFilters()
         {
             return [
-                new Twig_Filter('json_decode', [$this, 'jsonDecode'])
+                new Twig_Filter('json_decode', [$this, 'jsonDecode']),
+                new Twig_Filter('strMask', [$this, 'strMask'])
             ];
         }
 
@@ -54,6 +56,19 @@
         public function jsonDecode($json)
         {
             return json_decode($json, true);
+        }
+
+        /**
+         * String Masked
+         *
+         * @param string $str
+         * @param integer $length
+         * @param string $direction
+         * @return string
+         */
+        public function strMask($str, $length, $direction = 'right')
+        {
+            return str_pad(substr($str, $length), strlen($str), '*', ($direction == 'right' ? STR_PAD_RIGHT : STR_PAD_LEFT));
         }
 
         /**

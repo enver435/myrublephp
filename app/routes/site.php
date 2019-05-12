@@ -5,11 +5,9 @@
     /**
      * Site Routes
      */
-    $app->get('/privacy[/{app}]', function($request, $response, $args) use ($container) {
-        return $container->view->render($response, 'privacy.html', [
-            'appName' => @$args['app'] == 'incoin' ? 'INcoin' : 'myRuble'
-        ]);
-    });
+    $app->get('/', '\App\Controllers\Site\MainController:index')->setName('index');
+    $app->map(['GET', 'POST'], '/register[/{ref_code}]', '\App\Controllers\Site\MainController:register')->setName('register');
+    $app->get('/privacy[/{app}]', '\App\Controllers\Site\MainController:privacy')->setName('privacy');
 
     /**
      * Yandex OAuth
