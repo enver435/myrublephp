@@ -38,19 +38,13 @@
                             <input id="heart" type="number" name="heart" value="{{ item.heart }}" class="form-control">
                         </div>
                         <div class="form-group">
-                            <div class="form-label">Referrer</div>
-                            <div class="custom-controls-stacked">
-                                <label class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="referrer"
-                                        value="1" {{ item.referrer == 1 ? 'checked="checked"' : null }}>
-                                    <div class="custom-control-label">Seosprint</div>
-                                </label>
-                                <label class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="referrer"
-                                        value="0" {{ item.referrer == 0 ? 'checked="checked"' : null }}>
-                                    <div class="custom-control-label">Bilinmir</div>
-                                </label>
-                            </div>
+                            <label for="referrer">Referrer</label>
+                            <select id="referrer" name="referrer" class="form-control">
+                                <option value="1">App</option>
+                                <option value="2">Site</option>
+                                <option value="3">Seosprint</option>
+                                <option value="0">Bilinmir</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <div class="form-label">Ban</div>
