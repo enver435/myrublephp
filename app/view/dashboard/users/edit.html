@@ -40,10 +40,10 @@
                         <div class="form-group">
                             <label for="referrer">Referrer</label>
                             <select id="referrer" name="referrer" class="form-control">
-                                <option value="1">App</option>
-                                <option value="2">Site</option>
-                                <option value="3">Seosprint</option>
-                                <option value="0">Bilinmir</option>
+                                <option value="1" {{ item.referrer == 1 ? "selected='selected'" : null }}>App</option>
+                                <option value="2" {{ item.referrer == 2 ? "selected='selected'" : null }}>Site</option>
+                                <option value="3" {{ item.referrer == 3 ? "selected='selected'" : null }}>Seosprint</option>
+                                <option value="0" {{ item.referrer == 0 ? "selected='selected'" : null }}>Bilinmir</option>
                             </select>
                         </div>
                         <div class="form-group">
