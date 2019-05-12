@@ -60,13 +60,13 @@ class MainController extends BaseController
                         // database insert status
                         $insert = true;
 
-                        if($existEmail === true) {
+                        if($existEmail) {
                             // add flash message
                             $this->flash->addMessage('danger', 'Этот адрес электронной почты уже используется');
 
                             // set insert status
                             $insert = false;
-                        } elseif($existUsername === true) {
+                        } elseif($existUsername) {
                             // add flash message
                             $this->flash->addMessage('danger', 'Имя пользователя уже используется');
 
@@ -85,14 +85,12 @@ class MainController extends BaseController
 
                         if($insert) {
                             // modify insert data
-                            $insertData                  = $body;
-                            $insertData['pass']          = md5($insertData['pass']);
+                            $insertData['email']         = $email;
+                            $insertData['username']      = $username;
+                            $insertData['pass']          = md5($pass);
                             $insertData['heart']         = 3;
                             $insertData['register_time'] = time();
                             $insertData['referrer']      = 2; // site
-
-                            // destroy ref_code from $insertData
-                            unset($insertData['ref_code']);
 
                             // insert user
                             $lastId = UserModel::insert($insertData);

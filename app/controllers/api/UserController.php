@@ -259,7 +259,7 @@
             }
 
             // if validation status true
-            if($this->validate === true) {
+            if($this->validate) {
                 try {
                     $existEmail    = UserModel::exist(['email' => $email]);
                     $existUsername = UserModel::exist(['username' => $username]);
@@ -267,7 +267,7 @@
                     // database insert status
                     $insert = true;
 
-                    if($existEmail === true) {
+                    if($existEmail) {
                         // set json data
                         $this->json = [
                             'status'  => false,
@@ -275,7 +275,7 @@
                         ];
                         // set insert status
                         $insert = false;
-                    } elseif($existUsername === true) {
+                    } elseif($existUsername) {
                         // set json data
                         $this->json = [
                             'status'  => false,
@@ -296,16 +296,14 @@
                         }
                     }
 
-                    if($insert === true) {
+                    if($insert) {
                         // modify insert data
-                        $insertData                  = $body;
-                        $insertData['pass']          = md5($insertData['pass']);
+                        $insertData['email']         = $email;
+                        $insertData['username']      = $username;
+                        $insertData['pass']          = md5($pass);
                         $insertData['heart']         = 3;
                         $insertData['register_time'] = time();
                         $insertData['referrer']      = 1; // app
-
-                        // destroy ref_code from $insertData
-                        unset($insertData['ref_code']);
 
                         // insert user
                         $lastId = UserModel::insert($insertData);
