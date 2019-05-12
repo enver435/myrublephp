@@ -30,7 +30,7 @@
                                 <td>{{ item.balance|number_format(2, '.', ',') }} <i class="fa fa-rub"></i></td>
                                 <td>{{ item.level }}</td>
                                 <td>{{ item.register_time|date("d.m.Y H:i") }}</td>
-                                <td>{{ item.referrer == 1 ? 'Seosprint' : 'Bilinmir' }}</td>
+                                <td>{{ item.referrer == 1 ? 'App' : (item.referrer == 2 ? 'Site' : 'Bilinmir') }}</td>
                                 <td>
                                     <a class="icon" href="{{ path_for('dashboard.users.edit', {id: item.id}) }}" title="Editlə">
                                         <i class="fe fe-edit"></i>

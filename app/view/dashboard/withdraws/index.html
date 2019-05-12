@@ -31,7 +31,7 @@
                                 <td>
                                     <a href="{{ path_for('dashboard.users.show', {id: item.user_id}) }}">{{ item.username }}</a>
                                 </td>
-                                <td>{{ item.referrer == 1 ? 'Seosprint' : 'Bilinmir' }}</td>
+                                <td>{{ item.referrer == 1 ? 'App' : (item.referrer == 2 ? 'Site' : 'Bilinmir') }}</td>
                                 <td>{{ item.amount|number_format(2, '.', ',') }} <i class="fa fa-rub"></i></td>
                                 <td>{{ item.commission }}%</td>
                                 <td>{{ item.payment_method == 1 ? 'Yandex Money' : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</td>
