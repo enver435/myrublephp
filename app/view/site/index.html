@@ -1,0 +1,52 @@
+{% extends "./site/layout.html" %}
+
+{% block body %}
+    <div id="header">
+        <h3>myRuble - заработай свой рубль</h3>
+    </div>
+    <div id="content">
+        <div class="container">
+            <h3 class="text-center mt-4 mb-4"><span style="color: #00B518;display: block;">{{ totalSumWithdraw|number_format(2, '.', ',') }} руб.</span> выплатили</h3>
+            <div class="card mb-5 withdraws">
+                <div class="card-header">Список выплат последние</div>
+                <div class="card-body">
+                    <div class="withdraw-list">
+                        {% for item in withdraws %}    
+                            <div class="list-item">
+                                <div class="list-col">{{ item.id }}</div>
+                                <div class="list-col">
+                                    <span>{{ item.payment_method == 1 ? 'Yandex Money' : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</span>
+                                    <small>{{ item.wallet_number|strMask(-4, 'right') }}</small>
+                                </div>
+                                <div class="list-col">оплаченный</div>
+                                <div class="list-col">{{ item.amount }} руб.</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% for message in flash.danger %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endfor %}
+            <div class="card register mb-5">
+                {% if isPost() and flash.danger|length == 0 %}
+                    <div class="text-center pt-5 pb-5">
+                        <h5 style="color: #00B518;" class="mb-4">Вы успешная регистрация!</h5>
+                        <h5>Приложения в Google Play myRuble - заработай свой рубль</h5>
+                        <a href="https://play.google.com/store/apps/details?id=com.myruble">
+                            <img width="200" src="{{ publicPath('site/img/google-play.png') }}" alt="google play">
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="card-header">Присоединяйтесь бесплатно‎</div>
+                    <div class="card-body text-center">
+                        <a href="{{ path_for('register') }}" class="btn btn-primary d-inline-block">Регистрация</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <span>myruble.com {{ "now"|date("Y") }} All rights reserved</span>
+    </div>
+{% endblock %}

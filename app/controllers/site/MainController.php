@@ -2,18 +2,26 @@
 
     namespace App\Controllers\Site;
     use App\Controllers\BaseController;
-use App\Models\Site\WithdrawModel;
-use App\Models\BaseModel;
-use App\System\Helpers\Email;
-use App\System\Helpers\Url;
-use App\Models\Site\UserModel;
-use App\Models\Site\ReferralModel;
+    use App\Models\Site\WithdrawModel;
+    use App\Models\BaseModel;
+    use App\System\Helpers\Email;
+    use App\System\Helpers\Url;
+    use App\Models\Site\UserModel;
+    use App\Models\Site\ReferralModel;
 
-class MainController extends BaseController
+    class MainController extends BaseController
     {
         public function index($request, $response, $args)
         {
-
+            // render page
+            $withdraws = WithdrawModel::withdraws(['payment_status' => 1], 5);
+            $totalSumWithdraw = BaseModel::sum('withdraws', 'amount', ['payment_status' => 1]);
+            return $this->view->render($response, 'site/index.html', [
+                'flash' => $this->flash->getMessages(),
+                'totalSumWithdraw' => $totalSumWithdraw,
+                'withdraws' => $withdraws,
+                'ref_code' => @$args['ref_code']
+            ]);
         }
 
         public function register($request, $response, $args)
