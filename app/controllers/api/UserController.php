@@ -302,7 +302,6 @@
                             'email'         => $email,
                             'username'      => $username,
                             'pass'          => md5($pass),
-                            'heart'         => 3,
                             'register_time' => time(),
                             'referrer'      => 1 // app
                         ]);
