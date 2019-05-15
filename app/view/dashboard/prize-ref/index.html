@@ -44,7 +44,7 @@
                                     <a class="icon" href="{{ path_for('dashboard.prizeref.edit', {id: item.id}) }}" title="Editlə">
                                         <i class="fe fe-edit"></i>
                                     </a>
-                                    <a class="icon" href="{{ path_for('dashboard.prizeref.delete', {id: item.id}) }}" title="Sil">
+                                    <a class="icon" onclick='if(confirm("Silmək istədiyinizə əminsiniz?")) { window.location.href="{{ path_for('dashboard.prizeref.delete', {id: item.id}) }}" }' href="javascript:void(0);" title="Sil">
                                         <i class="fe fe-trash"></i>
                                     </a>
                                 </td>
