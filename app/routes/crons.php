@@ -7,7 +7,10 @@
         // heart notify
         $this->get('/heart-notify', '\App\Controllers\Crons\NotifyController:heart');
 
-        // withdraw notify
+        // prize referral
+        $this->get('/prize-ref', '\App\Controllers\Crons\NotifyController:prizeRef');
+
+        // withdraw routes
         $this->group('/withdraw', function() {
             // yandex
             $this->get('/yandex', '\App\Controllers\Crons\WithdrawController:withdrawYandex');

@@ -89,6 +89,14 @@
             // insert referral
             $this->post('/insert', '\App\Controllers\Api\ReferralController:insertReferral');
         });
+
+        /**
+         * PRIZE REFERRAL Routes
+         */
+        $this->group('/prize-ref', function() {
+            // get active prize
+            $this->get('/active', '\App\Controllers\Api\PrizeRefController:activePrize');
+        });
     })->add($mw);
 
 ?>

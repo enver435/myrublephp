@@ -1,0 +1,60 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="w-50">
+                    <h3 class="card-title">Referal prizləri</h3>
+                </div>
+                <div class="w-50 text-right">
+                    <a href="{{ path_for('dashboard.prizeref.add') }}" class="btn btn-sm btn-primary">Əlavə et</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="w-1">No.</th>
+                            <th>Başlanğıc tarixi</th>
+                            <th>Bitiş tarixi</th>
+                            <th>Priz məbləği</th>
+                            <th>Prizi qazanan</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in prizes %}    
+                            <tr>
+                                <td><span class="text-muted">{{ item.id }}</span></td>
+                                <th>{{ item.start_time|date("d.m.Y") }}</th>
+                                <th>{{ item.end_time|date("d.m.Y") }}</th>
+                                <th>{{ item.amount|number_format(2, '.', ',') }} <i class="fa fa-rub"></i></th>
+                                <th>
+                                    {% if item.winner_id > 0 %}
+                                        <a href="{{ path_for('dashboard.users.show', {id: item.winner_id}) }}">istifadəçiyə bax</a>
+                                    {% else %}
+                                        Bilinmir
+                                    {% endif %}
+                                </th>
+                                <td>{{ item.status == 1 ? 'Aktiv' : 'Deaktiv' }}</td>
+                                <td>
+                                    <a class="icon" href="{{ path_for('dashboard.prizeref.edit', {id: item.id}) }}" title="Editlə">
+                                        <i class="fe fe-edit"></i>
+                                    </a>
+                                    <a class="icon" href="{{ path_for('dashboard.prizeref.delete', {id: item.id}) }}" title="Sil">
+                                        <i class="fe fe-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {{ pagination|raw }}
+        </div>
+    </div>
+</div>
+{% endblock %}

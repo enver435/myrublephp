@@ -50,11 +50,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-settings"></i>
-                            Tənzimləmələr</a>
+                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-more-horizontal"></i>
+                            Digər</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
                             <a href="{{ path_for('dashboard.levels') }}" class="dropdown-item ">Oyun levelləri</a>
-                            <a href="{{ path_for('dashboard.settings.payment_methods') }}" class="dropdown-item ">Ödəniş metodları</a>
+                            <a href="{{ path_for('dashboard.withdraws.payment_methods') }}" class="dropdown-item ">Ödəniş metodları</a>
+                            <a href="{{ path_for('dashboard.prizeref') }}" class="dropdown-item ">Referal prizləri</a>
                         </div>
                     </li>
                 </ul>

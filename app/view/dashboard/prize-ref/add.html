@@ -1,0 +1,51 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        {% for message in flash.success %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.danger %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.info %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Priz əlavə et</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 offset-3">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="start_time">Başlanğıc tarixi</label>
+                            <input id="start_time" type="date" name="start_time" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="end_time">Bitmə tarixi</label>
+                            <input id="end_time" type="date" name="end_time" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Priz məbləği (RUB)</label>
+                            <input id="amount" type="number" step="any" name="amount" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label">Status</div>
+                            <div class="custom-switches-stacked">
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="status" value="1" class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">Deaktiv/Aktiv</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" name="save" class="btn btn-primary w-100">Əlavə et</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

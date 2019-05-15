@@ -3,7 +3,7 @@
     namespace App\Models\Dashboard;
     use App\Models\BaseModel;
 
-    class LevelModel extends BaseModel
+    class PrizeRefModel extends BaseModel
     {
         /**
          * Get Levels
@@ -12,7 +12,7 @@
          */
         public static function all()
         {
-            return self::get('db')->table('game_levels')
+            return self::get('db')->table('prizes_referral')
                 ->get();
         }
 
@@ -24,7 +24,7 @@
          */
         public static function info($where)
         {
-            $result = self::get('db')->table('game_levels')
+            $result = self::get('db')->table('prizes_referral')
                 ->where($where)
                 ->first();
             
@@ -43,7 +43,7 @@
          */
         public function update($where, $data)
         {
-            return self::get('db')->table('game_levels')
+            return self::get('db')->table('prizes_referral')
                 ->where($where)
                 ->update($data);
         }
@@ -56,7 +56,7 @@
          */
         public static function insert($data)
         {
-            return self::get('db')->table('game_levels')
+            return self::get('db')->table('prizes_referral')
                 ->insertGetId($data);
         }
 
@@ -68,7 +68,7 @@
          */
         public static function delete($where)
         {
-            return self::get('db')->table('game_levels')
+            return self::get('db')->table('prizes_referral')
                 ->where($where)
                 ->delete();
         }

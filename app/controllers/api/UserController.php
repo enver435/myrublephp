@@ -222,34 +222,50 @@
             $username = mb_strtolower(trim($body['username']), 'UTF-8');
             $pass     = strip_tags(trim($body['pass']));
             $ref_code = strip_tags(trim($body['ref_code']));
+            $mac_address = strip_tags(trim($body['mac_address']));
+            $ip_address = strip_tags(trim($body['ip_address']));
+            $device_id = strip_tags(trim($body['device_id']));
+            $timezone = strip_tags(trim($body['timezone']));
 
             // validate body
             if($email != '' && $username != '' && $pass != '') {
-                if(Email::valid($email)) {
-                    if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
-                        if(strlen($pass) >= 6) {
-                            $this->validate = true;
+                $mac_address = UserModel::exist(['mac_address' => $mac_address]);
+                $ip_address = UserModel::exist(['ip_address' => $ip_address]);
+                $device_id = UserModel::exist(['device_id' => $device_id]);
+                if($mac_address || $ip_address || $device_id) {
+                    // set json data
+                    $this->json = [
+                        'status'  => false,
+                        'message' => 'Вы можете зарегистрироваться один раз'
+                    ];
+                } else {
+                    if(Email::valid($email)) {
+                        if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
+                            if(strlen($pass) >= 6) {
+                                $this->validate = true;
+                            } else {
+                                // set json data
+                                $this->json = [
+                                    'status'  => false,
+                                    'message' => 'Пароль должен содержать не менее 6 символов'
+                                ];
+                            }
                         } else {
                             // set json data
                             $this->json = [
                                 'status'  => false,
-                                'message' => 'Пароль должен содержать не менее 6 символов'
+                                'message' => 'Неверное имя пользователя'
                             ];
                         }
                     } else {
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Неверное имя пользователя'
+                            'message' => 'Неверный электронной почты'
                         ];
                     }
-                } else {
-                    // set json data
-                    $this->json = [
-                        'status'  => false,
-                        'message' => 'Неверный электронной почты'
-                    ];
                 }
+
             } else {
                 // set json data
                 $this->json = [
@@ -303,7 +319,11 @@
                             'username'      => $username,
                             'pass'          => md5($pass),
                             'register_time' => time(),
-                            'referrer'      => 1 // app
+                            'referrer'      => 1, // app
+                            'mac_address'   => $mac_address,
+                            'ip_address'    => $ip_address,
+                            'device_id'     => $device_id,
+                            'timezone'      => $timezone
                         ]);
                         if($lastId > 0) {
                             // update referral code
