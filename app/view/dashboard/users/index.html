@@ -17,6 +17,7 @@
                             <th>Balans</th>
                             <th>Level</th>
                             <th>Qeydiyyat tarixi</th>
+                            <th>Son aktiv olma tarixi</th>
                             <th>Referrer</th>
                             <th></th>
                         </tr>
@@ -30,6 +31,7 @@
                                 <td>{{ item.balance|number_format(2, '.', ',') }} <i class="fa fa-rub"></i></td>
                                 <td>{{ item.level }}</td>
                                 <td>{{ item.register_time|date("d.m.Y H:i") }}</td>
+                                <td>{{ item.last_seen_time|date("d.m.Y H:i") }}</td>
                                 <td>{{ item.referrer == 1 ? 'App' : (item.referrer == 2 ? 'Site' : 'Bilinmir') }}</td>
                                 <td>
                                     <a class="icon" href="{{ path_for('dashboard.users.edit', {id: item.id}) }}" title="Editlə">

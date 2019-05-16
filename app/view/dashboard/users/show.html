@@ -6,7 +6,14 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-header">İstifadəçi məlumatları</div>
+                    <div class="card-header">
+                        <div class="w-75 text-left">İstifadəçi məlumatları</div>
+                        <div class="w-25 text-right">
+                            <a class="icon" href="{{ path_for('dashboard.users.edit', {id: info.id}) }}" title="Editlə">
+                                <i class="fe fe-edit"></i> Editlə
+                            </a>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="form-group">
                             <h5>İstifadəçi ID</h5>
@@ -39,6 +46,10 @@
                         <div class="form-group">
                             <h5>Qeydiyyat tarixi</h5>
                             <p>{{ info.register_time|date("d.m.Y H:i") }}</p>
+                        </div>
+                        <div class="form-group">
+                            <h5>Son aktiv olma tarixi</h5>
+                            <p>{{ info.last_seen_time|date("d.m.Y H:i") }}</p>
                         </div>
                         <div class="form-group">
                             <h5>Referrer</h5>
