@@ -315,15 +315,16 @@
                     if($insert) {
                         // insert user
                         $lastId = UserModel::insert([
-                            'email'         => $email,
-                            'username'      => $username,
-                            'pass'          => md5($pass),
-                            'register_time' => time(),
-                            'referrer'      => 1, // app
-                            'mac_address'   => $mac_address,
-                            'ip_address'    => $ip_address,
-                            'device_id'     => $device_id,
-                            'timezone'      => $timezone
+                            'email'          => $email,
+                            'username'       => $username,
+                            'pass'           => md5($pass),
+                            'register_time'  => time(),
+                            'last_seen_time' => time(),
+                            'referrer'       => 1, // app
+                            'mac_address'    => $mac_address,
+                            'ip_address'     => $ip_address,
+                            'device_id'      => $device_id,
+                            'timezone'       => $timezone
                         ]);
                         if($lastId > 0) {
                             // update referral code
