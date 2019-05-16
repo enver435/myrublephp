@@ -15,6 +15,6 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/enver43/myrublephp#readme",
   "dependencies": {
-    "libnmap": "^0.4.16"
+    "local-devices": "^2.0.0"
   }
 }
