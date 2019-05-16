@@ -13,5 +13,19 @@
     <script src="{{ publicPath('site/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ publicPath('site/js/popper.min.js') }}"></script>
     <script src="{{ publicPath('site/js/bootstrap.min.js') }}"></script>
+    <script>
+        var guid = function() {
+            var nav = window.navigator;
+            var screen = window.screen;
+            var guid = nav.mimeTypes.length;
+            guid += nav.userAgent.replace(/\D+/g, '');
+            guid += nav.plugins.length;
+            guid += screen.height || '';
+            guid += screen.width || '';
+            guid += screen.pixelDepth || '';
+        
+            return guid;
+        };
+    </script>
 </body>
 </html>

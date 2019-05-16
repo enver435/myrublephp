@@ -8,8 +8,9 @@
     use App\System\Helpers\Url;
     use App\Models\Site\UserModel;
     use App\Models\Site\ReferralModel;
+use App\System\Helpers\Main;
 
-    class MainController extends BaseController
+class MainController extends BaseController
     {
         public function index($request, $response, $args)
         {
@@ -27,101 +28,111 @@
         public function register($request, $response, $args)
         {
             if($request->isPost()) {
+                // get parsed body
                 $body = $request->getParsedBody();
 
-                // post body get data
-                $email    = mb_strtolower(trim($body['email']), 'UTF-8');
-                $username = mb_strtolower(trim($body['username']), 'UTF-8');
-                $pass     = strip_tags(trim($body['pass']));
-                $ref_code = strip_tags(trim($body['ref_code']));
+                $recaptcha = new \ReCaptcha\ReCaptcha(getenv('RECAPTCHA_SECRET'));
+                $resp = $recaptcha->verify($body['g-recaptcha-response'], Main::getIp());
 
-                // validate body
-                $validate = false;
-                if($email != '' && $username != '' && $pass != '') {
-                    if(Email::valid($email)) {
-                        if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
-                            if(strlen($pass) >= 6) {
-                                $validate = true;
+                if ($resp->isSuccess()) {
+                    // post body get data
+                    $email    = mb_strtolower(trim($body['email']), 'UTF-8');
+                    $username = mb_strtolower(trim($body['username']), 'UTF-8');
+                    $pass     = strip_tags(trim($body['pass']));
+                    $ref_code = strip_tags(trim($body['ref_code']));
+
+                    // validate body
+                    $validate = false;
+                    if($email != '' && $username != '' && $pass != '') {
+                        if(Email::valid($email)) {
+                            if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
+                                if(strlen($pass) >= 6) {
+                                    $validate = true;
+                                } else {
+                                    // add flash message
+                                    $this->flash->addMessage('danger', 'Пароль должен содержать не менее 6 символов');
+                                }
                             } else {
                                 // add flash message
-                                $this->flash->addMessage('danger', 'Пароль должен содержать не менее 6 символов');
+                                $this->flash->addMessage('danger', 'Неверное имя пользователя');
                             }
                         } else {
                             // add flash message
-                            $this->flash->addMessage('danger', 'Неверное имя пользователя');
+                            $this->flash->addMessage('danger', 'Неверный электронной почты');
                         }
                     } else {
                         // add flash message
-                        $this->flash->addMessage('danger', 'Неверный электронной почты');
+                        $this->flash->addMessage('danger', 'Пожалуйста, не оставляйте пустые строки пустыми');
+                    }
+
+                    // if validation status true
+                    if($validate) {
+                        try {
+                            $existEmail    = UserModel::exist(['email' => $email]);
+                            $existUsername = UserModel::exist(['username' => $username]);
+
+                            // database insert status
+                            $insert = true;
+
+                            if($existEmail) {
+                                // add flash message
+                                $this->flash->addMessage('danger', 'Этот адрес электронной почты уже используется');
+
+                                // set insert status
+                                $insert = false;
+                            } elseif($existUsername) {
+                                // add flash message
+                                $this->flash->addMessage('danger', 'Имя пользователя уже используется');
+
+                                // set insert status
+                                $insert = false;
+                            } elseif($ref_code != '') {
+                                $refUserInfo = UserModel::info(['referral_code' => $ref_code], ['id']);
+                                if($refUserInfo === false || $refUserInfo->ban == 1) {
+                                    // add flash message
+                                    $this->flash->addMessage('danger', 'Код реферала не найден');
+                                    
+                                    // set insert status
+                                    $insert = false;
+                                }
+                            }
+
+                            if($insert) {
+                                // insert user
+                                $lastId = UserModel::insert([
+                                    'email'          => $email,
+                                    'username'       => $username,
+                                    'pass'           => md5($pass),
+                                    'register_time'  => time(),
+                                    'last_seen_time' => time(),
+                                    'referrer'       => 2 // site
+                                ]);
+                                if($lastId > 0) {
+                                    // update referral code
+                                    UserModel::update(['id' => $lastId], [
+                                        'referral_code' => str_pad($lastId, 6, '0', STR_PAD_LEFT)
+                                    ]);
+
+                                    // insert referral
+                                    if($ref_code != '') {
+                                        ReferralModel::insert([
+                                            'user_id'     => $lastId,
+                                            'ref_user_id' => $refUserInfo->id,
+                                            'time'        => time()
+                                        ]);
+                                    }
+                                }
+                            }
+                        } catch (\Illuminate\Database\QueryException $e) {
+                            // add flash message
+                            $this->flash->addMessage('danger', 'Database Error: ' . $e->getMessage());
+                        }
                     }
                 } else {
                     // add flash message
-                    $this->flash->addMessage('danger', 'Пожалуйста, не оставляйте пустые строки пустыми');
+                    $this->flash->addMessage('danger', 'ReCaptcha неправильно');
                 }
 
-                // if validation status true
-                if($validate) {
-                    try {
-                        $existEmail    = UserModel::exist(['email' => $email]);
-                        $existUsername = UserModel::exist(['username' => $username]);
-
-                        // database insert status
-                        $insert = true;
-
-                        if($existEmail) {
-                            // add flash message
-                            $this->flash->addMessage('danger', 'Этот адрес электронной почты уже используется');
-
-                            // set insert status
-                            $insert = false;
-                        } elseif($existUsername) {
-                            // add flash message
-                            $this->flash->addMessage('danger', 'Имя пользователя уже используется');
-
-                            // set insert status
-                            $insert = false;
-                        } elseif($ref_code != '') {
-                            $refUserInfo = UserModel::info(['referral_code' => $ref_code], ['id']);
-                            if($refUserInfo === false || $refUserInfo->ban == 1) {
-                                // add flash message
-                                $this->flash->addMessage('danger', 'Код реферала не найден');
-                                
-                                // set insert status
-                                $insert = false;
-                            }
-                        }
-
-                        if($insert) {
-                            // insert user
-                            $lastId = UserModel::insert([
-                                'email'          => $email,
-                                'username'       => $username,
-                                'pass'           => md5($pass),
-                                'register_time'  => time(),
-                                'last_seen_time' => time(),
-                                'referrer'       => 2 // site
-                            ]);
-                            if($lastId > 0) {
-                                // update referral code
-                                UserModel::update(['id' => $lastId], [
-                                    'referral_code' => str_pad($lastId, 6, '0', STR_PAD_LEFT)
-                                ]);
-
-                                // insert referral
-                                if($ref_code != '') {
-                                    ReferralModel::insert([
-                                        'user_id'     => $lastId,
-                                        'ref_user_id' => $refUserInfo->id,
-                                        'time'        => time()
-                                    ]);
-                                }
-                            }
-                        }
-                    } catch (\Illuminate\Database\QueryException $e) {
-                        // add flash message
-                        $this->flash->addMessage('danger', 'Database Error: ' . $e->getMessage());
-                    }
-                }
                 if(!$insert) {
                     return Url::redirect('register', ['ref_code' => @$args['ref_code']]);
                 }

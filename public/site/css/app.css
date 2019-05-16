@@ -82,6 +82,12 @@ html {
     margin: 0;
 }
 
+.register .g-recaptcha > div {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+}
+
 .btn.btn-primary {
     background-color: #333;
     border: 1px solid #333;

@@ -58,6 +58,7 @@
                                 <input id="ref_code" type="text" name="ref_code" class="form-control" value="{{ ref_code }}">
                             </div>
                             <div class="text-center mb-3">Продолжая вы принимаете <a href="#">Политика Конфиденциальности</a></div>
+                            <div class="g-recaptcha" data-sitekey="6Lfk4aMUAAAAAA3V5fAmmolwFozaPf4uER2cNDz3"></div>
                             <button type="submit" class="btn btn-primary">Регистрация</button>
                         </form>
                     </div>
@@ -68,4 +69,5 @@
     <div id="footer">
         <span>myruble.com {{ "now"|date("Y") }} All rights reserved</span>
     </div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
