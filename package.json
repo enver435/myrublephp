@@ -15,6 +15,8 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/enver43/myrublephp#readme",
   "dependencies": {
-    "local-devices": "^2.0.0"
+    "getmac": "^1.4.6",
+    "local-devices": "^2.0.0",
+    "network-list": "^1.1.5"
   }
 }
