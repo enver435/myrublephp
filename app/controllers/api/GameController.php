@@ -39,6 +39,7 @@
         {
             $body = $request->getParsedBody();
 
+            // get post body
             $user_id = $body['user_id'];
             $task_success = $body['task_success'];
             $task_fail = $body['task_fail'];
@@ -117,6 +118,12 @@
                                 ];
                             }
                         }
+                    } else {
+                        // set json data
+                        $this->json = [
+                            'status'  => false,
+                            'message' => 'User not found'
+                        ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
                     // set json data

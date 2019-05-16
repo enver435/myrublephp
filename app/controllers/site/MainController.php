@@ -81,8 +81,8 @@
                             // set insert status
                             $insert = false;
                         } elseif($ref_code != '') {
-                            $refInfo = UserModel::info(['referral_code' => $ref_code], ['id']);
-                            if($refInfo === false) {
+                            $refUserInfo = UserModel::info(['referral_code' => $ref_code], ['id']);
+                            if($refUserInfo === false || $refUserInfo->ban == 1) {
                                 // add flash message
                                 $this->flash->addMessage('danger', 'Код реферала не найден');
                                 
@@ -110,7 +110,7 @@
                                 if($ref_code != '') {
                                     ReferralModel::insert([
                                         'user_id'     => $lastId,
-                                        'ref_user_id' => $refInfo->id,
+                                        'ref_user_id' => $refUserInfo->id,
                                         'time'        => time()
                                     ]);
                                 }

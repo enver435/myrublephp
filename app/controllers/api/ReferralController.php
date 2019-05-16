@@ -50,22 +50,22 @@
                 isset($user_id) && $user_id > 0
             ) {
                 try {
-                    $refInfo = UserModel::info(
+                    $refUserInfo = UserModel::info(
                         ['referral_code' => $ref_code],
                         ['id', 'referral_code']
                     );
-                    if($refInfo !== false) {
-                        if($refInfo->id != $user_id) {
+                    if($refUserInfo !== false && $refUserInfo->ban == 0) {
+                        if($refUserInfo->id != $user_id) {
                             $lastId = ReferralModel::insert([
                                 'user_id'     => $user_id,
-                                'ref_user_id' => $refInfo->id,
+                                'ref_user_id' => $refUserInfo->id,
                                 'time'        => time()
                             ]);
     
                             // referral information
                             $data['id']          = $lastId;
                             $data['user_id']     = $user_id;
-                            $data['ref_user_id'] = $refInfo->id;
+                            $data['ref_user_id'] = $refUserInfo->id;
                             $data['time']        = time();
                             
                             // set json data

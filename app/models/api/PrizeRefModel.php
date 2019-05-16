@@ -55,6 +55,7 @@
                         $join->on('user_referrals.ref_user_id', '=', 'users.id');
                     })
                     ->where([
+                        ['users.ban', '=', 0],
                         ['user_referrals.time', '>=', $prize->start_time],
                         ['user_referrals.time', '<=', $prize->end_time]
                     ])
