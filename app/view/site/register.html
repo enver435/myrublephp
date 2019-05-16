@@ -40,7 +40,7 @@
                 {% else %}
                     <div class="card-header">Присоединяйтесь бесплатно‎</div>
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="" method="POST" onsubmit="checkReg(event)">
                             <div class="form-group">
                                 <label for="email">Ваш email</label>
                                 <input id="email" type="email" name="email" class="form-control">
@@ -59,6 +59,7 @@
                             </div>
                             <div class="text-center mb-3">Продолжая вы принимаете <a href="#">Политика Конфиденциальности</a></div>
                             <div class="g-recaptcha" data-sitekey="6Lfk4aMUAAAAAA3V5fAmmolwFozaPf4uER2cNDz3"></div>
+                            <input type="hidden" name="guid" value="">
                             <button type="submit" class="btn btn-primary">Регистрация</button>
                         </form>
                     </div>

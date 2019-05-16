@@ -8,9 +8,10 @@
     use App\System\Helpers\Url;
     use App\Models\Site\UserModel;
     use App\Models\Site\ReferralModel;
-use App\System\Helpers\Main;
+    use App\System\Helpers\Main;
+    use App\System\Helpers\Cookie;
 
-class MainController extends BaseController
+    class MainController extends BaseController
     {
         public function index($request, $response, $args)
         {
@@ -31,38 +32,46 @@ class MainController extends BaseController
                 // get parsed body
                 $body = $request->getParsedBody();
 
+                // init google recaptcha
                 $recaptcha = new \ReCaptcha\ReCaptcha(getenv('RECAPTCHA_SECRET'));
                 $resp = $recaptcha->verify($body['g-recaptcha-response'], Main::getIp());
 
+                // if google recaptcha success
                 if ($resp->isSuccess()) {
                     // post body get data
                     $email    = mb_strtolower(trim($body['email']), 'UTF-8');
                     $username = mb_strtolower(trim($body['username']), 'UTF-8');
                     $pass     = strip_tags(trim($body['pass']));
                     $ref_code = strip_tags(trim($body['ref_code']));
+                    $guid     = strip_tags(trim($body['guid']));
 
                     // validate body
                     $validate = false;
-                    if($email != '' && $username != '' && $pass != '') {
-                        if(Email::valid($email)) {
-                            if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
-                                if(strlen($pass) >= 6) {
-                                    $validate = true;
+                    if(!Cookie::get('guid') && !UserModel::exist(['ip_address' => Main::getIp()])) {
+                        if($email != '' && $username != '' && $pass != '') {
+                            if(Email::valid($email)) {
+                                if(preg_match('/^[a-z0-9_-]{3,15}$/i', $username)) {
+                                    if(strlen($pass) >= 6) {
+                                        $validate = true;
+                                    } else {
+                                        // add flash message
+                                        $this->flash->addMessage('danger', 'Пароль должен содержать не менее 6 символов');
+                                    }
                                 } else {
                                     // add flash message
-                                    $this->flash->addMessage('danger', 'Пароль должен содержать не менее 6 символов');
+                                    $this->flash->addMessage('danger', 'Неверное имя пользователя');
                                 }
                             } else {
                                 // add flash message
-                                $this->flash->addMessage('danger', 'Неверное имя пользователя');
+                                $this->flash->addMessage('danger', 'Неверный электронной почты');
                             }
                         } else {
                             // add flash message
-                            $this->flash->addMessage('danger', 'Неверный электронной почты');
+                            $this->flash->addMessage('danger', 'Пожалуйста, не оставляйте пустые строки пустыми');
                         }
                     } else {
                         // add flash message
-                        $this->flash->addMessage('danger', 'Пожалуйста, не оставляйте пустые строки пустыми');
+                        $this->flash->addMessage('danger', 'Вы можете зарегистрироваться один раз');
                     }
 
                     // if validation status true
@@ -105,7 +114,8 @@ class MainController extends BaseController
                                     'pass'           => md5($pass),
                                     'register_time'  => time(),
                                     'last_seen_time' => time(),
-                                    'referrer'       => 2 // site
+                                    'referrer'       => 2, // site
+                                    'ip_address'     => Main::getIp()
                                 ]);
                                 if($lastId > 0) {
                                     // update referral code
@@ -121,6 +131,9 @@ class MainController extends BaseController
                                             'time'        => time()
                                         ]);
                                     }
+
+                                    // set cookie guid 365 day
+                                    Cookie::set('guid', strval($guid), (10 * 365 * 24 * 60 * 60));
                                 }
                             }
                         } catch (\Illuminate\Database\QueryException $e) {
