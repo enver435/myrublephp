@@ -5,9 +5,9 @@
     use App\Controllers\BaseController;
     use App\Models\Api\ReferralModel;
     use App\System\Helpers\Email;
-use App\System\Helpers\Main;
+    use App\System\Helpers\Main;
 
-class UserController extends BaseController
+    class UserController extends BaseController
     {
         private $json     = [];
         private $validate = false;
