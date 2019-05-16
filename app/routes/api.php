@@ -34,7 +34,7 @@
                     'appVersion' => getenv('APP_VERSION'),
                     'appStatus'  => getenv('APP_STATUS'),
                     'appTime'    => time(),
-                    'ip' => Main::getIp()
+                    'remoteIp'   => Main::getIp()
                 ]
             ]);
         });

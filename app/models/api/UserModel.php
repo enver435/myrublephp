@@ -2,6 +2,7 @@
 
     namespace App\Models\Api;
     use App\Models\BaseModel;
+    use App\System\Helpers\Main;
 
     class UserModel extends BaseModel
     {
@@ -102,8 +103,9 @@
          */
         public static function update($where, $data)
         {
-            // merge last seen
+            // merge data
             $data['last_seen_time'] = time();
+            $data['ip_address']     = Main::getIp();
             
             // update user and return
             return self::get('db')->table('users')

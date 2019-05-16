@@ -5,8 +5,9 @@
     use App\Controllers\BaseController;
     use App\Models\Api\ReferralModel;
     use App\System\Helpers\Email;
+use App\System\Helpers\Main;
 
-    class UserController extends BaseController
+class UserController extends BaseController
     {
         private $json     = [];
         private $validate = false;
@@ -223,14 +224,13 @@
             $pass     = strip_tags(trim($body['pass']));
             $ref_code = strip_tags(trim($body['ref_code']));
             $mac_address = strip_tags(trim($body['mac_address']));
-            $ip_address = strip_tags(trim($body['ip_address']));
             $device_id = strip_tags(trim($body['device_id']));
             $timezone = strip_tags(trim($body['timezone']));
 
             // validate body
             if($email != '' && $username != '' && $pass != '') {
                 $mac_address = UserModel::exist(['mac_address' => $mac_address]);
-                $ip_address = UserModel::exist(['ip_address' => $ip_address]);
+                $ip_address = UserModel::exist(['ip_address' => Main::getIp()]);
                 $device_id = UserModel::exist(['device_id' => $device_id]);
                 if($mac_address || $ip_address || $device_id) {
                     // set json data
@@ -322,7 +322,7 @@
                             'last_seen_time' => time(),
                             'referrer'       => 1, // app
                             'mac_address'    => $mac_address,
-                            'ip_address'     => $ip_address,
+                            'ip_address'     => Main::getIp(),
                             'device_id'      => $device_id,
                             'timezone'       => $timezone
                         ]);
