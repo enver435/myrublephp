@@ -33,7 +33,8 @@
                     'appName'    => getenv('APP_NAME'),
                     'appVersion' => getenv('APP_VERSION'),
                     'appStatus'  => getenv('APP_STATUS'),
-                    'appTime'    => time()
+                    'appTime'    => time(),
+                    'ip' => Main::getIp()
                 ]
             ]);
         });
