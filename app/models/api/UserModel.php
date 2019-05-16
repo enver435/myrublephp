@@ -102,6 +102,10 @@
          */
         public static function update($where, $data)
         {
+            // merge last seen
+            $data['last_seen_time'] = time();
+            
+            // update user and return
             return self::get('db')->table('users')
                 ->where($where)
                 ->update($data);
