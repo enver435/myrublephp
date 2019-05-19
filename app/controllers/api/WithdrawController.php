@@ -64,7 +64,7 @@
                     // return response json data
                     return $response->withJson([
                         'status' => false,
-                        'message' => 'Неверный кошелек'
+                        'message' => $this->trans('api/withdraw.wallet_incorrect')
                     ]);
                 }
 
@@ -101,28 +101,28 @@
                                         $this->json = [
                                             'status' => true,
                                             'data' => UserModel::infoFull(['users.id' => $user_id]),
-                                            'message' => 'Ваш запрос был успешно отправлен. Это будет сделано в течение 3 дней.'
+                                            'message' => $this->trans('api/withdraw.withdraw_success')
                                         ];
                                     }
                                 } else {
                                     // set json data
                                     $this->json = [
                                         'status' => false,
-                                        'message' => 'Ваш баланс не хватает'
+                                        'message' => $this->trans('api/withdraw.balance_error')
                                     ];
                                 }
                             } else {
                                 // set json data
                                 $this->json = [
                                     'status' => false,
-                                    'message' => 'Можно снять как минимум ' . round($methodInfo->min_withdraw, 2) . ' рублей'
+                                    'message' => $this->trans('api/withdraw.min_withdraw', ['amount' => round($methodInfo->min_withdraw, 2)])
                                 ];
                             }
                         } else {
                             // set json data
                             $this->json = [
                                 'status' => false,
-                                'message' => 'Ваш аккаунт заблокирован'
+                                'message' => $this->trans('api/user.banned')
                             ];
                         }
                                              
@@ -138,7 +138,7 @@
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Пожалуйста, заполните информацию'
+                    'message' => $this->trans('api/withdraw.empty')
                 ];
             }
 

@@ -22,7 +22,7 @@
             // set array where data
             $where = [];
             foreach ($params as $key => $value) {
-                if($key != 'full') {
+                if($key != 'full' && $key != 'locale') {
                     $where[] = [(@$params['full'] == "true" ? "users.$key" : $key), '=', $value];
                 }
             }
@@ -41,7 +41,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Пользователь не найден'
+                            'message' => $this->trans('api/user.not_found')
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -55,7 +55,7 @@
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Пользователь не найден'
+                    'message' => $this->trans('api/user.not_found')
                 ];
             }
 
@@ -118,7 +118,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Пользователь не найден'
+                            'message' => $this->trans('api/user.user_not_found')
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -159,14 +159,14 @@
                     // set json data
                     $this->json = [
                         'status'  => false,
-                        'message' => 'Неверный электронной почты'
+                        'message' => $this->trans('api/user.email_wrong')
                     ];
                 }
             } else {
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Пожалуйста, не оставляйте пустые строки пустыми'
+                    'message' => $this->trans('api/user.empty')
                 ];
             }
 
@@ -188,14 +188,14 @@
                             // set json data
                             $this->json = [
                                 'status' => false,
-                                'message' => 'Ваш аккаунт заблокирован'
+                                'message' => $this->trans('api/user.banned')
                             ];
                         }
                     } else {
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Пользователь не найден'
+                            'message' => $this->trans('api/user.not_found')
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -236,7 +236,7 @@
                     // set json data
                     $this->json = [
                         'status'  => false,
-                        'message' => 'Вы можете зарегистрироваться один раз'
+                        'message' => $this->trans('api/user.reg_once_only')
                     ];
                 } else {
                     if(Email::valid($email)) {
@@ -247,21 +247,21 @@
                                 // set json data
                                 $this->json = [
                                     'status'  => false,
-                                    'message' => 'Пароль должен содержать не менее 6 символов'
+                                    'message' => $this->trans('api/user.pass_wrong')
                                 ];
                             }
                         } else {
                             // set json data
                             $this->json = [
                                 'status'  => false,
-                                'message' => 'Неверное имя пользователя'
+                                'message' => $this->trans('api/user.not_found')
                             ];
                         }
                     } else {
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Неверный электронной почты'
+                            'message' => $this->trans('api/user.email_wrong')
                         ];
                     }
                 }
@@ -270,7 +270,7 @@
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Пожалуйста, не оставляйте пустые строки пустыми'
+                    'message' => $this->trans('api/user.empty')
                 ];
             }
 
@@ -287,7 +287,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Этот адрес электронной почты уже используется'
+                            'message' => $this->trans('api/user.email_exist')
                         ];
                         // set insert status
                         $insert = false;
@@ -295,7 +295,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Имя пользователя уже используется'
+                            'message' => $this->trans('api/user.username_exist')
                         ];
                         // set insert status
                         $insert = false;
@@ -305,7 +305,7 @@
                             // set json data
                             $this->json = [
                                 'status'  => false,
-                                'message' => 'Код реферала не найден'
+                                'message' => $this->trans('api/referral.refcode_not_found')
                             ];
                             // set insert status
                             $insert = false;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2019 at 06:34 PM
+-- Generation Time: May 16, 2019 at 06:50 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -55,8 +55,8 @@ CREATE TABLE `game_levels` (
 
 INSERT INTO `game_levels` (`id`, `level`, `level_start_xp`, `level_end_xp`, `time`, `task`, `heart`, `heart_time`, `earn`, `earn_xp`, `referral_percent`, `math_num_one`, `math_num_two`, `math_num_three`, `math_positive`, `math_negative`, `math_multiplication`, `math_division`) VALUES
 (1, 0, 0, 300, 60, 5, 1, 50, 0.01, 1, 5, 0, 1, 0, 1, 1, 0, 0),
-(2, 1, 300, 600, 120, 10, 5, 50, 0.02, 2, 6, 0, 1, 0, 1, 1, 0, 0),
-(3, 2, 600, 0, 120, 10, 10, 10, 0.02, 2, 7, 0, 0, 0, 0, 0, 0, 0);
+(2, 1, 300, 600, 120, 3, 5, 50, 0.003, 2, 6, 0, 1, 0, 1, 1, 0, 0),
+(4, 2, 300, 600, 120, 10, 5, 50, 0.02, 2, 6, 0, 1, 0, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -558,7 +558,17 @@ INSERT INTO `game_logs` (`id`, `user_id`, `task_success`, `task_fail`, `earn`, `
 (476, 8, 0, 0, 0, 0, 0, 1557238580),
 (477, 8, 10, 6, 0.02, 0.0012, 1, 1557239291),
 (478, 8, 9, 4, 0, 0, 0, 1557289958),
-(479, 8, 10, 2, 0.02, 0.0012, 1, 1557290067);
+(479, 8, 10, 2, 0.02, 0.0012, 1, 1557290067),
+(480, 8, 0, 0, 0, 0, 0, 1558004326),
+(481, 8, 10, 2, 0.02, 0.0012, 1, 1558015913),
+(482, 8, 1, 0, 0.003, 0.00018, 1, 1558016027),
+(483, 8, 3, 0, 0.003, 0.00018, 1, 1558016218),
+(484, 8, 3, 1, 0.003, 0.00018, 1, 1558019783),
+(485, 8, 3, 3, 0.003, 0.00018, 1, 1558019846),
+(486, 8, 3, 0, 0.003, 0.00018, 1, 1558019948),
+(487, 8, 3, 2, 0.003, 0.00018, 1, 1558020205),
+(488, 8, 3, 0, 0.003, 0.00018, 1, 1558020253),
+(489, 8, 3, 1, 0.003, 0.00018, 1, 1558021097);
 
 -- --------------------------------------------------------
 
@@ -587,6 +597,29 @@ INSERT INTO `payment_methods` (`id`, `method`, `min_withdraw`, `commission`, `st
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `prizes_referral`
+--
+
+CREATE TABLE `prizes_referral` (
+  `id` int(11) NOT NULL,
+  `winner_id` int(11) NOT NULL,
+  `start_time` int(11) NOT NULL,
+  `end_time` int(11) NOT NULL,
+  `amount` float NOT NULL,
+  `status` int(11) NOT NULL COMMENT '0 = deactive, 1 = active',
+  `last_update_time` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `prizes_referral`
+--
+
+INSERT INTO `prizes_referral` (`id`, `winner_id`, `start_time`, `end_time`, `amount`, `status`, `last_update_time`) VALUES
+(1, 0, 1557864000, 1558382400, 500, 1, 1557928833);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -599,34 +632,41 @@ CREATE TABLE `users` (
   `level_xp` int(11) NOT NULL,
   `heart` int(11) NOT NULL,
   `notify_heart_time` int(11) NOT NULL,
-  `firebase_token` text NOT NULL,
+  `firebase_token` text,
   `register_time` int(11) NOT NULL,
+  `last_seen_time` int(11) NOT NULL,
   `referral_code` varchar(255) DEFAULT NULL,
   `referrer` int(11) NOT NULL COMMENT '0 = unknown, 1 = app, 2 = site, 3 = seosprint',
-  `ban` int(11) NOT NULL COMMENT '0 = deactive, 1 = active'
+  `ban` int(11) NOT NULL COMMENT '0 = deactive, 1 = active',
+  `mac_address` varchar(255) DEFAULT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `timezone` varchar(255) DEFAULT NULL,
+  `device_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `referral_code`, `referrer`, `ban`) VALUES
-(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 119.11, 201, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000001', 0, 0),
-(2, 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, '000002', 0, 0),
-(3, 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000003', 0, 0),
-(4, 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0.0005, 0, 3, 0, '', 0, '000004', 0, 0),
-(5, 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, '000005', 0, 0),
-(6, 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0015, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, '000006', 0, 0),
-(7, 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.1187, 1, 0, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1554130670, '000007', 0, 0),
-(8, 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 59.63, 374, 3, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1554131201, '000008', 0, 0),
-(9, 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.09, 599, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, '000009', 0, 0),
-(10, 'yyy435', 'avb@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 100, 605, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554311138, '000010', 0, 0),
-(11, 'uuu435', 'hfdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.01, 1, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830030, '000011', 0, 0),
-(12, 'ififi435', 'gdhdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830591, '000012', 0, 0),
-(13, '44fg', 'abbhh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1555964309, '000013', 0, 0),
-(14, 'yymb3', 'ttt@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.01, 1, 0, 1556034461, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1555964365, '000014', 0, 0),
-(15, 'enver11222', 'abbasovenver199900@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, '', 1557676367, '000015', 0, 0),
-(16, 'envvv55', 'abbasovenver1999111@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, '', 1557676598, '000016', 0, 0);
+INSERT INTO `users` (`id`, `username`, `email`, `pass`, `balance`, `level_xp`, `heart`, `notify_heart_time`, `firebase_token`, `register_time`, `last_seen_time`, `referral_code`, `referrer`, `ban`, `mac_address`, `ip_address`, `timezone`, `device_id`) VALUES
+(1, 'enver435', 'abbasovenver1999@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 119.11, 201, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, 0, '000001', 0, 0, '', '', '', ''),
+(2, 'enver555', 'abbasov-enver@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 0, 0, '000002', 0, 0, '', '', '', ''),
+(3, 'blackrast', 'babayevmanaf1995@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, 0, '000003', 0, 0, '', '', '', ''),
+(4, 'testuser', 'test@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 0.0005, 0, 3, 0, '', 0, 0, '000004', 0, 0, '', '', '', ''),
+(5, 'ttt435', 'gggg@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'eigai1-BOyM:APA91bHv6hNcumWnQBMApKQHfqfM-VehhHMELvF5R8vqSCE_TF7Y-ThnoS-tOA7CDt9N9NpQC1GGSLn8b8WNZE5LQP3-vx1_sCgRLGKT_9M4ujj263qTkzVd66OkdpcCFJxHS2tWorwh', 0, 0, '000005', 0, 0, '', '', '', ''),
+(6, 'hjdkooopp', 'fgh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.0015, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 0, 0, '000006', 0, 0, '', '', '', ''),
+(7, 'enver557', 'abbasovenver@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.12134, 1, 0, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1554130670, 1558021097, '000007', 0, 0, '', '', '', ''),
+(8, 'rrr555', 'abbs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 59.083, 392, 2, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1554131201, 1558024169, '000008', 0, 0, 'A0:10:81:02:3B:62', '192.168.1.100', 'Asia/Baku', '98aa2220965052d1'),
+(9, 'rrr5554', 'ababs@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.09, 599, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554131269, 0, '000009', 0, 0, '', '', '', ''),
+(10, 'yyy435', 'avb@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 100, 605, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554311138, 0, '000010', 0, 0, '', '', '', ''),
+(11, 'uuu435', 'hfdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.01, 1, 0, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830030, 0, '000011', 0, 0, '', '', '', ''),
+(12, 'ififi435', 'gdhdh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cJnLmADAtFU:APA91bFWPzATUevbOXlYzMB0EtcpmNzG5nDDVJZauE_q3cKAAGaElDpA15H8aJpWINnawkI5q1rKyTUIIFOHfibG-iGcx0yRR3bJJj8hjUH-PWBw1KGRroVI_pC1-1TI1WHNF3NMZLDA', 1554830591, 0, '000012', 0, 0, '', '', '', ''),
+(13, '44fg', 'abbhh@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1555964309, 0, '000013', 0, 0, '', '', '', ''),
+(14, 'yymb3', 'ttt@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0.01, 1, 0, 1556034461, 'cMhbhrrdJeo:APA91bEuli27A0_7Yte11M_wjdx0EZUzmRrfzdUe6I23U-VyBfu0K1MwhaSm_qPJZKRt3O9gBYcNbg9i3Sq-uIiYTImx5s022UcxQG7D_pcmA7T1vmphZU-g6NWynDgq1_R0rH9tfDFV', 1555964365, 0, '000014', 0, 0, '', '', '', ''),
+(15, 'enver11222', 'abbasovenver199900@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, '', 1557676367, 0, '000015', 0, 0, '', '', '', ''),
+(16, 'envvv55', 'abbasovenver1999111@gmail.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 3, 0, '', 1557676598, 0, '000016', 0, 0, '', '', '', ''),
+(17, 'enver145222', 'admisssn@soburli.com', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 1558012239, 1558012239, '000017', 2, 0, NULL, NULL, NULL, NULL),
+(18, 'ssqsq666', 'abbasov-envssser@mail.ru', 'b6ffb8cb3fc96d5a259b36d103131d7d', 0, 0, 0, 0, '', 1558012515, 1558012515, '000018', 2, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -646,10 +686,10 @@ CREATE TABLE `user_referrals` (
 --
 
 INSERT INTO `user_referrals` (`id`, `user_id`, `ref_user_id`, `time`) VALUES
-(2, 9, 7, 1554131269),
-(3, 7, 6, 1554304636),
+(2, 9, 7, 1557916375),
+(3, 7, 6, 1557916375),
 (4, 10, 6, 1554311139),
-(6, 8, 7, 1554832641),
+(6, 8, 7, 1557916375),
 (7, 14, 4, 1555964365),
 (8, 15, 1, 1557676367),
 (9, 16, 1, 1557676598);
@@ -754,6 +794,12 @@ ALTER TABLE `payment_methods`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `prizes_referral`
+--
+ALTER TABLE `prizes_referral`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -788,13 +834,13 @@ ALTER TABLE `withdraws`
 -- AUTO_INCREMENT for table `game_levels`
 --
 ALTER TABLE `game_levels`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `game_logs`
 --
 ALTER TABLE `game_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=480;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=490;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
@@ -803,10 +849,16 @@ ALTER TABLE `payment_methods`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `prizes_referral`
+--
+ALTER TABLE `prizes_referral`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user_referrals`

@@ -59,11 +59,28 @@
         $view->getEnvironment()->addGlobal('siteName', getenv('APP_NAME'));
         $view->getEnvironment()->addGlobal('baseUrl', getenv('APP_URL'));
         $view->getEnvironment()->addGlobal('fullUrl', $container->get('request')->getUri());
+        $view->getEnvironment()->addGlobal('locale', $_SESSION['locale'] ?? $container->get('settings')['defaultLocale']);
         $view->getEnvironment()->addGlobal('session', $_SESSION);
         $view->getEnvironment()->addGlobal('cookie', $_COOKIE);
         $view->getEnvironment()->addGlobal('env', ENVIRONMENT);
 
         return $view;
+    };
+
+    // translator
+    $container['translator'] = function($container) {
+        $settings   = $container->get('settings');
+
+        if(strpos($container->get('request')->getUri()->getPath(), 'api') !== false) {
+            $locale = getallheaders()['locale'] ?? $settings['defaultLocale'];
+        } else {
+            $locale = $_SESSION['locale'] ?? $settings['defaultLocale'];
+        }
+
+        $loader     = new Illuminate\Translation\FileLoader(new Illuminate\Filesystem\Filesystem(), __DIR__ . '/translations');
+        $translator = new Illuminate\Translation\Translator($loader, $locale);
+        $translator->setFallback($settings['defaultLocale']);
+        return $translator;
     };
 
     // flash message

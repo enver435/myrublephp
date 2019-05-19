@@ -11,7 +11,8 @@
         "slim/flash": "^0.4.0",
         "yandex-money/yandex-money-sdk-php": "^3.0",
         "baibaratsky/php-webmoney": "^0.17.2",
-        "google/recaptcha": "^1.2"
+        "google/recaptcha": "^1.2",
+        "illuminate/translation": "^5.8"
     },
     "autoload": {
         "psr-4": {

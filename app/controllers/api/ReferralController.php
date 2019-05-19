@@ -77,14 +77,14 @@
                             // set json data
                             $this->json = [
                                 'status'  => false,
-                                'message' => 'Код реферала не найден'
+                                'message' => $this->trans('api/referral.refcode_not_found')
                             ];
                         }
                     } else {
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'Код реферала не найден'
+                            'message' => $this->trans('api/referral.refcode_not_found')
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {
@@ -98,7 +98,7 @@
                 // set json data
                 $this->json = [
                     'status'  => false,
-                    'message' => 'Код реферала не найден'
+                    'message' => $this->trans('api/referral.refcode_not_found')
                 ];
             }
 

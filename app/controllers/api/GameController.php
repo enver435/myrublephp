@@ -122,7 +122,7 @@
                         // set json data
                         $this->json = [
                             'status'  => false,
-                            'message' => 'User not found'
+                            'message' => $this->trans('api/user.not_found')
                         ];
                     }
                 } catch (\Illuminate\Database\QueryException $e) {

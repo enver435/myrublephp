@@ -28,11 +28,17 @@
     $dotenv = Dotenv\Dotenv::create(__DIR__, ENVIRONMENT == 'development' ? '.env.dev' : '.env');
     $dotenv->load(true);
 
+    // languages
+    $allowedLocales = ['en', 'ru', 'tr'];
+    $defaultLocale  = 'en';
+
     // instantiate the App object
     $app = new \Slim\App([
         'settings' => [
             'determineRouteBeforeAppMiddleware' => true,
             'displayErrorDetails' => filter_var(getenv('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN),
+            'allowedLocales' => $allowedLocales,
+            'defaultLocale'  => $defaultLocale,
             'db' => [
                 'driver'    => 'mysql',
                 'host'      => getenv('DB_HOST'),

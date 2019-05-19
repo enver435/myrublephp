@@ -27,6 +27,28 @@
             ]);
         }
 
+        /**
+         * Get Current Locale
+         *
+         * @return string
+         */
+        public function getLocale()
+        {
+            return $this->trans('main.locale');
+        }
+
+        /**
+         * Get translation value
+         *
+         * @param string $key
+         * @param array $replace
+         * @return string
+         */
+        public function trans($key, $replace = [])
+        {
+            return $this->container->translator->trans($key, $replace);
+        }
+
         public function __get($property)
         {
             if(isset($this->container->{$property})) {

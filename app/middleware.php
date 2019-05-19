@@ -18,4 +18,10 @@
         return $next($request, $response);
     });
 
+    // Add locale middleware
+    $app->add(new App\System\Middleware\Locale([
+        'allowedLocales' => $allowedLocales,
+        'defaultLocale' => $defaultLocale
+    ]));
+
 ?>
