@@ -5,9 +5,9 @@
     use App\System\Helpers\Session;
     use App\System\Helpers\Url;
     use App\Models\BaseModel;
-use App\Models\Dashboard\LevelModel;
+    use App\Models\Dashboard\LevelModel;
 
-class MainController extends BaseController
+    class MainController extends BaseController
     {
         public function index($request, $response, $args)
         {
