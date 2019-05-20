@@ -37,13 +37,13 @@
                 $earn_xp = $body['earn_xp'];
 
                 // math body
-                $math_num_one = $body['math_num_one'];
-                $math_num_two = $body['math_num_two'];
-                $math_num_three = $body['math_num_three'];
-                $math_positive = $body['math_positive'];
-                $math_negative = $body['math_negative'];
-                $math_multiplication = $body['math_multiplication'];
-                $math_division = $body['math_division'];
+                $math_num_one = $body['math_num_one'] ?? 0;
+                $math_num_two = $body['math_num_two'] ?? 0;
+                $math_num_three = $body['math_num_three'] ?? 0;
+                $math_positive = $body['math_positive'] ?? 0;
+                $math_negative = $body['math_negative'] ?? 0;
+                $math_multiplication = $body['math_multiplication'] ?? 0;
+                $math_division = $body['math_division'] ?? 0;
 
                 try {
                     // insert level
@@ -106,13 +106,13 @@
                     $earn_xp = $body['earn_xp'];
 
                     // math body
-                    $math_num_one = $body['math_num_one'];
-                    $math_num_two = $body['math_num_two'];
-                    $math_num_three = $body['math_num_three'];
-                    $math_positive = $body['math_positive'];
-                    $math_negative = $body['math_negative'];
-                    $math_multiplication = $body['math_multiplication'];
-                    $math_division = $body['math_division'];
+                    $math_num_one = $body['math_num_one'] ?? 0;
+                    $math_num_two = $body['math_num_two'] ?? 0;
+                    $math_num_three = $body['math_num_three'] ?? 0;
+                    $math_positive = $body['math_positive'] ?? 0;
+                    $math_negative = $body['math_negative'] ?? 0;
+                    $math_multiplication = $body['math_multiplication'] ?? 0;
+                    $math_division = $body['math_division'] ?? 0;
 
                     try {
                         // update level
