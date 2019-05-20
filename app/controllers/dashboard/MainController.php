@@ -5,8 +5,9 @@
     use App\System\Helpers\Session;
     use App\System\Helpers\Url;
     use App\Models\BaseModel;
+use App\Models\Dashboard\LevelModel;
 
-    class MainController extends BaseController
+class MainController extends BaseController
     {
         public function index($request, $response, $args)
         {
@@ -69,6 +70,11 @@
                     ['payment_time', '<=', $dayEnd],
                     ['payment_status', '=', 1]
                 ]);
+                
+                /**
+                 * Level Analytics
+                 */
+                $renderData['userLevelAnalytics'] = LevelModel::analytics();
             }
 
             return $this->view->render($response, 'dashboard/index.html', $renderData);

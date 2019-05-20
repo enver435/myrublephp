@@ -72,6 +72,26 @@
                 ->where($where)
                 ->delete();
         }
+
+        /**
+         * User Level Analytics
+         *
+         * @return array
+         */
+        public static function analytics()
+        {
+            return self::get('db')->table('game_levels')
+                ->selectRaw('
+                    level,
+                    COUNT(users.id) AS user_count
+                ')
+                ->leftJoin('users', function($join) {
+                    $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
+                        ->on('game_levels.level_end_xp', '>=', 'users.level_xp');
+                })
+                ->groupBy('game_levels.id')
+                ->get();
+        }
     }
 
 ?>
