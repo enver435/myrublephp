@@ -54,7 +54,7 @@
                     $userInfo = UserModel::infoFull(['users.id' => $user_id]);
     
                     if($userInfo !== false && $userInfo->ban == 0) {
-                        // get level information
+                        // get current level information
                         $levelData = GameModel::levelInfo(['level' => $userInfo->level]);
     
                         if($levelData !== false) {
@@ -70,8 +70,9 @@
                             ) {
                                 $earn = $levelData->earn;
                                 $status = 1;
-    
-                                if($maxLevel->level > $userInfo->level) {
+                                
+                                // eger en sonuncu levelin bitis xpsi boyukduse istifadecinin levelinin xpsinden
+                                if($maxLevel->level_end_xp > $userInfo->level_xp) {
                                     $level_xp = $levelData->earn_xp;
                                 }
                                 
