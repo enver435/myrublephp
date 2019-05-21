@@ -1,11 +1,11 @@
 <?php 
 
 	return [
-		"locale" => "en",
-		"not_found" => "No results found",
+		"locale" => "tr",
+		"not_found" => "Sonuç bulunamadı",
 		"ok" => "Ok",
-		"next" => "Next",
-		"prev" => "Prev"
+		"next" => "İleri",
+		"prev" => "Geri"
 	]; 
 
 ?>

@@ -1,11 +1,11 @@
 <?php
 
     return [
-        'wallet_incorrect' => 'Неверный кошелек',
-        'withdraw_success' => 'Ваш запрос был успешно отправлен. Это будет сделано в течение 3 дней.',
-        'balance_error' => 'Ваш баланс не хватает',
-        'min_withdraw' => 'Можно снять как минимум :amount рублей',
-        'empty' => 'Пожалуйста, заполните информацию'
+        'wallet_incorrect' => 'Geçersiz cüzdan',
+        'withdraw_success' => 'İsteğiniz başarıyla gönderildi. 3 gün içinde yapılacaktır.',
+        'balance_error' => 'Bakiyeniz yeterli değil',
+        'min_withdraw' => 'En az :amount ruble çekebilirisiniz',
+        'empty' => 'Lütfen, tüm bilgileri doldurunuz'
     ];
 
 ?>

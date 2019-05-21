@@ -1,7 +1,7 @@
 <?php
 
     return [
-        'refcode_not_found' => 'Код реферала не найден'
+        'refcode_not_found' => 'Davetiye kodu bulunamadı'
     ];
 
 ?>
