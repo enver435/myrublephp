@@ -85,7 +85,7 @@
                     level,
                     COUNT(users.id) AS user_count
                 ')
-                ->leftJoin('users', function($join) {
+                ->join('users', function($join) {
                     $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
                         ->on('game_levels.level_end_xp', '>=', 'users.level_xp');
                 })
