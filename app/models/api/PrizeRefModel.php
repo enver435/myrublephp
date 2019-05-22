@@ -32,7 +32,7 @@
             if(!empty($result)) {
                 return $result;
             }
-            return false;
+            return [];
         }
 
         /**
