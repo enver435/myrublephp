@@ -31,7 +31,7 @@
             // join tables
             $query->leftJoin('game_levels', function($join) {
                 $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
-                    ->on('game_levels.level_end_xp', '>=', 'users.level_xp');
+                    ->on('game_levels.level_end_xp', '>', 'users.level_xp');
             });
 
             // if where not null
@@ -96,7 +96,7 @@
             // join tables
             $query->leftJoin('game_levels', function($join) {
                 $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
-                    ->on('game_levels.level_end_xp', '>=', 'users.level_xp');
+                    ->on('game_levels.level_end_xp', '>', 'users.level_xp');
             });
 
             // where columns

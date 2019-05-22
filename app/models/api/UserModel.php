@@ -76,7 +76,7 @@
             })
             ->leftJoin('game_levels', function($join) {
                 $join->on('game_levels.level_start_xp', '<=', 'users.level_xp')
-                    ->on('game_levels.level_end_xp', '>=', 'users.level_xp');
+                    ->on('game_levels.level_end_xp', '>', 'users.level_xp');
             })
             ->leftJoin('game_logs', function($join) {
                 $join->on('game_logs.user_id', '=', 'refusers.user_id')
