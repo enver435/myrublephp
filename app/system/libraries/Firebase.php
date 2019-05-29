@@ -11,7 +11,7 @@
 
         public static function init()
         {
-            $serviceAccount = ServiceAccount::fromJsonFile('myruble-dfbba-firebase-adminsdk-sri1t-d6e6fb83e7.json');
+            $serviceAccount = ServiceAccount::fromJsonFile('myruble-adf72-firebase-adminsdk-585zf-1088d12831.json');
             $firebase = (new FirebaseService\Factory)
                 ->withServiceAccount($serviceAccount)
                 ->create();
