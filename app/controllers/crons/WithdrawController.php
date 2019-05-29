@@ -51,9 +51,9 @@
                                 'pattern_id' => 'p2p',
                                 'to' => $withdraw->wallet_number,
                                 'amount_due' => $withdraw->amount,
-                                'message' => 'myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?',
-                                'comment' => 'myRuble: Перевод #' . $withdraw->id,
-                                'label' => 'myRuble: Перевод #' . $withdraw->id
+                                'message' => 'myRuble: Transfer #' . $withdraw->id . '. Can you give a rating on Google Play?',
+                                'comment' => 'myRuble: Transfer #' . $withdraw->id,
+                                'label' => 'myRuble: Transfer #' . $withdraw->id
                             ]);
         
                             if($request_payment->status == 'success') {
@@ -69,10 +69,17 @@
                                         'payment_status' => 1,
                                         'payment_time' => time()
                                     ]);
-    
+                                        
                                     // send notification
-                                    $title   = 'Ваш платеж успешен';
-                                    $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                    $title = 'Your payment is successful';
+                                    $message = $withdraw->amount . ' rubles was sent to your account ' . $withdraw->wallet_number;
+                                    if($userInfo->locale == 'ru') {
+                                        $title = 'Ваш платеж успешен';
+                                        $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                    } elseif($userInfo->locale == 'tr') {
+                                        $title = 'Ödemeniz başarılı';
+                                        $message = $withdraw->amount . ' ruble ' . $withdraw->wallet_number . ' numaralı hesabınıza gönderildi';
+                                    }
                                     $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                                 }
                             } elseif (
@@ -89,10 +96,17 @@
                                 UserModel::update(['id' => $withdraw->user_id], [
                                     'balance' => $this->db->raw('balance + ' . round(($withdraw->amount + ($withdraw->amount * $withdraw->commission / 100)), 2))
                                 ]);
-        
+
                                 // send notification
-                                $title   = 'Ваш платеж не успешен';
-                                $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                $title = 'Your payment was not successful';
+                                $message = $withdraw->wallet_number . ' wallet is incorrect. Please check another wallet';
+                                if($userInfo->locale == 'ru') {
+                                    $title = 'Ваш платеж не успешен';
+                                    $message = $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                } elseif($userInfo->locale == 'tr') {
+                                    $title = 'Ödemeniz başarısız';
+                                    $message = $withdraw->wallet_number . ' numaralı cüzdan yanlış. Lütfen başka bir cüzdan ile tekrar deneyiniz';
+                                }
                                 $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                             }
                         }
@@ -154,7 +168,7 @@
                                         'sum' => $comissionBalance, // komissiya ile birlikde (tam mebleg gondermek ucun)
                                         'curOut' => 'RUB',
                                         'to' => $withdraw->wallet_number,
-                                        'comment' => 'myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?'
+                                        'comment' => 'myRuble: Transfer #' . $withdraw->id . '. Can you give a rating on Google Play?'
                                     ]);
                                     if (empty($arTransfer['errors'])) {
                                         // update withdraw
@@ -165,8 +179,15 @@
                                         ]);
     
                                         // send notification
-                                        $title   = 'Ваш платеж успешен';
-                                        $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                        $title = 'Your payment is successful';
+                                        $message = $withdraw->amount . ' rubles was sent to your account ' . $withdraw->wallet_number;
+                                        if($userInfo->locale == 'ru') {
+                                            $title = 'Ваш платеж успешен';
+                                            $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                        } elseif($userInfo->locale == 'tr') {
+                                            $title = 'Ödemeniz başarılı';
+                                            $message = $withdraw->amount . ' ruble ' . $withdraw->wallet_number . ' numaralı hesabınıza gönderildi';
+                                        }
                                         $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                                     }
                                 } else {
@@ -182,8 +203,15 @@
                                     ]);
     
                                     // send notification
-                                    $title   = 'Ваш платеж не успешен';
-                                    $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                    $title = 'Your payment was not successful';
+                                    $message = $withdraw->wallet_number . ' wallet is incorrect. Please check another wallet';
+                                    if($userInfo->locale == 'ru') {
+                                        $title = 'Ваш платеж не успешен';
+                                        $message = $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                    } elseif($userInfo->locale == 'tr') {
+                                        $title = 'Ödemeniz başarısız';
+                                        $message = $withdraw->wallet_number . ' numaralı cüzdan yanlış. Lütfen başka bir cüzdan ile tekrar deneyiniz';
+                                    }
                                     $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                                 }
                             }
@@ -241,7 +269,7 @@
                             $wrequest->setPayerPurse(getenv('WEBMONEY_WMR'));
                             $wrequest->setPayeePurse($withdraw->wallet_number);
                             $wrequest->setAmount($withdraw->amount); // Payment amount
-                            $wrequest->setDescription('myRuble: Перевод #' . $withdraw->id . '. Можете дать по рейтингу Google Play?');
+                            $wrequest->setDescription('myRuble: Transfer #' . $withdraw->id . '. Can you give a rating on Google Play?');
                             $wrequest->setOnlyAuth(false);
 
                             // auth webmoney
@@ -264,8 +292,15 @@
                                     ]);
     
                                     // send notification
-                                    $title   = 'Ваш платеж успешен';
-                                    $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                    $title = 'Your payment is successful';
+                                    $message = $withdraw->amount . ' rubles was sent to your account ' . $withdraw->wallet_number;
+                                    if($userInfo->locale == 'ru') {
+                                        $title = 'Ваш платеж успешен';
+                                        $message = $withdraw->amount . ' рублей было отправлено на ваш счет ' . $withdraw->wallet_number;
+                                    } elseif($userInfo->locale == 'tr') {
+                                        $title = 'Ödemeniz başarılı';
+                                        $message = $withdraw->amount . ' ruble ' . $withdraw->wallet_number . ' numaralı hesabınıza gönderildi';
+                                    }
                                     $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                                 } elseif($resCode == -5 || $resCode == 7 || $resCode == 29) {
                                     // update withdraw
@@ -280,8 +315,15 @@
                                     ]);
             
                                     // send notification
-                                    $title   = 'Ваш платеж не успешен';
-                                    $message = 'Ваш ' . $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                    $title = 'Your payment was not successful';
+                                    $message = $withdraw->wallet_number . ' wallet is incorrect. Please check another wallet';
+                                    if($userInfo->locale == 'ru') {
+                                        $title = 'Ваш платеж не успешен';
+                                        $message = $withdraw->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                    } elseif($userInfo->locale == 'tr') {
+                                        $title = 'Ödemeniz başarısız';
+                                        $message = $withdraw->wallet_number . ' numaralı cüzdan yanlış. Lütfen başka bir cüzdan ile tekrar deneyiniz';
+                                    }
                                     $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                                 }
                             }

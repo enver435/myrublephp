@@ -40,6 +40,7 @@
                         users.referral_code,
                         users.username,
                         users.firebase_token,
+                        users.locale,
                         COUNT(user_referrals.user_id) AS total_ref_count
                     ')
                     ->join('users', function($join) {
