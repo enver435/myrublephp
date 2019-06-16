@@ -147,7 +147,7 @@
                 }
 
                 if(!$insert) {
-                    return Url::redirect('register', ['ref_code' => @$args['ref_code']]);
+                    return Url::redirect('register', ['locale' => $this->getLocale(), 'ref_code' => @$args['ref_code']]);
                 }
             }
 
