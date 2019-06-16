@@ -2,7 +2,7 @@
 
     return [
         'title' => 'Список выплат последние',
-        'payment' => 'оплаченный',
+        'paid' => 'оплаченный',
         'rub' => 'руб',
         'yandex' => 'Yandex Money',
         'withdraw' => 'выплатили'

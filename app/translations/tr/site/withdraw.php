@@ -2,7 +2,7 @@
 
     return [
         'title' => 'Son ödemelerin listesi',
-        'payment' => 'ödendi',
+        'paid' => 'ödendi',
         'rub' => 'ruble',
         'yandex' => 'Yandex Cüzdan',
         'withdraw' => 'ödendi'
