@@ -91,8 +91,15 @@
                             // eger odenilibse
                             if($body['payment_status'] == 1) {
                                 // send notification
-                                $title   = 'Ваш платеж успешен';
-                                $message = $info->amount . ' рублей было отправлено на ваш счет ' . $info->wallet_number;
+                                $title = 'Your payment is successful';
+                                $message = $info->amount . ' rubles was sent to your account ' . $info->wallet_number;
+                                if($userInfo->locale == 'ru') {
+                                    $title = 'Ваш платеж успешен';
+                                    $message = $info->amount . ' рублей было отправлено на ваш счет ' . $info->wallet_number;
+                                } elseif($userInfo->locale == 'tr') {
+                                    $title = 'Ödemeniz başarılı';
+                                    $message = $info->amount . ' ruble ' . $info->wallet_number . ' numaralı hesabınıza gönderildi';
+                                }
                                 $firebase->sendNotify($userInfo->firebase_token, $title, $message);
                             }
                             // eger odenilmeyibse
@@ -103,13 +110,20 @@
                                 ]);
 
                                 // send notification
-                                $title = 'Ваш платеж не успешен';
+                                $title = 'Your payment was not successful';
 
                                 /**
                                  * 1 => wallet incorrect
                                  */
                                 if($body['not_paid_selectbox'] == 1) {
-                                    $message = 'Ваш ' . $body['wallet_number'] . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                    $message = $info->wallet_number . ' wallet is incorrect. Please check another wallet';
+                                    if($userInfo->locale == 'ru') {
+                                        $title = 'Ваш платеж не успешен';
+                                        $message = $info->wallet_number . ' кошелек неверен. Пожалуйста, проверьте другой кошелек';
+                                    } elseif($userInfo->locale == 'tr') {
+                                        $title = 'Ödemeniz başarısız';
+                                        $message = $info->wallet_number . ' numaralı cüzdan yanlış. Lütfen başka bir cüzdan ile tekrar deneyiniz';
+                                    }
                                 } else {
                                     $message = '';
                                 }

@@ -6,10 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ publicPath('site/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ publicPath('site/css/app.css') }}">
-    <title>myRuble - заработай свой рубль</title>
+    <title>{{ __('site/header.title') }}</title>
 </head>
 <body>
+    <div id="header">
+        <h3>{{ __('site/header.title') }}</h3>
+        <div class="dropdown">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <img src="{{ publicPath('site/img/' ~ locale ~ '.png') }}" alt="{{ locale }}">
+            </button>
+            <div class="dropdown-menu">
+                <a href="{{ getLocaleUrl('en') }}" class="dropdown-item">
+                    <img src="{{ publicPath('site/img/en.png') }}" alt="en"> EN
+                </a>
+                <a href="{{ getLocaleUrl('ru') }}" class="dropdown-item">
+                    <img src="{{ publicPath('site/img/ru.png') }}" alt="ru"> RU
+                </a>
+                <a href="{{ getLocaleUrl('tr') }}" class="dropdown-item">
+                    <img src="{{ publicPath('site/img/tr.png') }}" alt="tr"> TR
+                </a>
+            </div>
+        </div>
+    </div>
     {% block body %}{% endblock %}
+    <div id="footer">
+        <span>myruble.com {{ "now"|date("Y") }} All rights reserved</span>
+    </div>
     <script src="{{ publicPath('site/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ publicPath('site/js/popper.min.js') }}"></script>
     <script src="{{ publicPath('site/js/bootstrap.min.js') }}"></script>

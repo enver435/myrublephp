@@ -5,9 +5,21 @@
     /**
      * Site Routes
      */
-    $app->get('/', '\App\Controllers\Site\MainController:index')->setName('index');
-    $app->map(['GET', 'POST'], '/register[/{ref_code}]', '\App\Controllers\Site\MainController:register')->setName('register');
-    $app->get('/privacy[/{app}]', '\App\Controllers\Site\MainController:privacy')->setName('privacy');
+    $routes = function($app) {
+        $app->get('', '\App\Controllers\Site\MainController:index')->setName('index');
+        $app->map(['GET', 'POST'], 'register[/{ref_code}]', '\App\Controllers\Site\MainController:register')->setName('register');
+        $app->get('privacy[/{app}]', '\App\Controllers\Site\MainController:privacy')->setName('privacy');
+    };
+
+    /**
+     * Configration Routes
+     */
+    $app->group('/{locale:[a-z]{2}}', function() use ($routes) {
+        $routes($this);
+    });
+    $app->group('/', function() use ($routes) {
+        $routes($this);
+    });
 
     /**
      * Yandex OAuth

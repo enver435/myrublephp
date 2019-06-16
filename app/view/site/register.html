@@ -1,25 +1,22 @@
 {% extends "./site/layout.html" %}
 
 {% block body %}
-    <div id="header">
-        <h3>myRuble - заработай свой рубль</h3>
-    </div>
     <div id="content">
         <div class="container">
-            <h3 class="text-center mt-4 mb-4"><span style="color: #00B518;display: block;">{{ totalSumWithdraw|number_format(2, '.', ',') }} руб.</span> выплатили</h3>
+            <h3 class="text-center mt-4 mb-4"><span style="color: #00B518;display: block;">{{ totalSumWithdraw|number_format(2, '.', ',') }} {{ __('site/withdraw.rub') }}.</span> {{ __('site/withdraw.withdraw') }}</h3>
             <div class="card mb-5 withdraws">
-                <div class="card-header">Список выплат последние</div>
+                <div class="card-header">{{ __('site/withdraw.title') }}</div>
                 <div class="card-body">
                     <div class="withdraw-list">
                         {% for item in withdraws %}    
                             <div class="list-item">
                                 <div class="list-col">{{ item.id }}</div>
                                 <div class="list-col">
-                                    <span>{{ item.payment_method == 1 ? 'Yandex Money' : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</span>
+                                    <span>{{ item.payment_method == 1 ? __('site/withdraw.yandex') : (item.payment_method == 2 ? 'Payeer' : (item.payment_method == 3 ? 'Webmoney' : 'Unknown')) }}</span>
                                     <small>{{ item.wallet_number|strMask(-4, 'right') }}</small>
                                 </div>
-                                <div class="list-col">оплаченный</div>
-                                <div class="list-col">{{ item.amount }} руб.</div>
+                                <div class="list-col">{{ __('site/withdraw.paid') }}</div>
+                                <div class="list-col">{{ item.amount }} {{ __('site/withdraw.rub') }}.</div>
                             </div>
                         {% endfor %}
                     </div>
@@ -31,44 +28,41 @@
             <div class="card register mb-5">
                 {% if isPost() and flash.danger|length == 0 %}
                     <div class="text-center pt-5 pb-5">
-                        <h5 style="color: #00B518;" class="mb-4">Вы успешная регистрация!</h5>
-                        <h5>Приложения в Google Play myRuble - заработай свой рубль</h5>
+                        <h5 style="color: #00B518;" class="mb-4">{{ __('site/register.success_title') }}</h5>
+                        <h5>{{ __('site/register.success_text') }}</h5>
                         <a href="https://play.google.com/store/apps/details?id=com.myruble">
                             <img width="200" src="{{ publicPath('site/img/google-play.png') }}" alt="google play">
                         </a>
                     </div>
                 {% else %}
-                    <div class="card-header">Присоединяйтесь бесплатно‎</div>
+                    <div class="card-header">{{ __('site/register.title') }}‎</div>
                     <div class="card-body">
                         <form action="" method="POST" onsubmit="checkReg(event)">
                             <div class="form-group">
-                                <label for="email">Ваш email</label>
+                                <label for="email">{{ __('site/register.email') }}</label>
                                 <input id="email" type="email" name="email" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="username">Ваш имя пользователя</label>
+                                <label for="username">{{ __('site/register.username') }}</label>
                                 <input id="username" type="text" name="username" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="pass">Ваш пароль</label>
+                                <label for="pass">{{ __('site/register.pass') }}</label>
                                 <input id="pass" type="password" name="pass" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="ref_code">Ваш реферал</label>
+                                <label for="ref_code">{{ __('site/register.referral') }}</label>
                                 <input id="ref_code" type="text" name="ref_code" class="form-control" value="{{ ref_code }}">
                             </div>
-                            <div class="text-center mb-3">Продолжая вы принимаете <a href="#">Политика Конфиденциальности</a></div>
+                            <div class="text-center mb-3">{{ __('site/register.rules') }}</div>
                             <div class="g-recaptcha" data-sitekey="6Lfk4aMUAAAAAA3V5fAmmolwFozaPf4uER2cNDz3"></div>
                             <input type="hidden" name="guid" value="">
-                            <button type="submit" class="btn btn-primary">Регистрация</button>
+                            <button type="submit" class="btn btn-primary">{{ __('site/register.btn') }}</button>
                         </form>
                     </div>
                 {% endif %}
             </div>
         </div>
-    </div>
-    <div id="footer">
-        <span>myruble.com {{ "now"|date("Y") }} All rights reserved</span>
     </div>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}

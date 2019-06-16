@@ -1,0 +1,45 @@
+{% extends "./dashboard/layout.html" %}
+
+{% block body %}
+<div class="my-3 my-md-5">
+    <div class="container">
+        {% for message in flash.success %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.danger %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        {% for message in flash.info %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Bildiriş göndər</h3>
+            </div>
+            <div class="card-body">
+                <div class="col-md-6 offset-3">
+                    <form action="" method="POST">
+                        <div class="form-group">
+                            <label for="locale">Dil</label>
+                            <select name="locale" id="locale" class="form-control">
+                                <option value="en">EN</option>
+                                <option value="ru">RU</option>
+                                <option value="tr">TR</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Başlıq</label>
+                            <input id="title" type="text" name="title" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mətn</label>
+                            <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Göndər</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

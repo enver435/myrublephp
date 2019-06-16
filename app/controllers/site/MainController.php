@@ -55,23 +55,23 @@
                                         $validate = true;
                                     } else {
                                         // add flash message
-                                        $this->flash->addMessage('danger', 'Пароль должен содержать не менее 6 символов');
+                                        $this->flash->addMessage('danger', $this->trans('site/messages.pass_length'));
                                     }
                                 } else {
                                     // add flash message
-                                    $this->flash->addMessage('danger', 'Неверное имя пользователя');
+                                    $this->flash->addMessage('danger', $this->trans('site/messages.username_incorrect'));
                                 }
                             } else {
                                 // add flash message
-                                $this->flash->addMessage('danger', 'Неверный электронной почты');
+                                $this->flash->addMessage('danger', $this->trans('site/messages.email_incorrect'));
                             }
                         } else {
                             // add flash message
-                            $this->flash->addMessage('danger', 'Пожалуйста, не оставляйте пустые строки пустыми');
+                            $this->flash->addMessage('danger', $this->trans('site/messages.empty'));
                         }
                     } else {
                         // add flash message
-                        $this->flash->addMessage('danger', 'Вы можете зарегистрироваться один раз');
+                        $this->flash->addMessage('danger', $this->trans('site/messages.once_only'));
                     }
 
                     // if validation status true
@@ -85,13 +85,13 @@
 
                             if($existEmail) {
                                 // add flash message
-                                $this->flash->addMessage('danger', 'Этот адрес электронной почты уже используется');
+                                $this->flash->addMessage('danger', $this->trans('site/messages.email_unique'));
 
                                 // set insert status
                                 $insert = false;
                             } elseif($existUsername) {
                                 // add flash message
-                                $this->flash->addMessage('danger', 'Имя пользователя уже используется');
+                                $this->flash->addMessage('danger', $this->trans('site/messages.username_unique'));
 
                                 // set insert status
                                 $insert = false;
@@ -99,7 +99,7 @@
                                 $refUserInfo = UserModel::info(['referral_code' => $ref_code], ['id']);
                                 if($refUserInfo === false || $refUserInfo->ban == 1) {
                                     // add flash message
-                                    $this->flash->addMessage('danger', 'Код реферала не найден');
+                                    $this->flash->addMessage('danger', $this->trans('site/messages.ref_code_not_found'));
                                     
                                     // set insert status
                                     $insert = false;
@@ -143,7 +143,7 @@
                     }
                 } else {
                     // add flash message
-                    $this->flash->addMessage('danger', 'ReCaptcha неправильно');
+                    $this->flash->addMessage('danger', $this->trans('site/messages.recaptcha_incorrect'));
                 }
 
                 if(!$insert) {

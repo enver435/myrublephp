@@ -77,6 +77,9 @@
             $this->get('/delete/{id}', '\App\Controllers\Dashboard\LevelController:delete')->setName('dashboard.levels.delete');
         });
 
+        // send notify
+        $this->map(['GET', 'POST'], '/send-notify', '\App\Controllers\Dashboard\NotifyController:index')->setName('dashboard.send_notify');
+
     })->add($mw);
 
 ?>

@@ -48,6 +48,34 @@
                 ]
             ]);
         }
+
+        /**
+         * Send Multi Notification
+         *
+         * @param array $token
+         * @param string $title
+         * @param string $body
+         * @return void
+         */
+        public function sendMultiNotify($tokens, $title, $body)
+        {
+            self::$firebase->getMessaging()->sendMulticast([
+                'notification' => [
+                    'title' => $title,
+                    'body'  => $body,
+                ],
+                'android' => [
+                    'priority' => 'normal',
+                    'notification' => [
+                        'title'      => $title,
+                        'body'       => $body,
+                        'channel_id' => 'myruble_channel',
+                        'sound'      => 'default',
+                        'color'      => '#474747'
+                    ]
+                ]
+            ], $tokens);
+        }
     }
 
 ?>
