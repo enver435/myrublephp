@@ -54,7 +54,7 @@
                                 <label for="ref_code">{{ __('site/register.referral') }}</label>
                                 <input id="ref_code" type="text" name="ref_code" class="form-control" value="{{ ref_code }}">
                             </div>
-                            <div class="text-center mb-3">{{ __('site/register.rules') }}</div>
+                            <div class="text-center mb-3">{{ __('site/register.rules')|raw }}</div>
                             <div class="g-recaptcha" data-sitekey="6Lfk4aMUAAAAAA3V5fAmmolwFozaPf4uER2cNDz3"></div>
                             <input type="hidden" name="guid" value="">
                             <button type="submit" class="btn btn-primary">{{ __('site/register.btn') }}</button>
@@ -64,5 +64,5 @@
             </div>
         </div>
     </div>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?hl={{ locale }}" async defer></script>
 {% endblock %}

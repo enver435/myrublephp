@@ -67,7 +67,7 @@
 
         public function __invoke($request, $response, $next)
         {
-            $this->requestLocale = $this->getWantLangFromUrlPath($request);
+            $this->requestLocale = $this->getWantLangFromUrlPath($request) == '' ? $this->defaultLocale : $this->getWantLangFromUrlPath($request);
             $this->requestUrl = $request->getUri()->getPath();
 
             // request
